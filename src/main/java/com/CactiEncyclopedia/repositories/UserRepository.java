@@ -1,4 +1,4 @@
-package com.CactiEncyclopedia.domain.repositories;
+package com.CactiEncyclopedia.repositories;
 
 import com.CactiEncyclopedia.domain.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;

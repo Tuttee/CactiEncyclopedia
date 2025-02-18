@@ -1,9 +1,9 @@
-package com.CactiEncyclopedia.domain.services;
+package com.CactiEncyclopedia.services;
 
 import com.CactiEncyclopedia.domain.binding.UserLoginBindingModel;
 import com.CactiEncyclopedia.domain.binding.UserRegisterBindingModel;
 import com.CactiEncyclopedia.domain.entities.User;
-import com.CactiEncyclopedia.domain.repositories.UserRepository;
+import com.CactiEncyclopedia.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
