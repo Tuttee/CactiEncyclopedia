@@ -1,6 +1,6 @@
 package com.CactiEncyclopedia.domain.binding;
 
-import com.example.spotifyplaylistapp.validation.userAndPasswordMatch.UserAndPasswordMatch;
+import com.CactiEncyclopedia.validation.userAndPasswordMatch.UserAndPasswordMatch;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

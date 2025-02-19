@@ -1,8 +1,8 @@
 package com.CactiEncyclopedia.domain.binding;
 
-import com.example.spotifyplaylistapp.validation.emailIsUnique.EmailIsUnique;
-import com.example.spotifyplaylistapp.validation.passwordMatch.PasswordMatch;
-import com.example.spotifyplaylistapp.validation.usernameIsUnique.UsernameIsUnique;
+import com.CactiEncyclopedia.validation.emailIsUnique.EmailIsUnique;
+import com.CactiEncyclopedia.validation.passwordMatch.PasswordMatch;
+import com.CactiEncyclopedia.validation.usernameIsUnique.UsernameIsUnique;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

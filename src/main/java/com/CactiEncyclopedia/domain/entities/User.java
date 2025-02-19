@@ -37,4 +37,7 @@ public class User extends BaseEntity{
 
     @OneToMany(mappedBy = "createdBy")
     private List<Species> addedSpecies;
+
+    @OneToMany(mappedBy = "askedBy")
+    private List<Question> askedQuestions;
 }
