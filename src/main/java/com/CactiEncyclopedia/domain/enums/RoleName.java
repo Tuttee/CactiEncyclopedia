@@ -1,6 +1,6 @@
 package com.CactiEncyclopedia.domain.enums;
 
-public enum UserRole {
+public enum RoleName {
     USER,
     ADMIN
 }

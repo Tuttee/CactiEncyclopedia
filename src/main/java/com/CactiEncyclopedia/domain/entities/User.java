@@ -1,9 +1,6 @@
 package com.CactiEncyclopedia.domain.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +31,9 @@ public class User extends BaseEntity{
 
     @Column
     private String lastName;
+
+    @ManyToOne
+    private UserRole role;
 
     @OneToMany(mappedBy = "createdBy")
     private List<Species> addedSpecies;

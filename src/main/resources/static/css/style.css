@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'Jokerman';
+    src: url("fonts/Jokerman.otf");
+}
+
+nav {
+    font-family: 'Jokerman', sans-serif;
+    font-size: 25px;
+}
+
 .w-15 {
     width: 15%;
 }
