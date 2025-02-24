@@ -28,4 +28,7 @@ public class Species extends BaseEntity {
     @ManyToOne(optional = false)
     private Family family;
 
+    @Column
+    private boolean approved = false;
+
 }

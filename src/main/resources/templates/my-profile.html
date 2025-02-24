@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<header th:replace="~{fragments/commons::nav}"></header>
+<main>
+
+    <div class="container text-white">
+        <div class="row">
+            <div>Username: <strong th:text="${userProfile.username}"></strong></div>
+        </div>
+        <div class="row">
+            <div>First name: <strong th:text="${userProfile.firstName}"></strong></div>
+        </div>
+        <div class="row">
+            <div>Last name: <strong th:text="${userProfile.lastName}"></strong></div>
+        </div>
+        <div class="row">
+            <div>Email: <strong th:text="${userProfile.email}"></strong></div>
+        </div>
+    </div>
+
+    <h2 class="text-white">Added Species</h2>
+    <table class="text-white table table-responsive">
+        <thead>
+            <tr>
+                <th>Species</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="species : ${userProfile.addedSpecies}">
+                <td th:text="${species.name}"></td>
+                <td class="text-white" th:if="${species.approved}">Approved</td>
+                <td class="text-danger" th:unless="${species.approved}">In Review</td>
+            </tr>
+            <tr th:if="${userProfile.addedSpecies.size() == 0}">
+                <td>No added species present.</td>
+            </tr>
+        </tbody>
+    </table>
+
+</main>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

@@ -23,4 +23,11 @@ public class RoleService {
                  .toList());
     }
 
+    public UserRole getUserRole() {
+        return this.roleRepository.findByRoleName(RoleName.USER);
+    }
+
+    public UserRole getAdminRole() {
+        return this.roleRepository.findByRoleName(RoleName.ADMIN);
+    }
 }

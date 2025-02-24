@@ -26,13 +26,13 @@ public class User extends BaseEntity{
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String firstName;
 
-    @Column
+    @Column(nullable = false)
     private String lastName;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private UserRole role;
 
     @OneToMany(mappedBy = "createdBy")

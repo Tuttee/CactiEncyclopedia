@@ -13,7 +13,7 @@
                 <label for="username" class="h4 mb-2 text-white">Username</label>
             </div>
 
-            <input type="text" class="form-control" id="username" name="username" th:value="*{username}" placeholder="Enter username" />
+            <input type="text" class="form-control" id="username" name="username" th:value="*{username}" placeholder="Enter username" required/>
             <small class="bg-danger text-light rounded" style="font-size: 15px"  th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error message</small>
         </div>
 
@@ -21,7 +21,7 @@
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="email" class="h4 mb-2">Email</label>
             </div>
-            <input type="email" class="form-control" id="email" name="email" th:value="*{email}" placeholder="Enter email address" />
+            <input type="email" class="form-control" id="email" name="email" th:value="*{email}" placeholder="Enter email address" required/>
             <small class="bg-danger text-light rounded"  th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error message</small>
         </div>
 
@@ -29,7 +29,7 @@
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="firstName" class="h4 mb-2">First Name</label>
             </div>
-            <input type="firstName" class="form-control" id="firstName" name="firstName" th:value="*{firstName}" placeholder="Enter first name"/>
+            <input type="firstName" class="form-control" id="firstName" name="firstName" th:value="*{firstName}" placeholder="Enter first name" required/>
             <small class="bg-danger text-light rounded"  th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name error message</small>
         </div>
 
@@ -37,7 +37,7 @@
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="lastName" class="h4 mb-2">Last name</label>
             </div>
-            <input type="lastName" class="form-control" id="lastName" name="lastName" th:value="*{lastName}" placeholder="Enter last name"/>
+            <input type="lastName" class="form-control" id="lastName" name="lastName" th:value="*{lastName}" placeholder="Enter last name" required/>
             <small class="bg-danger text-light rounded"  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name error message</small>
         </div>
 
@@ -45,7 +45,7 @@
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="password" class="h4 mb-2">Password</label>
             </div>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password"/>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required/>
             <small class="bg-danger text-light rounded"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error message</small>
         </div>
 
@@ -53,7 +53,7 @@
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="confirmPassword" class="h4 mb-2">Confirm Password</label>
             </div>
-            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Enter confirm password"/>
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Enter confirm password" required/>
             <small class="bg-danger text-light rounded"  th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" >Password error message</small>
         </div>
 

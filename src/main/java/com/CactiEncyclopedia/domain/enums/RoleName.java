@@ -1,6 +1,12 @@
 package com.CactiEncyclopedia.domain.enums;
 
 public enum RoleName {
-    USER,
-    ADMIN
+    USER("User"),
+    ADMIN("Admin");
+
+    public final String label;
+
+    RoleName(String label) {
+        this.label = label;
+    }
 }

@@ -17,25 +17,29 @@
         <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
             <ul class="navbar-nav row">
                 <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active h5" th:href="@{/auth/login}">Families Catalogue</a>
+                    <a class="nav-link text-white active h5" th:href="@{/catalog}">Families Catalog</a>
                 </li>
                 <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active h5" th:href="@{/auth/login}">Species Catalogue</a>
+                    <a class="nav-link text-white active h5" th:href="@{/auth/login}">Species Catalog</a>
                 </li>
                 <li class="nav-item col-md-4">
                     <a class="nav-link text-white active h5" th:href="@{/auth/login}">About</a>
                 </li>
 
                 <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active h5" th:href="@{/auth/login}">Login</a>
+                    <a class="nav-link text-white active h5" th:unless="${user_id != null}" th:href="@{/auth/login}">Login</a>
                 </li>
 
                 <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active h5" th:href="@{/auth/register}">Register</a>
+                    <a class="nav-link text-white active h5" th:unless="${user_id != null}" th:href="@{/auth/register}">Register</a>
                 </li>
 
                 <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active h5" th:href="@{/auth/logout}">Logout</a>
+                    <a class="nav-link text-white active h5" th:if="${user_id != null}" th:href="@{/auth/logout}">Logout</a>
+                </li>
+
+                <li class="nav-item col-md-4">
+                    <a class="nav-link text-white active h5" th:if="${user_id != null}" th:href="@{/user/my-profile}">My Profile</a>
                 </li>
 
             </ul>

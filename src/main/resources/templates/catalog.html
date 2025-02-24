@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<header th:replace="~{fragments/commons::nav}"></header>
+<main>
+
+    <div class="container">
+        <div class="card catalog-card w-15" th:each="family : ${families}">
+            <a th:href="@{/catalog/{familyName}(familyName=${family.name})}">
+                <img class="card-img-top" th:src="${family.imageURL}" alt="Card image cap"/>
+                <div><strong th:text="${family.name}"></strong></div>
+            </a>
+        </div>
+    </div>
+
+</main>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

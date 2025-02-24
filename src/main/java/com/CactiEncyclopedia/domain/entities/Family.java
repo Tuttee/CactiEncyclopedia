@@ -19,10 +19,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Family extends BaseEntity {
     @Column(unique = true, nullable = false)
-    private String familyName;
+    private String name;
 
     @Column(nullable = false)
-    private String familyImageURL;
+    private String imageURL;
 
     @OneToMany(mappedBy = "family")
     private List<Species> speciesList;
