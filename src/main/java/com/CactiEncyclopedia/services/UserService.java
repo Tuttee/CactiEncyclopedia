@@ -46,11 +46,10 @@ public class UserService {
         this.userRepository.saveAndFlush(user);
     }
 
-//    public void login(UserLoginBindingModel userLoginBindingModel) {
-//        if (validateLogin(userLoginBindingModel)) {
-//            User user = this.userRepository.findByUsername(userLoginBindingModel.getUsername()).get();
-//            loggedUser.setId(user.getId());
-//            loggedUser.setUsername(user.getUsername());
-//        }
-//    }
+    public User login(UserLoginBindingModel userLoginBindingModel) {
+        if (validateLogin(userLoginBindingModel)) {
+            return this.userRepository.findByUsername(userLoginBindingModel.getUsername()).get();
+        }
+        throw new RuntimeException("Invalid username or password");
+    }
 }
