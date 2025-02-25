@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -65,15 +66,36 @@ public class UserService {
     public UserDetailsViewModel getLoggedUserDetails(String userId) {
         User loggedUser = this.userRepository.findById(userId).orElseThrow();
 
+        return mapToUserDetailsViewModel(loggedUser);
+    }
+
+
+    public List<UserDetailsViewModel> getAllUsersExceptLogged(String id) {
+        return this.userRepository.findAllByIdNot(id)
+                .stream().map(UserService::mapToUserDetailsViewModel)
+                .toList();
+    }
+
+    private static UserDetailsViewModel mapToUserDetailsViewModel(User user) {
         UserDetailsViewModel userDetailsViewModel = new UserDetailsViewModel();
 
-        userDetailsViewModel.setUsername(loggedUser.getUsername());
-        userDetailsViewModel.setFirstName(loggedUser.getFirstName());
-        userDetailsViewModel.setLastName(loggedUser.getLastName());
-        userDetailsViewModel.setEmail(loggedUser.getEmail());
-        userDetailsViewModel.setRole(loggedUser.getRole().getRoleName());
-        userDetailsViewModel.setAddedSpecies(loggedUser.getAddedSpecies());
-
+        userDetailsViewModel.setUsername(user.getUsername());
+        userDetailsViewModel.setFirstName(user.getFirstName());
+        userDetailsViewModel.setLastName(user.getLastName());
+        userDetailsViewModel.setEmail(user.getEmail());
+        userDetailsViewModel.setRole(user.getRole().getRoleName());
+        userDetailsViewModel.setAddedSpecies(user.getAddedSpecies());
         return userDetailsViewModel;
+    }
+
+    public void updateUserRole(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow();
+
+        switch (user.getRole().getRoleName()) {
+            case USER -> user.setRole(roleService.getAdminRole());
+            case ADMIN -> user.setRole(roleService.getUserRole());
+        }
+
+        this.userRepository.save(user);
     }
 }

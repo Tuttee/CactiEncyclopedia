@@ -8,5 +8,9 @@ import java.util.List;
 
 @Repository
 public interface SpeciesRepository extends JpaRepository<Species, String> {
-    List<Species> findAllByFamily_Name(String family);
+    List<Species> findAllByFamily_NameAndApprovedIsTrue(String family);
+
+    List<Species> findAllByApprovedIsTrue();
+
+    List<Species> findAllByApprovedIsFalse();
 }

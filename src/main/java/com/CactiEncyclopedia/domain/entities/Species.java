@@ -28,6 +28,15 @@ public class Species extends BaseEntity {
     @ManyToOne(optional = false)
     private Family family;
 
+    @Column(nullable = false, columnDefinition = "TEXT", length = 1000)
+    private String description;
+
+    @Column(columnDefinition = "TEXT", length = 1000)
+    private String cultivation;
+
+    @Column(columnDefinition = "TEXT", length = 1000)
+    private String coldHardiness;
+
     @Column
     private boolean approved = false;
 

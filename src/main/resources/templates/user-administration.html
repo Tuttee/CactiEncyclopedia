@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<header th:replace="~{fragments/commons::nav}"></header>
+<main>
+
+    <h2 class="text-white">Users Administration</h2>
+    <table class="text-white table table-responsive">
+        <thead>
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:unless="${users.size() == 0}" th:each="user : ${users}">
+                <td class="text-white" th:text="${user.firstName}">FirstName</td>
+                <td class="text-white" th:text="${user.lastName}">LastName</td>
+                <td class="text-white" th:text="${user.username}">username</td>
+                <td class="text-white" th:text="${user.email}">email</td>
+                <td class="text-danger">
+                    <form th:if="${user.role.label == 'Admin'}" th:method="PATCH" th:action="@{/administration/users/{username}(username=${user.username})}">
+                        <button type="submit" class="btn btn-danger">Demote to User</button>
+                    </form>
+                    <form th:unless="${user.role.label == 'Admin'}" th:method="PATCH" th:action="@{/administration/users/{username}(username=${user.username})}">
+                        <button type="submit" class="btn btn-success">Promote to Admin</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${users.size() == 0}">
+                <td>No users present.</td>
+            </tr>
+        </tbody>
+    </table>
+
+</main>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<header th:replace="~{fragments/commons::nav}"></header>
+<main>
+
+    <h2 class="text-white">New Species</h2>
+    <table class="text-white table table-responsive">
+        <thead>
+            <tr>
+                <th>Species</th>
+                <th>Added by</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:unless="${unapprovedSpecies.size() == 0}" th:each="species : ${unapprovedSpecies}">
+                <td><a th:text="${species.name}" th:href="@{/catalog/species/{id}(id=${species.id})}"></a></td>
+                <td class="text-white" th:text="${species.createdBy.username}">createdBy</td>
+                <td class="text-danger">
+                    <form th:method="PATCH" th:action="@{/administration/species/{id}(id=${species.id})}">
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                    <form th:method="DELETE" th:action="@{/administration/species/{id}(id=${species.id})}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${unapprovedSpecies.size() == 0}">
+                <td>No new species present.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="text-white">Approved Species</h2>
+    <table class="text-white table table-responsive">
+        <thead>
+        <tr>
+            <th>Species</th>
+            <th>Added by</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:unless="${approvedSpecies.size() == 0}" th:each="species : ${approvedSpecies}">
+            <td><a th:text="${species.name}" th:href="@{/catalog/species/{id}(id=${species.id})}"></a></td>
+            <td class="text-white" th:text="${species.createdBy.username}">createdBy</td>
+            <td class="text-danger">
+                <form th:method="DELETE" th:action="@{/administration/species/{id}(id=${species.id})}">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${approvedSpecies.size() == 0}">
+            <td>No approved species present.</td>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

@@ -8,7 +8,7 @@
 
     <div class="container">
         <div class="card catalog-card w-15" th:each="specie : ${species}">
-            <a th:href="@{/catalog/{familyName}(familyName=${specie.name})}">
+            <a th:href="@{/catalog/species/{id}(id=${specie.id})}">
                 <img class="card-img-top" th:src="${specie.imageURL}" alt="Card image cap"/>
                 <div><strong th:text="${specie.name}"></strong></div>
             </a>

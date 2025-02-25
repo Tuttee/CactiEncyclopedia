@@ -20,10 +20,16 @@
                     <a class="nav-link text-white active h5" th:href="@{/catalog}">Families Catalog</a>
                 </li>
                 <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active h5" th:href="@{/auth/login}">Species Catalog</a>
+                    <a class="nav-link text-white active h5" th:href="@{/catalog/species/add}">Add Species</a>
                 </li>
                 <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active h5" th:href="@{/auth/login}">About</a>
+                    <a class="nav-link text-white active h5" th:href="@{/catalog/add-family}">Add Family</a>
+                </li>
+                <li class="nav-item col-md-4">
+                    <a class="nav-link text-white active h5" th:href="@{/catalog/all}">Species Catalog</a>
+                </li>
+                <li class="nav-item col-md-4">
+                    <a class="nav-link text-white active h5" th:href="@{/about}">About</a>
                 </li>
 
                 <li class="nav-item col-md-4">
@@ -40,6 +46,12 @@
 
                 <li class="nav-item col-md-4">
                     <a class="nav-link text-white active h5" th:if="${user_id != null}" th:href="@{/user/my-profile}">My Profile</a>
+                </li>
+                <li class="nav-item col-md-4">
+                    <a class="nav-link text-white active h5" th:href="@{/administration/species}">Species Administration</a>
+                </li>
+                <li class="nav-item col-md-4">
+                    <a class="nav-link text-white active h5" th:href="@{/administration/users}">Users Administration</a>
                 </li>
 
             </ul>
