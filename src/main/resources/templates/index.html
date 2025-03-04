@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head th:replace="~{fragments/commons::head}"></head>
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
@@ -12,7 +13,7 @@
         <p class="h4">Lorem Ipsum!!!</p>
         <hr class="my-3 bg-white w-75"/>
 
-        <h3>
+        <h3 sec:authorize="isAnonymous()">
             <a class="text-primary" th:href="@{/auth/login}">Login</a>
             if you have an account or
             <a class="text-primary" th:href="@{/auth/register}">Register</a>

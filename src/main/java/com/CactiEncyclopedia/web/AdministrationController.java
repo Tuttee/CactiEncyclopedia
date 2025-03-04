@@ -2,14 +2,17 @@ package com.CactiEncyclopedia.web;
 
 import com.CactiEncyclopedia.domain.entities.Species;
 import com.CactiEncyclopedia.domain.view.UserDetailsViewModel;
+import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.SpeciesService;
 import com.CactiEncyclopedia.services.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/administration")
@@ -37,22 +40,22 @@ public class AdministrationController extends BaseController {
     }
 
     @PatchMapping("/species/{id}")
-    public ModelAndView approveSpecies(@PathVariable String id) {
+    public ModelAndView approveSpecies(@PathVariable UUID id) {
         speciesService.approve(id);
 
         return super.redirect("/administration/species");
     }
 
     @DeleteMapping("/species/{id}")
-    public ModelAndView deleteSpecies(@PathVariable String id) {
+    public ModelAndView deleteSpecies(@PathVariable UUID id) {
         speciesService.delete(id);
 
         return super.redirect("/administration/species");
     }
 
     @GetMapping("/users")
-    public ModelAndView getUserAdministration(HttpSession session) {
-        List<UserDetailsViewModel> users = userService.getAllUsersExceptLogged(session.getAttribute("user_id").toString());
+    public ModelAndView getUserAdministration(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        List<UserDetailsViewModel> users = userService.getAllUsersExceptLogged(authenticationMetadata.getUserId());
 
         ModelAndView modelAndView = new ModelAndView();
 

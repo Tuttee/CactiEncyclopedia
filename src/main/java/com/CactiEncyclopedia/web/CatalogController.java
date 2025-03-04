@@ -4,16 +4,20 @@ import com.CactiEncyclopedia.domain.binding.AddFamilyBindingModel;
 import com.CactiEncyclopedia.domain.binding.AddSpeciesBindingModel;
 import com.CactiEncyclopedia.domain.entities.Family;
 import com.CactiEncyclopedia.domain.entities.Species;
+import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.FamilyService;
 import com.CactiEncyclopedia.services.SpeciesService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/catalog")
@@ -79,7 +83,7 @@ public class CatalogController extends BaseController {
     }
 
     @GetMapping("/species/{id}")
-    public ModelAndView getSpecies(@PathVariable String id) {
+    public ModelAndView getSpecies(@PathVariable UUID id) {
         Species speciesById = speciesService.getSpeciesById(id);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -99,10 +103,11 @@ public class CatalogController extends BaseController {
     }
 
     @PostMapping("/species/add")
+//    @PreAuthorize("hasAnyRole('USER', 'ADMIN')") - better to use
     public ModelAndView postAddSpecies(@Valid @ModelAttribute("addSpecies")AddSpeciesBindingModel addSpeciesBindingModel,
                                        BindingResult bindingResult,
                                        ModelAndView modelAndView,
-                                       HttpSession session) {
+                                       @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
         if (bindingResult.hasErrors()) {
             List<String> familyList = familyService.getAllFamiliesList();
@@ -111,7 +116,7 @@ public class CatalogController extends BaseController {
             return super.view("add-species", modelAndView);
         }
 
-        speciesService.addSpecies(addSpeciesBindingModel, session.getAttribute("user_id").toString());
+        speciesService.addSpecies(addSpeciesBindingModel, authenticationMetadata.getUserId());
 
         return super.view("thank-you");
     }

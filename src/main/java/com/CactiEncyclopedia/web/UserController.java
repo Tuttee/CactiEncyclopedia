@@ -1,9 +1,11 @@
 package com.CactiEncyclopedia.web;
 
 import com.CactiEncyclopedia.domain.view.UserDetailsViewModel;
+import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +18,8 @@ public class UserController extends BaseController {
     private final UserService userService;
 
     @GetMapping("/my-profile")
-    public ModelAndView getMyProfile(HttpSession session) {
-        UserDetailsViewModel userDetailsViewModel = userService.getLoggedUserDetails(session.getAttribute("user_id").toString());
+    public ModelAndView getMyProfile(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        UserDetailsViewModel userDetailsViewModel = userService.getLoggedUserDetails(authenticationMetadata.getUserId());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userProfile", userDetailsViewModel);

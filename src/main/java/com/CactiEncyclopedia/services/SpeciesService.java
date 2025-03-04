@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class SpeciesService {
         return this.speciesRepository.findAllByFamily_NameAndApprovedIsTrue(family);
     }
 
-    public Species getSpeciesById(String id) {
+    public Species getSpeciesById(UUID id) {
         return this.speciesRepository.findById(id).orElseThrow();
     }
 
@@ -34,7 +35,7 @@ public class SpeciesService {
         return this.speciesRepository.findAllByApprovedIsFalse();
     }
 
-    public void addSpecies(AddSpeciesBindingModel addSpeciesBindingModel, String userId) {
+    public void addSpecies(AddSpeciesBindingModel addSpeciesBindingModel, UUID userId) {
         User user = modelMapper.map(userService.getLoggedUserDetails(userId), User.class);
 
         Species species = modelMapper.map(addSpeciesBindingModel, Species.class);
@@ -42,16 +43,17 @@ public class SpeciesService {
         species.setCreatedBy(user);
         species.setFamily(familyService.getFamilyByName(addSpeciesBindingModel.getFamily()));
 
-        this.speciesRepository.save(species);
+        userService.saveSpeciesToUser(user, species);
+        this.speciesRepository.saveAndFlush(species);
     }
 
-    public void approve(String id) {
+    public void approve(UUID id) {
         Species species = this.speciesRepository.findById(id).orElseThrow();
         species.setApproved(true);
         this.speciesRepository.save(species);
     }
 
-    public void delete(String id) {
+    public void delete(UUID id) {
         this.speciesRepository.deleteById(id);
     }
 }

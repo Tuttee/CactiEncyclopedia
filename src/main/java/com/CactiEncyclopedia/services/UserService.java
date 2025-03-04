@@ -2,21 +2,27 @@ package com.CactiEncyclopedia.services;
 
 import com.CactiEncyclopedia.domain.binding.UserLoginBindingModel;
 import com.CactiEncyclopedia.domain.binding.UserRegisterBindingModel;
+import com.CactiEncyclopedia.domain.entities.Species;
 import com.CactiEncyclopedia.domain.entities.User;
 import com.CactiEncyclopedia.domain.view.UserDetailsViewModel;
 import com.CactiEncyclopedia.repositories.UserRepository;
+import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
@@ -51,26 +57,19 @@ public class UserService {
         this.userRepository.saveAndFlush(user);
     }
 
-    public User login(UserLoginBindingModel userLoginBindingModel) {
-        if (validateLogin(userLoginBindingModel)) {
-            return this.userRepository.findByUsername(userLoginBindingModel.getUsername()).get();
-        }
-        throw new RuntimeException("Invalid username or password");
-    }
-
     private boolean isDbInit() {
         return this.userRepository.count() > 0;
     }
 
     @Transactional
-    public UserDetailsViewModel getLoggedUserDetails(String userId) {
+    public UserDetailsViewModel getLoggedUserDetails(UUID userId) {
         User loggedUser = this.userRepository.findById(userId).orElseThrow();
 
         return mapToUserDetailsViewModel(loggedUser);
     }
 
 
-    public List<UserDetailsViewModel> getAllUsersExceptLogged(String id) {
+    public List<UserDetailsViewModel> getAllUsersExceptLogged(UUID id) {
         return this.userRepository.findAllByIdNot(id)
                 .stream().map(UserService::mapToUserDetailsViewModel)
                 .toList();
@@ -97,5 +96,21 @@ public class UserService {
         }
 
         this.userRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username + " not found"));
+
+        return new AuthenticationMetadata(user.getId(),
+                user.getUsername(),
+                user.getPassword(),
+                user.getRole(),
+                true);
+    }
+
+    public void saveSpeciesToUser(User user, Species species) {
+        user.getAddedSpecies().add(species);
+        this.userRepository.saveAndFlush(user);
     }
 }

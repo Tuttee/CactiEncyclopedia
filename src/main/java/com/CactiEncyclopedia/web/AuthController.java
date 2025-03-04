@@ -3,28 +3,19 @@ package com.CactiEncyclopedia.web;
 
 import com.CactiEncyclopedia.domain.binding.UserLoginBindingModel;
 import com.CactiEncyclopedia.domain.binding.UserRegisterBindingModel;
-import com.CactiEncyclopedia.domain.entities.User;
 import com.CactiEncyclopedia.services.UserService;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/auth")
-public class AuthController extends BaseController{
+@RequiredArgsConstructor
+public class AuthController extends BaseController {
     private final UserService userService;
-
-    @Autowired
-    public AuthController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/register")
     public ModelAndView getRegister() {
@@ -47,32 +38,16 @@ public class AuthController extends BaseController{
     }
 
     @GetMapping("/login")
-    public ModelAndView getLogin() {
-        return super.view("login");
-    }
+    public ModelAndView getLogin(@RequestParam(value = "error", required = false) String errorParam) {
 
-    @PostMapping("/login")
-    public ModelAndView postRegister(@Valid @ModelAttribute("userLogin") UserLoginBindingModel userLoginBindingModel,
-                                     BindingResult bindingResult,
-                                     HttpSession httpSession,
-                                     ModelAndView modelAndView) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("userLogin", new UserLoginBindingModel());
 
-        if (bindingResult.hasErrors()) {
-            modelAndView.addObject("userLogin", userLoginBindingModel);
-            return super.view("login", modelAndView);
+        if (errorParam != null) {
+            modelAndView.addObject("error", "Incorrect username or password!");
         }
 
-        User user = this.userService.login(userLoginBindingModel);
-
-        httpSession.setAttribute("user_id", user.getId());
-
-        return super.redirect("/");
-    }
-
-    @GetMapping("/logout")
-    public ModelAndView logout(HttpSession session) {
-        session.invalidate();
-        return super.redirect("/");
+        return super.view("login", modelAndView);
     }
 
     @ModelAttribute("userRegister")
