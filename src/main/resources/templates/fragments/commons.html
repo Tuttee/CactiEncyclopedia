@@ -13,50 +13,53 @@
 <body>
 <header>
     <nav class="">
-        <a class="logo" th:href="@{/}" ><img src="/images/Logo.png" alt="Logo"></a>
+        <a class="logo" th:href="@{/}"><img src="/images/Logo.png" alt="Logo"></a>
 
-        <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
-            <ul class="navbar-nav row">
-                <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active h5" th:href="@{/catalog}">Families Catalog</a>
-                </li>
-                <li class="nav-item col-md-4" sec:authorize="isAuthenticated()">
-                    <a class="nav-link text-white active h5" th:href="@{/catalog/species/add}">Add Species</a>
-                </li>
-                <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active h5" th:href="@{/catalog/all}">Species Catalog</a>
-                </li>
-                <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active h5" th:href="@{/about}">About</a>
-                </li>
+        <!--        <div class="flex-lg-row justify-content-between align-items-center p-2" id="navbarNav">-->
+        <div>
+            <div class="user-nav" id="navbarNav">
+                <ul class="">
+                    <li class="">
+                        <a class="" th:href="@{/catalog}">Families Catalog</a>
+                    </li>
+                    <li class="" sec:authorize="isAuthenticated()">
+                        <a class="" th:href="@{/catalog/species/add}">Add Species</a>
+                    </li>
+                    <li class="">
+                        <a class="" th:href="@{/catalog/all}">Species Catalog</a>
+                    </li>
+                    <li class="">
+                        <a class="" th:href="@{/about}">About</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="" sec:authorize="isAnonymous()">
+                        <a class="" th:href="@{/auth/login}">Login</a>
+                    </li>
 
-                <li class="nav-item col-md-4" sec:authorize="isAnonymous()">
-                    <a class="nav-link text-white active h5" th:href="@{/auth/login}">Login</a>
-                </li>
+                    <li class="" sec:authorize="isAnonymous()">
+                        <a class="" th:href="@{/auth/register}">Register</a>
+                    </li>
 
-                <li class="nav-item col-md-4" sec:authorize="isAnonymous()">
-                    <a class="nav-link text-white active h5" th:href="@{/auth/register}">Register</a>
-                </li>
+                    <li class="" sec:authorize="isAuthenticated()">
+                        <a class="" th:href="@{/user/my-profile}">My Profile</a>
+                    </li>
 
-                <li class="nav-item col-md-4" sec:authorize="isAuthenticated()">
-                    <a class="nav-link text-white active h5" th:href="@{/auth/logout}">Logout</a>
+                    <li class="" sec:authorize="isAuthenticated()">
+                        <a class="" th:href="@{/auth/logout}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav-admin" sec:authorize="hasRole('ADMIN')">
+                <li class="">
+                    <a class="" th:href="@{/administration/species}">Species
+                        Administration</a>
                 </li>
-
-                <li class="nav-item col-md-4" sec:authorize="isAuthenticated()">
-                    <a class="nav-link text-white active h5" th:href="@{/user/my-profile}">My Profile</a>
+                <li class="">
+                    <a class="" th:href="@{/administration/users}">Users Administration</a>
                 </li>
-
-
-            </ul>
-            <ul class="navbar-nav row" sec:authorize="hasRole('ADMIN')">
-                <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active h5" th:href="@{/administration/species}">Species Administration</a>
-                </li>
-                <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active h5" th:href="@{/administration/users}">Users Administration</a>
-                </li>
-                <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active h5" th:href="@{/catalog/add-family}">Add Family</a>
+                <li class="">
+                    <a class="" th:href="@{/catalog/add-family}">Add Family</a>
                 </li>
             </ul>
         </div>
@@ -64,9 +67,9 @@
 </header>
 
 <footer class="footer py-2 fixed-bottom">
-        <p class="h5 text-white text-center">
-            &copy; Tuttee 2025. All rights reserved.
-        </p>
+    <p class="">
+        &copy; Tuttee 2025. All rights reserved.
+    </p>
 </footer>
 </body>
 </html>
