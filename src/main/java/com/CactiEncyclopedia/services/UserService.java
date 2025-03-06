@@ -63,9 +63,13 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public UserDetailsViewModel getLoggedUserDetails(UUID userId) {
-        User loggedUser = this.userRepository.findById(userId).orElseThrow();
+        User loggedUser = findUserById(userId);
 
         return mapToUserDetailsViewModel(loggedUser);
+    }
+
+    public User findUserById(UUID userId) {
+        return this.userRepository.findById(userId).orElseThrow();
     }
 
 

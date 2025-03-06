@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "questions")
 @AllArgsConstructor
@@ -17,8 +19,17 @@ import lombok.Setter;
 @Setter
 public class Question extends BaseEntity {
     @Column(nullable = false)
-    private String question;
+    private String content;
 
     @ManyToOne
     private User askedBy;
+
+    @ManyToOne
+    private Species species;
+
+    @Column(nullable = false)
+    private LocalDateTime askedOn;
+
+    @Column
+    private boolean approved = false;
 }

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,6 +43,7 @@ public class SpeciesService {
 
         species.setCreatedBy(user);
         species.setFamily(familyService.getFamilyByName(addSpeciesBindingModel.getFamily()));
+        species.setAddedOn(LocalDate.now());
 
         userService.saveSpeciesToUser(user, species);
         this.speciesRepository.saveAndFlush(species);

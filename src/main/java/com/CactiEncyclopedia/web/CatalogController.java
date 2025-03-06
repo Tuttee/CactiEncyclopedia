@@ -1,6 +1,7 @@
 package com.CactiEncyclopedia.web;
 
 import com.CactiEncyclopedia.domain.binding.AddFamilyBindingModel;
+import com.CactiEncyclopedia.domain.binding.AddQuestionBindingModel;
 import com.CactiEncyclopedia.domain.binding.AddSpeciesBindingModel;
 import com.CactiEncyclopedia.domain.entities.Family;
 import com.CactiEncyclopedia.domain.entities.Species;
@@ -129,5 +130,10 @@ public class CatalogController extends BaseController {
     @ModelAttribute("addFamily")
     public AddFamilyBindingModel getAddFamilyBindingModel() {
         return new AddFamilyBindingModel();
+    }
+
+    @ModelAttribute("addQuestion")
+    public AddQuestionBindingModel getAddQuestionBindingModel() {
+        return new AddQuestionBindingModel();
     }
 }

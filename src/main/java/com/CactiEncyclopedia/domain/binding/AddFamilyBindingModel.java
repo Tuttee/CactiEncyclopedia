@@ -13,10 +13,10 @@ import org.hibernate.validator.constraints.URL;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddFamilyBindingModel {
-    @Size(min = 5, max = 200)
+    @Size(min = 5, max = 200, message = "Species name must be between 5 and 200 characters!")
     private String name;
 
     @NotBlank
-    @URL
+    @URL(message = "Please enter a valid URL!")
     private String imageURL;
 }

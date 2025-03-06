@@ -6,30 +6,24 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
-    <form class="welcome login" th:method="POST" th:action="@{/catalog/add-family}" th:object="${addFamily}">
-        <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Add Family</span></h1>
-        <div class="form-group">
-            <div class="label-holder textCol d-flex justify-content-center">
-                <label for="name" class="h4 mb-2 text-white">Species Name</label>
+    <form class="form-submit" th:method="POST" th:action="@{/catalog/add-family}" th:object="${addFamily}">
+        <h1 class="text-center mt-2"><span class="">Add Family</span></h1>
+            <div class="">
+                <label for="name" class="">Species Name</label>
             </div>
 
-            <input type="text" class="form-control" id="name" name="name" th:value="*{name}" placeholder="Enter name" required/>
-            <small class="bg-danger text-light rounded" style="font-size: 15px"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error message</small>
-        </div>
+            <input type="text" class="" id="name" name="name" th:value="*{name}" placeholder="Enter name" required/>
+            <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error message</small>
 
-        <div class="form-group">
-            <div class="label-holder textCol d-flex justify-content-center">
-                <label for="imageURL" class="h4 mb-2 text-white">Image URL</label>
+            <div class="">
+                <label for="imageURL" class="">Image URL</label>
             </div>
 
-            <input type="text" class="form-control" id="imageURL" name="imageURL" th:value="*{imageURL}" placeholder="Enter image URL" required/>
-            <small class="bg-danger text-light rounded" style="font-size: 15px"  th:if="${#fields.hasErrors('imageURL')}" th:errors="*{imageURL}">Name error message</small>
-        </div>
+            <input type="text" class="" id="imageURL" name="imageURL" th:value="*{imageURL}" placeholder="Enter image URL" required/>
+            <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('imageURL')}" th:errors="*{imageURL}">Name error message</small>
 
 
-        <div class="button-holder d-flex justify-content-center">
-            <button type="submit" value="Register">Add family</button>
-        </div>
+            <button class="submit-btn" type="submit" value="Register">Add family</button>
 
     </form>
 </main>

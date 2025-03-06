@@ -6,66 +6,52 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
-    <form class="welcome login" th:method="POST" th:action="@{/catalog/species/add}" th:object="${addSpecies}">
-        <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Add Species</span></h1>
-        <div class="form-group">
-            <div class="label-holder textCol d-flex justify-content-center">
-                <label for="name" class="h4 mb-2 text-white">Species Name</label>
+    <form class="form-submit" th:method="POST" th:action="@{/catalog/species/add}" th:object="${addSpecies}">
+        <h1 class=""><span class="">Add Species</span></h1>
+            <div class="">
+                <label for="name" class="">Species Name</label>
             </div>
 
-            <input type="text" class="form-control" id="name" name="name" th:value="*{name}" placeholder="Enter name" required/>
-            <small class="bg-danger text-light rounded" style="font-size: 15px"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error message</small>
-        </div>
+            <input type="text" class="" id="name" name="name" th:value="*{name}" placeholder="Enter name" required/>
+            <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error message</small>
 
-        <div class="form-group">
-            <div class="label-holder textCol d-flex justify-content-center">
-                <label for="family" class="h4 mb-2 text-white">Family</label>
+            <div class="">
+                <label for="family" class="">Family</label>
             </div>
 
-            <select type="text" class="form-control" id="family" name="family" th:value="*{family}" required>
-                <option value="">Select family</option>
+            <select type="text" class="" id="family" name="family" th:value="*{family}" required>
+                <option class="placeholder" value="">Select family</option>
                 <option th:each="family : ${familyList}" th:value="${family}" th:text="${family}">Select family</option>
             </select>
-            <small class="bg-danger text-light rounded" style="font-size: 15px"  th:if="${#fields.hasErrors('family')}" th:errors="*{family}">Family error message</small>
-        </div>
+            <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('family')}" th:errors="*{family}">Family error message</small>
 
-        <div class="form-group">
-            <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="description" class="h4 mb-2">Description</label>
+            <div class="">
+                <label for="description" class="">Description</label>
             </div>
-            <textarea type="description" class="form-control" id="description" name="description" th:value="*{description}" placeholder="Enter description" required></textarea>
-            <small class="bg-danger text-light rounded" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Email error message</small>
-        </div>
+            <textarea type="description" class="" id="description" name="description" th:value="*{description}" placeholder="Enter description" required></textarea>
+            <small class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Email error message</small>
 
-        <div class="form-group">
-            <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="cultivation" class="h4 mb-2">Cultivation</label>
+            <div class="">
+                <label for="cultivation" class="">Cultivation</label>
             </div>
-            <textarea type="cultivation" class="form-control" id="cultivation" name="cultivation" th:value="*{cultivation}" placeholder="Enter cultivation" required></textarea>
-            <small class="bg-danger text-light rounded" th:if="${#fields.hasErrors('cultivation')}" th:errors="*{cultivation}">Email error message</small>
-        </div>
+            <textarea type="cultivation" class="" id="cultivation" name="cultivation" th:value="*{cultivation}" placeholder="Enter cultivation" required></textarea>
+            <small class="error" th:if="${#fields.hasErrors('cultivation')}" th:errors="*{cultivation}">Email error message</small>
 
-        <div class="form-group">
-            <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="coldHardiness" class="h4 mb-2">Cold hardiness</label>
+            <div class="">
+                <label for="coldHardiness" class="">Cold hardiness</label>
             </div>
-            <textarea type="coldHardiness" class="form-control" id="coldHardiness" name="coldHardiness" th:value="*{coldHardiness}" placeholder="Enter cold hardiness" required></textarea>
-            <small class="bg-danger text-light rounded" th:if="${#fields.hasErrors('coldHardiness')}" th:errors="*{coldHardiness}">Email error message</small>
-        </div>
+            <textarea type="coldHardiness" class="" id="coldHardiness" name="coldHardiness" th:value="*{coldHardiness}" placeholder="Enter cold hardiness" required></textarea>
+            <small class="error" th:if="${#fields.hasErrors('coldHardiness')}" th:errors="*{coldHardiness}">Email error message</small>
 
-        <div class="form-group">
-            <div class="label-holder textCol d-flex justify-content-center">
-                <label for="imageURL" class="h4 mb-2 text-white">Image URL</label>
+            <div class="">
+                <label for="imageURL" class="">Image URL</label>
             </div>
 
-            <input type="text" class="form-control" id="imageURL" name="imageURL" th:value="*{imageURL}" placeholder="Enter image URL" required/>
-            <small class="bg-danger text-light rounded" style="font-size: 15px"  th:if="${#fields.hasErrors('imageURL')}" th:errors="*{imageURL}">Name error message</small>
-        </div>
+            <input type="text" class="" id="imageURL" name="imageURL" th:value="*{imageURL}" placeholder="Enter image URL" required/>
+            <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('imageURL')}" th:errors="*{imageURL}">Name error message</small>
 
 
-        <div class="button-holder d-flex justify-content-center">
-            <button type="submit" value="Register">Add species</button>
-        </div>
+            <button class="submit-btn" type="submit" value="Register">Add species</button>
 
     </form>
 </main>

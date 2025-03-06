@@ -5,23 +5,23 @@
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
-    <form class="login" th:action="@{/auth/login}" th:method="POST" th:object="${userLogin}">
+    <form class="form-submit" th:action="@{/auth/login}" th:method="POST" th:object="${userLogin}">
 
         <h1 class=""><span class="">Login</span></h1>
         <div class="error" th:if="${error}" th:text="${error}">Error</div>
             <div class="">
                 <label for="username" class="">Username</label>
             </div>
-            <input type="text" class="" id="username" name="username"/>
+            <input type="text" class="" id="username" name="username" placeholder="Enter username"/>
 
 
 
             <div class="">
                 <label for="password" class="">Password</label>
             </div>
-            <input type="password" class="" id="password" name="password"/>
+            <input type="password" class="" id="password" name="password" placeholder="Enter password"/>
 
-            <button class="loginBtn" type="submit">Log In</button>
+            <button class="submit-btn" type="submit">Log In</button>
 
     </form>
 </main>

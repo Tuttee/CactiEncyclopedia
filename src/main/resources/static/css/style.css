@@ -13,13 +13,14 @@ main {
 }
 
 nav {
-    font-family: 'Jokerman', sans-serif;
+    font-family: 'Inder', sans-serif;
     background-image: url("/images/cacti_cartoon.png");
     background-position: center;
     background-size: cover;
-    height: 140px;
+    height: fit-content;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     /*gap: 20px;*/
 }
 
@@ -36,12 +37,15 @@ nav > div {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 nav ul {
     display: flex;
     align-content: space-evenly;
+    /*justify-content: center;*/
     flex-direction: row;
+    flex-wrap: wrap;
     margin: 0;
 }
 
@@ -56,6 +60,7 @@ nav a {
     padding: 5px 15px;
     border: 1px solid rgba(20, 81, 35, 0.25);
     border-radius: 25px;
+    /*transition: 3s ease-in-out;*/
 }
 
 nav a:hover {
@@ -64,6 +69,7 @@ nav a:hover {
     text-decoration: none;
     text-underline: none;
     color: whitesmoke;
+
 }
 
 .nav-admin {
@@ -77,6 +83,7 @@ nav a:hover {
     margin: 0;
     align-content: center;
     border: 0;
+    /*height: 140px;*/
 }
 
 .logo img {
@@ -139,7 +146,7 @@ body {
     /*margin-bottom: 5rem;*/
 }
 
-form.login {
+form.form-submit {
     display: flex;
     flex-direction: column;
     max-width: 705px;
@@ -156,19 +163,29 @@ form h1 {
     text-align: center;
 }
 
-form.login label {
+form.form-submit label {
     margin-top: 65px;
     font-size: 20px;
 }
 
-input {
-    height: 39px;
+input, select, textarea {
     background-color: #FCF8EE;
     border: 1px solid #8A9964;
     border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 16px;
 }
 
-input::placeholder {
+input, select {
+    height: 39px;
+}
+
+textarea {
+    height: 100px;
+}
+
+input::placeholder, select .placeholder {
     color: #5A5A5A;
 }
 
@@ -178,7 +195,7 @@ input::placeholder {
     text-align: right;
 }
 
-.loginBtn {
+.submit-btn {
     background-color: #8A9964;
     color: #faefd6;
     font-size: 24px;
@@ -186,7 +203,7 @@ input::placeholder {
     border-radius: 8px;
     border: 0;
     margin-top: 80px;
-    max-width: 120px;
+    max-width: fit-content;
     align-self: center;
 }
 

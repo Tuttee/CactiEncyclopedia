@@ -28,6 +28,22 @@
 
     </div>
 
+    <div class="questions">
+        <div class="question" th:if="${#lists.size(species.questions)>0}" th:each="question : ${species.questions}">
+            <h5 th:text="${question.askedBy.username}"></h5>
+            <p th:text="${question.content}"></p>
+            <p class="date" th:text="${#temporals.format(question.askedOn, 'yyyy MMM dd') + ' at ' + #temporals.format(question.askedOn, 'HH:mm')}"></p>
+        </div>
+        <div class="question" th:unless="${#lists.size(species.questions)>0}">
+            <p class="">No questions are present. Be the first one to ask a question. Registration needed.</p>
+        </div>
+        <form th:method="POST" th:action="@{/question/{id}(id=${species.id})}" th:object="${addQuestion}">
+            <label for="content">Add Question</label>
+            <textarea id="content" th:field="*{content}" placeholder="Enter your question"></textarea>
+            <input class="submit-btn" type="submit" value="Post Question"/>
+        </form>
+    </div>
+
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>
 </body>

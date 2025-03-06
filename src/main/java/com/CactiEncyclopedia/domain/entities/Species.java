@@ -1,13 +1,14 @@
 package com.CactiEncyclopedia.domain.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Locale;
 
 @Entity
 @Table
@@ -38,6 +39,11 @@ public class Species extends BaseEntity {
     private String coldHardiness;
 
     @Column
+    private LocalDate addedOn;
+
+    @Column
     private boolean approved = false;
 
+    @OneToMany(mappedBy = "species")
+    private List<Question> questions;
 }
