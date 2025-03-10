@@ -12,18 +12,18 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name = "families")
+@Table(name = "genera")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Family extends BaseEntity {
+public class Genera extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String imageURL;
 
-    @OneToMany(mappedBy = "family")
+    @OneToMany(mappedBy = "genera")
     private List<Species> speciesList;
 }

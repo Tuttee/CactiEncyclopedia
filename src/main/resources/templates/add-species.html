@@ -16,14 +16,14 @@
             <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error message</small>
 
             <div class="">
-                <label for="family" class="">Family</label>
+                <label for="genera" class="">Genera</label>
             </div>
 
-            <select type="text" class="" id="family" name="family" th:value="*{family}" required>
-                <option class="placeholder" value="">Select family</option>
-                <option th:each="family : ${familyList}" th:value="${family}" th:text="${family}">Select family</option>
+            <select type="text" class="" id="genera" name="genera" th:value="*{genera}" required>
+                <option class="placeholder" value="">Select genera</option>
+                <option th:each="genera : ${generaList}" th:value="${genera}" th:text="${genera}">Select genera</option>
             </select>
-            <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('family')}" th:errors="*{family}">Family error message</small>
+            <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('genera')}" th:errors="*{genera}">Genera error message</small>
 
             <div class="">
                 <label for="description" class="">Description</label>

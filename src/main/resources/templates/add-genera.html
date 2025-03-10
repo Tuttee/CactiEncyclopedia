@@ -6,8 +6,8 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
-    <form class="form-submit" th:method="POST" th:action="@{/catalog/add-family}" th:object="${addFamily}">
-        <h1 class="text-center mt-2"><span class="">Add Family</span></h1>
+    <form class="form-submit" th:method="POST" th:action="@{/catalog/add-genera}" th:object="${addGenera}">
+        <h1 class="text-center mt-2"><span class="">Add Genera</span></h1>
             <div class="">
                 <label for="name" class="">Species Name</label>
             </div>
@@ -23,7 +23,7 @@
             <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('imageURL')}" th:errors="*{imageURL}">Name error message</small>
 
 
-            <button class="submit-btn" type="submit" value="Register">Add family</button>
+            <button class="submit-btn" type="submit" value="Register">Add genera</button>
 
     </form>
 </main>

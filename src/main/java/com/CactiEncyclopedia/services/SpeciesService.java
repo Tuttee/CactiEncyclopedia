@@ -18,10 +18,10 @@ public class SpeciesService {
     private final SpeciesRepository speciesRepository;
     private final UserService userService;
     private final ModelMapper modelMapper;
-    private final FamilyService familyService;
+    private final GeneraService generaService;
 
-    public List<Species> getApprovedSpeciesByFamily(String family) {
-        return this.speciesRepository.findAllByFamily_NameAndApprovedIsTrue(family);
+    public List<Species> getApprovedSpeciesByGenera(String genera) {
+        return this.speciesRepository.findAllByGenera_NameAndApprovedIsTrue(genera);
     }
 
     public Species getSpeciesById(UUID id) {
@@ -42,7 +42,7 @@ public class SpeciesService {
         Species species = modelMapper.map(addSpeciesBindingModel, Species.class);
 
         species.setCreatedBy(user);
-        species.setFamily(familyService.getFamilyByName(addSpeciesBindingModel.getFamily()));
+        species.setGenera(generaService.getGeneraByName(addSpeciesBindingModel.getGenera()));
         species.setAddedOn(LocalDate.now());
 
         userService.saveSpeciesToUser(user, species);

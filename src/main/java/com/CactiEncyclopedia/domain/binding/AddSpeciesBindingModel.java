@@ -18,7 +18,7 @@ public class AddSpeciesBindingModel {
     private String name;
 
     @NotBlank(message = "Selecting a family is mandatory!")
-    private String family;
+    private String genera;
 
     @NotBlank(message = "Please enter a valid URL!")
     @URL(message = "Please enter a valid URL!")

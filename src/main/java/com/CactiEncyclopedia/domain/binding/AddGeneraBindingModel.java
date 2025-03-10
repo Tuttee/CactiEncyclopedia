@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.URL;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddFamilyBindingModel {
+public class AddGeneraBindingModel {
     @Size(min = 5, max = 200, message = "Species name must be between 5 and 200 characters!")
     private String name;
 

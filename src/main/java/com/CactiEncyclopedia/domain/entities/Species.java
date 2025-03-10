@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 
 @Entity
 @Table
@@ -27,7 +26,7 @@ public class Species extends BaseEntity {
     private User createdBy;
 
     @ManyToOne(optional = false)
-    private Family family;
+    private Genera genera;
 
     @Column(nullable = false, columnDefinition = "TEXT", length = 1000)
     private String description;

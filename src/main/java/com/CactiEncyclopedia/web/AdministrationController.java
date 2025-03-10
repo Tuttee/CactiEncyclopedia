@@ -6,6 +6,8 @@ import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.SpeciesService;
 import com.CactiEncyclopedia.services.UserService;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,18 +18,14 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/administration")
+@RequiredArgsConstructor
 public class AdministrationController extends BaseController {
 
     private final SpeciesService speciesService;
     private final UserService userService;
 
-    public AdministrationController(SpeciesService speciesService, UserService userService) {
-        super();
-        this.speciesService = speciesService;
-        this.userService = userService;
-    }
-
     @GetMapping("/species")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ModelAndView getSpeciesAdministration() {
         List<Species> approvedSpecies = speciesService.getAllApproved();
         List<Species> unapprovedSpecies = speciesService.getAllUnapproved();
@@ -40,6 +38,7 @@ public class AdministrationController extends BaseController {
     }
 
     @PatchMapping("/species/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ModelAndView approveSpecies(@PathVariable UUID id) {
         speciesService.approve(id);
 
@@ -47,6 +46,7 @@ public class AdministrationController extends BaseController {
     }
 
     @DeleteMapping("/species/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ModelAndView deleteSpecies(@PathVariable UUID id) {
         speciesService.delete(id);
 
@@ -54,6 +54,7 @@ public class AdministrationController extends BaseController {
     }
 
     @GetMapping("/users")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ModelAndView getUserAdministration(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         List<UserDetailsViewModel> users = userService.getAllUsersExceptLogged(authenticationMetadata.getUserId());
 
@@ -66,6 +67,7 @@ public class AdministrationController extends BaseController {
     }
 
     @PatchMapping("/users/{username}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ModelAndView updateUser(@PathVariable String username, HttpSession session) {
         userService.updateUserRole(username);
         return super.redirect("/administration/users");

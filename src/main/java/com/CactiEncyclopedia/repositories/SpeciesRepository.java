@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Repository
 public interface SpeciesRepository extends JpaRepository<Species, UUID> {
-    List<Species> findAllByFamily_NameAndApprovedIsTrue(String family);
+    List<Species> findAllByGenera_NameAndApprovedIsTrue(String family);
 
     List<Species> findAllByApprovedIsTrue();
 

@@ -1,14 +1,13 @@
 package com.CactiEncyclopedia.web;
 
-import com.CactiEncyclopedia.domain.binding.AddFamilyBindingModel;
+import com.CactiEncyclopedia.domain.binding.AddGeneraBindingModel;
 import com.CactiEncyclopedia.domain.binding.AddQuestionBindingModel;
 import com.CactiEncyclopedia.domain.binding.AddSpeciesBindingModel;
-import com.CactiEncyclopedia.domain.entities.Family;
+import com.CactiEncyclopedia.domain.entities.Genera;
 import com.CactiEncyclopedia.domain.entities.Species;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
-import com.CactiEncyclopedia.services.FamilyService;
+import com.CactiEncyclopedia.services.GeneraService;
 import com.CactiEncyclopedia.services.SpeciesService;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,54 +22,56 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/catalog")
 public class CatalogController extends BaseController {
-    private final FamilyService familyService;
+    private final GeneraService generaService;
     private final SpeciesService speciesService;
 
-    public CatalogController(FamilyService familyService, SpeciesService speciesService) {
+    public CatalogController(GeneraService generaService, SpeciesService speciesService) {
         super();
-        this.familyService = familyService;
+        this.generaService = generaService;
         this.speciesService = speciesService;
     }
 
     @GetMapping
     public ModelAndView catalog() {
-        List<Family> allFamilies = familyService.getAllFamiliesWithSpecies();
+        List<Genera> allGenera = generaService.getAllGeneraWithSpecies();
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("families", allFamilies);
+        modelAndView.addObject("allGenera", allGenera);
 
         return super.view("catalog", modelAndView);
     }
 
-    @GetMapping("/{familyName}")
-    public ModelAndView getFamily(@PathVariable String familyName) {
-        List<Species> speciesByFamily = speciesService.getApprovedSpeciesByFamily(familyName);
+    @GetMapping("/{generaName}")
+    public ModelAndView getGenera(@PathVariable String generaName) {
+        List<Species> speciesByGenera = speciesService.getApprovedSpeciesByGenera(generaName);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("species", speciesByFamily);
+        modelAndView.addObject("species", speciesByGenera);
 
         return super.view("species", modelAndView);
     }
 
-    @GetMapping("/add-family")
-    public ModelAndView getAddFamily() {
+    @GetMapping("/add-genera")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ModelAndView getAddGenera() {
 
-        return super.view("add-family");
+        return super.view("add-genera");
     }
 
-    @PostMapping("/add-family")
-    public ModelAndView postAddFamily(@Valid @ModelAttribute("addFamily")AddFamilyBindingModel addFamilyBindingModel,
+    @PostMapping("/add-genera")
+    @PreAuthorize("hasAnyRole(ADMIN')")
+    public ModelAndView postAddGenera(@Valid @ModelAttribute("addGenera") AddGeneraBindingModel addGeneraBindingModel,
                                       BindingResult bindingResult,
                                       ModelAndView modelAndView) {
 
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("addFamily", addFamilyBindingModel);
-            return super.view("add-family", modelAndView);
+            modelAndView.addObject("addGenera", addGeneraBindingModel);
+            return super.view("add-genera", modelAndView);
         }
 
-        familyService.addFamily(addFamilyBindingModel);
+        generaService.addGenera(addGeneraBindingModel);
 
-        return super.view("add-family");
+        return super.view("add-genera");
     }
 
     @GetMapping("/all")
@@ -95,25 +96,25 @@ public class CatalogController extends BaseController {
 
     @GetMapping("/species/add")
     public ModelAndView getAddSpecies() {
-        List<String> familyList = familyService.getAllFamiliesList();
+        List<String> GeneraList = generaService.getAllGeneraNamesList();
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("familyList", familyList);
+        modelAndView.addObject("generaList", GeneraList);
 
         return super.view("add-species", modelAndView);
     }
 
     @PostMapping("/species/add")
-//    @PreAuthorize("hasAnyRole('USER', 'ADMIN')") - better to use
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ModelAndView postAddSpecies(@Valid @ModelAttribute("addSpecies")AddSpeciesBindingModel addSpeciesBindingModel,
                                        BindingResult bindingResult,
                                        ModelAndView modelAndView,
                                        @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
         if (bindingResult.hasErrors()) {
-            List<String> familyList = familyService.getAllFamiliesList();
+            List<String> generaList = generaService.getAllGeneraNamesList();
             modelAndView.addObject("addSpecies", addSpeciesBindingModel);
-            modelAndView.addObject("familyList", familyList);
+            modelAndView.addObject("generaList", generaList);
             return super.view("add-species", modelAndView);
         }
 
@@ -127,9 +128,9 @@ public class CatalogController extends BaseController {
         return new AddSpeciesBindingModel();
     }
 
-    @ModelAttribute("addFamily")
-    public AddFamilyBindingModel getAddFamilyBindingModel() {
-        return new AddFamilyBindingModel();
+    @ModelAttribute("addGenera")
+    public AddGeneraBindingModel getAddGeneraBindingModel() {
+        return new AddGeneraBindingModel();
     }
 
     @ModelAttribute("addQuestion")

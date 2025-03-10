@@ -4,6 +4,7 @@ import com.CactiEncyclopedia.domain.binding.AddQuestionBindingModel;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.QuestionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ public class QuestionController extends BaseController {
     private final QuestionService questionService;
 
     @PostMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ModelAndView postQuestion(AddQuestionBindingModel addQuestionBindingModel,
                                      @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata,
                                      @PathVariable UUID id) {
