@@ -6,8 +6,8 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
-    <h2 class="text-white">Users Administration</h2>
-    <table class="text-white table table-responsive">
+    <h2 class="">Users Administration</h2>
+    <table class="table table-responsive">
         <thead>
             <tr>
                 <th>First name</th>
@@ -19,10 +19,10 @@
         </thead>
         <tbody>
             <tr th:unless="${users.size() == 0}" th:each="user : ${users}">
-                <td class="text-white" th:text="${user.firstName}">FirstName</td>
-                <td class="text-white" th:text="${user.lastName}">LastName</td>
-                <td class="text-white" th:text="${user.username}">username</td>
-                <td class="text-white" th:text="${user.email}">email</td>
+                <td class="" th:text="${user.firstName}">FirstName</td>
+                <td class="" th:text="${user.lastName}">LastName</td>
+                <td class="" th:text="${user.username}">username</td>
+                <td class="" th:text="${user.email}">email</td>
                 <td class="text-danger">
                     <form th:if="${user.role.label == 'Admin'}" th:method="PATCH" th:action="@{/administration/users/{username}(username=${user.username})}">
                         <button type="submit" class="btn btn-danger">Demote to User</button>

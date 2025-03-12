@@ -1,8 +1,8 @@
 package com.CactiEncyclopedia.web;
 
 
-import com.CactiEncyclopedia.domain.binding.UserLoginBindingModel;
-import com.CactiEncyclopedia.domain.binding.UserRegisterBindingModel;
+import com.CactiEncyclopedia.domain.binding.UserRegisterDto;
+import com.CactiEncyclopedia.exception.UsernameAlreadyExistsException;
 import com.CactiEncyclopedia.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,16 +23,16 @@ public class AuthController extends BaseController {
     }
 
     @PostMapping("/register")
-    public ModelAndView postRegister(@Valid @ModelAttribute("userRegister") UserRegisterBindingModel userRegisterBindingModel,
+    public ModelAndView postRegister(@Valid @ModelAttribute("userRegister") UserRegisterDto userRegisterDto,
                                      BindingResult bindingResult,
                                      ModelAndView modelAndView) {
 
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("userRegister", userRegisterBindingModel);
+            modelAndView.addObject("userRegister", userRegisterDto);
             return super.view("register", modelAndView);
         }
 
-        this.userService.register(userRegisterBindingModel);
+        this.userService.register(userRegisterDto);
 
         return super.view("login");
     }
@@ -41,8 +41,6 @@ public class AuthController extends BaseController {
     public ModelAndView getLogin(@RequestParam(value = "error", required = false) String errorParam) {
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("userLogin", new UserLoginBindingModel());
-
         if (errorParam != null) {
             modelAndView.addObject("error", "Incorrect username or password!");
         }
@@ -51,12 +49,7 @@ public class AuthController extends BaseController {
     }
 
     @ModelAttribute("userRegister")
-    public UserRegisterBindingModel userRegisterBindingModel() {
-        return new UserRegisterBindingModel();
-    }
-
-    @ModelAttribute("userLogin")
-    public UserLoginBindingModel userLoginBindingModel() {
-        return new UserLoginBindingModel();
+    public UserRegisterDto userRegisterBindingModel() {
+        return new UserRegisterDto();
     }
 }

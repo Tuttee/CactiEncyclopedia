@@ -1,14 +1,20 @@
 package com.CactiEncyclopedia.web;
 
-import com.CactiEncyclopedia.domain.binding.AddGeneraBindingModel;
-import com.CactiEncyclopedia.domain.binding.AddQuestionBindingModel;
-import com.CactiEncyclopedia.domain.binding.AddSpeciesBindingModel;
+import com.CactiEncyclopedia.client.FactClient;
+import com.CactiEncyclopedia.domain.binding.AddGeneraDto;
+import com.CactiEncyclopedia.domain.binding.AddQuestionDto;
+import com.CactiEncyclopedia.domain.binding.AddSpeciesDto;
+import com.CactiEncyclopedia.domain.binding.FactDto;
 import com.CactiEncyclopedia.domain.entities.Genera;
 import com.CactiEncyclopedia.domain.entities.Species;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
+import com.CactiEncyclopedia.services.FactService;
 import com.CactiEncyclopedia.services.GeneraService;
 import com.CactiEncyclopedia.services.SpeciesService;
+import feign.RetryableException;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,24 +25,31 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Controller
 @RequestMapping("/catalog")
+@RequiredArgsConstructor
 public class CatalogController extends BaseController {
     private final GeneraService generaService;
     private final SpeciesService speciesService;
-
-    public CatalogController(GeneraService generaService, SpeciesService speciesService) {
-        super();
-        this.generaService = generaService;
-        this.speciesService = speciesService;
-    }
+    private final FactClient factClient;
 
     @GetMapping
     public ModelAndView catalog() {
         List<Genera> allGenera = generaService.getAllGeneraWithSpecies();
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("allGenera", allGenera);
+
+        try {
+            FactDto body = factClient.randomFact().getBody();
+
+            if (body != null) {
+                modelAndView.addObject("fact", body.getContent());
+            }
+        } catch (RetryableException e) {
+            log.error(e.getMessage());
+        }
+
 
         return super.view("catalog", modelAndView);
     }
@@ -59,17 +72,17 @@ public class CatalogController extends BaseController {
     }
 
     @PostMapping("/add-genera")
-    @PreAuthorize("hasAnyRole(ADMIN')")
-    public ModelAndView postAddGenera(@Valid @ModelAttribute("addGenera") AddGeneraBindingModel addGeneraBindingModel,
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ModelAndView postAddGenera(@Valid @ModelAttribute("addGenera") AddGeneraDto addGeneraDto,
                                       BindingResult bindingResult,
                                       ModelAndView modelAndView) {
 
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("addGenera", addGeneraBindingModel);
+            modelAndView.addObject("addGenera", addGeneraDto);
             return super.view("add-genera", modelAndView);
         }
 
-        generaService.addGenera(addGeneraBindingModel);
+        generaService.addGenera(addGeneraDto);
 
         return super.view("add-genera");
     }
@@ -80,6 +93,7 @@ public class CatalogController extends BaseController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("species", allSpecies);
+        modelAndView.addObject("all", true);
 
         return super.view("species", modelAndView);
     }
@@ -106,35 +120,35 @@ public class CatalogController extends BaseController {
 
     @PostMapping("/species/add")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ModelAndView postAddSpecies(@Valid @ModelAttribute("addSpecies")AddSpeciesBindingModel addSpeciesBindingModel,
+    public ModelAndView postAddSpecies(@Valid @ModelAttribute("addSpecies") AddSpeciesDto addSpeciesDto,
                                        BindingResult bindingResult,
                                        ModelAndView modelAndView,
                                        @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
         if (bindingResult.hasErrors()) {
             List<String> generaList = generaService.getAllGeneraNamesList();
-            modelAndView.addObject("addSpecies", addSpeciesBindingModel);
+            modelAndView.addObject("addSpecies", addSpeciesDto);
             modelAndView.addObject("generaList", generaList);
             return super.view("add-species", modelAndView);
         }
 
-        speciesService.addSpecies(addSpeciesBindingModel, authenticationMetadata.getUserId());
+        speciesService.addSpecies(addSpeciesDto, authenticationMetadata.getUserId());
 
         return super.view("thank-you");
     }
 
     @ModelAttribute("addSpecies")
-    public AddSpeciesBindingModel getAddSpeciesBindingModel() {
-        return new AddSpeciesBindingModel();
+    public AddSpeciesDto getAddSpeciesBindingModel() {
+        return new AddSpeciesDto();
     }
 
     @ModelAttribute("addGenera")
-    public AddGeneraBindingModel getAddGeneraBindingModel() {
-        return new AddGeneraBindingModel();
+    public AddGeneraDto getAddGeneraBindingModel() {
+        return new AddGeneraDto();
     }
 
     @ModelAttribute("addQuestion")
-    public AddQuestionBindingModel getAddQuestionBindingModel() {
-        return new AddQuestionBindingModel();
+    public AddQuestionDto getAddQuestionBindingModel() {
+        return new AddQuestionDto();
     }
 }

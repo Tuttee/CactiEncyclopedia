@@ -1,6 +1,6 @@
 package com.CactiEncyclopedia.services;
 
-import com.CactiEncyclopedia.domain.binding.AddQuestionBindingModel;
+import com.CactiEncyclopedia.domain.binding.AddQuestionDto;
 import com.CactiEncyclopedia.domain.entities.Question;
 import com.CactiEncyclopedia.repositories.QuestionRepository;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
@@ -17,7 +17,7 @@ public class QuestionService {
     private final SpeciesService speciesService;
     private final UserService userService;
 
-    public void addQuestion(AddQuestionBindingModel questionAdd, UUID speciesId, AuthenticationMetadata authenticationMetadata) {
+    public void addQuestion(AddQuestionDto questionAdd, UUID speciesId, AuthenticationMetadata authenticationMetadata) {
         Question question = new Question();
 
         question.setContent(questionAdd.getContent());

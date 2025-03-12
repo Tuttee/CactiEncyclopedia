@@ -6,8 +6,8 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
-    <h2 class="text-white">New Species</h2>
-    <table class="text-white table table-responsive">
+    <h2 class="">New Species</h2>
+    <table class="table table-responsive">
         <thead>
             <tr>
                 <th>Species</th>
@@ -18,7 +18,7 @@
         <tbody>
             <tr th:unless="${unapprovedSpecies.size() == 0}" th:each="species : ${unapprovedSpecies}">
                 <td><a th:text="${species.name}" th:href="@{/catalog/species/{id}(id=${species.id})}"></a></td>
-                <td class="text-white" th:text="${species.createdBy.username}">createdBy</td>
+                <td class="" th:text="${species.createdBy.username}">createdBy</td>
                 <td class="text-danger">
                     <form th:method="PATCH" th:action="@{/administration/species/{id}(id=${species.id})}">
                         <button type="submit" class="btn btn-success">Approve</button>
@@ -34,8 +34,8 @@
         </tbody>
     </table>
 
-    <h2 class="text-white">Approved Species</h2>
-    <table class="text-white table table-responsive">
+    <h2 class="">Approved Species</h2>
+    <table class="table table-responsive">
         <thead>
         <tr>
             <th>Species</th>
@@ -46,7 +46,7 @@
         <tbody>
         <tr th:unless="${approvedSpecies.size() == 0}" th:each="species : ${approvedSpecies}">
             <td><a th:text="${species.name}" th:href="@{/catalog/species/{id}(id=${species.id})}"></a></td>
-            <td class="text-white" th:text="${species.createdBy.username}">createdBy</td>
+            <td class="" th:text="${species.createdBy.username}">createdBy</td>
             <td class="text-danger">
                 <form th:method="DELETE" th:action="@{/administration/species/{id}(id=${species.id})}">
                     <button type="submit" class="btn btn-danger">Delete</button>

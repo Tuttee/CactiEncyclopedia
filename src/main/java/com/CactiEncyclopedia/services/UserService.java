@@ -1,7 +1,6 @@
 package com.CactiEncyclopedia.services;
 
-import com.CactiEncyclopedia.domain.binding.UserLoginBindingModel;
-import com.CactiEncyclopedia.domain.binding.UserRegisterBindingModel;
+import com.CactiEncyclopedia.domain.binding.UserRegisterDto;
 import com.CactiEncyclopedia.domain.entities.Species;
 import com.CactiEncyclopedia.domain.entities.User;
 import com.CactiEncyclopedia.domain.view.UserDetailsViewModel;
@@ -36,22 +35,13 @@ public class UserService implements UserDetailsService {
         return this.userRepository.existsByEmail(email);
     }
 
-    public boolean validateLogin(UserLoginBindingModel userLoginBindingModel) {
-        Optional<User> byUsername = this.userRepository.findByUsername(userLoginBindingModel.getUsername());
-
-        if (byUsername.isPresent() && passwordEncoder.matches(userLoginBindingModel.getPassword(), byUsername.get().getPassword())) {
-            return true;
-        }
-        return false;
-    }
-
-    public void register(UserRegisterBindingModel userRegisterBindingModel) {
+    public void register(UserRegisterDto userRegisterDto) {
         User user = new User();
-        user.setUsername(userRegisterBindingModel.getUsername());
-        user.setPassword(passwordEncoder.encode(userRegisterBindingModel.getPassword()));
-        user.setEmail(userRegisterBindingModel.getEmail());
-        user.setFirstName(userRegisterBindingModel.getFirstName());
-        user.setLastName(userRegisterBindingModel.getLastName());
+        user.setUsername(userRegisterDto.getUsername());
+        user.setPassword(passwordEncoder.encode(userRegisterDto.getPassword()));
+        user.setEmail(userRegisterDto.getEmail());
+        user.setFirstName(userRegisterDto.getFirstName());
+        user.setLastName(userRegisterDto.getLastName());
         user.setRole(isDbInit() ? roleService.getUserRole() : roleService.getAdminRole());
 
         this.userRepository.saveAndFlush(user);

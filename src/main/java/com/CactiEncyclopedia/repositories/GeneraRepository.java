@@ -13,6 +13,6 @@ import java.util.UUID;
 public interface GeneraRepository extends JpaRepository<Genera, UUID> {
     Optional<Genera> findByName(String family);
 
-    @Query("select f from Genera f cross join Species s where size(f.speciesList) > 0 and s.approved=true")
+    @Query("select g from Genera g cross join Species s where size(g.speciesList) > 0 and s.approved=true order by g.name asc")
     List<Genera> findAllBySpeciesCountMoreThan0();
 }

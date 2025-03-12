@@ -5,13 +5,22 @@
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
+    <h1 class="text-center mt-2"><span class="">Genera Catalogue</span></h1>
 
-    <div class="container">
-        <div class="card catalog-card w-15" th:each="genera : ${allGenera}">
-            <a th:href="@{/catalog/{generaName}(generaName=${genera.name})}">
-                <img class="card-img-top" th:src="${genera.imageURL}" alt="Card image cap"/>
-                <div><strong th:text="${genera.name}"></strong></div>
-            </a>
+    <div class='catalog'>
+        <div class="card-container">
+            <div class="card-cacti " th:each="genera : ${allGenera}">
+                <a th:href="@{/catalog/{generaName}(generaName=${genera.name})}">
+                    <img th:src="${genera.imageURL}" alt="Card image cap"/>
+                    <div th:text="${genera.name}"></div>
+                </a>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="did-you-know" th:if="${fact}">
+                <h5 class="text-center">Did You Know?</h5>
+                <p class="text-center" th:text="${fact}"></p>
+            </div>
         </div>
     </div>
 

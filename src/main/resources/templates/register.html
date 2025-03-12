@@ -12,7 +12,7 @@
                 <label for="username" class="">Username</label>
             </div>
             <input type="text" class="" id="username" name="username" th:value="*{username}" placeholder="Enter username" required/>
-            <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error message</small>
+            <small class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error message</small>
 
             <div class="">
                 <label for="email" class="">Email</label>

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inder&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 @font-face {
     font-family: 'Jokerman';
@@ -8,8 +9,8 @@
 
 main {
     font: 14px Inder, sans-serif;
+    margin-top: 150px;
     margin-bottom: 150px;
-
 }
 
 nav {
@@ -22,6 +23,9 @@ nav {
     flex-direction: row;
     flex-wrap: wrap;
     /*gap: 20px;*/
+    position: fixed;
+    width: 100vw;
+    top: 0;
 }
 
 nav > div {
@@ -51,7 +55,7 @@ nav ul {
 
 nav a {
     display: flex;
-    font-size: 20px;
+    font-size: 1.2em;
     color: white;
     text-shadow: 1px 0 5px black;
     margin-inline: 15px;
@@ -60,15 +64,17 @@ nav a {
     padding: 5px 15px;
     border: 1px solid rgba(20, 81, 35, 0.25);
     border-radius: 25px;
-    /*transition: 3s ease-in-out;*/
+    transition: 0.2s ease-in-out;
 }
 
 nav a:hover {
     /*box-shadow: black 2px ;*/
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0 18px 36px -18px inset;
     text-decoration: none;
     text-underline: none;
     color: whitesmoke;
+    transition: 0.2s ease-in-out;
+
 
 }
 
@@ -98,9 +104,8 @@ footer {
     background-position: center;
     bottom: 0;
     width: 100%;
-    /*height: 50px;*/
     text-align: center;
-    height: 140px;
+    height: 50px;
     align-content: center;
     position: fixed;
     clear: both;
@@ -108,9 +113,9 @@ footer {
 
 footer p {
     display: inline;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 30px 60px -12px;
     margin-bottom: 0;
-    font: 20px 'Jokerman';
+    font: 1em 'Jokerman';
     color: whitesmoke;
     background-color: rgba(28, 116, 48, 0.25);
     backdrop-filter: blur(5px);
@@ -150,22 +155,25 @@ form.form-submit {
     display: flex;
     flex-direction: column;
     max-width: 705px;
-    margin: 80px auto 0;
+    margin: 20px auto 0;
     padding: 0 70px;
     overflow: hidden;
     color: black;
 }
 
-form h1 {
+h1 {
     margin-top: 16px;
     padding-bottom: 40px;
-    border-bottom: 1px solid #8A9964;
     text-align: center;
 }
 
+form h1 {
+    border-bottom: 1px solid #8A9964;
+}
+
 form.form-submit label {
-    margin-top: 65px;
-    font-size: 20px;
+    margin-top: 40px;
+    font-size: 1.5em;
 }
 
 input, select, textarea {
@@ -174,7 +182,7 @@ input, select, textarea {
     border-radius: 8px;
     padding-left: 10px;
     padding-right: 10px;
-    font-size: 16px;
+    font-size: 1.2em;
 }
 
 input, select {
@@ -190,7 +198,7 @@ input::placeholder, select .placeholder {
 }
 
 .error {
-    font-size: 12px;
+    font-size: 1em;
     color: #e22d2d;
     text-align: right;
 }
@@ -198,7 +206,7 @@ input::placeholder, select .placeholder {
 .submit-btn {
     background-color: #8A9964;
     color: #faefd6;
-    font-size: 24px;
+    font-size: 1.8em;
     padding: 12px 24px;
     border-radius: 8px;
     border: 0;
@@ -206,6 +214,93 @@ input::placeholder, select .placeholder {
     max-width: fit-content;
     align-self: center;
 }
+
+.catalog {
+    display: flex;
+    flex-direction: row;
+    max-width: fit-content;
+    gap: 50px;
+    margin-inline: auto;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: left;
+    margin-inline: auto;
+    max-width: 700px;
+    /*flex-grow: 1;*/
+    /*align-content: stretch;*/
+}
+
+.card-cacti {
+    display: flex;
+    overflow: hidden;
+    width: 200px;
+    min-height: 200px;
+    background-color: rgb(248, 233, 233);
+    border-radius: 20px;
+
+}
+
+.card-cacti a{
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: black;
+    transition: 0.2s ease-in-out;
+    flex-grow: 1;
+}
+
+.card-cacti:hover {
+    background-color: rgba(248, 233, 233, 0.65);
+    color: green;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 30px 60px -12px;
+    transition: 0.2s ease-in-out;
+
+}
+
+.card-cacti img {
+    height: 140px;
+    object-fit: cover;
+}
+
+.card-cacti div {
+    margin: 7px 12px;
+    font: 1em Inter;
+}
+
+.card-cacti div.genera {
+    margin: 7px 12px 10px;
+    font: 0.9em Inter;
+    color: #9a9a9a;
+    font-style: italic;
+    flex-grow: 1;
+    align-content: end;
+}
+
+.sidebar {
+    text-align: left;
+}
+
+.did-you-know {
+    background-color: #FCF8EE;
+    padding-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.sidebar h5 {
+    width: 200px;
+    background-color: #8A9964;
+    color: white;
+    padding: 15px;
+    font: 1em "Inter";
+    font-weight: 600;
+}
+
 
 /*textarea {*/
 /*    resize: none;*/

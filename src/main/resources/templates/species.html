@@ -6,11 +6,15 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
-    <div class="container">
-        <div class="card catalog-card w-15" th:each="specie : ${species}">
+    <h1 th:if="${all}" class="text-center mt-2"><span >Species Catalogue</span></h1>
+    <h1 th:unless="${all}" class="text-center mt-2"><span th:text="${species[0].genera.name + ' Catalogue'}">Species Catalogue</span></h1>
+    <div class="card-container">
+
+        <div class="card-cacti" th:each="specie : ${species}">
             <a th:href="@{/catalog/species/{id}(id=${specie.id})}">
-                <img class="card-img-top" th:src="${specie.imageURL}" alt="Card image cap"/>
-                <div><strong th:text="${specie.name}"></strong></div>
+                <img th:src="${specie.imageURL}" alt="Card image cap"/>
+                <div th:text="${specie.name}"></div>
+                <div class="genera" th:text="${'Genera: ' + specie.genera.name}"></div>
             </a>
         </div>
     </div>

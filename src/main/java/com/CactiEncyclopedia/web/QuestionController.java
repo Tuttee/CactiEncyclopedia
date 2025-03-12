@@ -1,6 +1,6 @@
 package com.CactiEncyclopedia.web;
 
-import com.CactiEncyclopedia.domain.binding.AddQuestionBindingModel;
+import com.CactiEncyclopedia.domain.binding.AddQuestionDto;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.QuestionService;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +22,10 @@ public class QuestionController extends BaseController {
 
     @PostMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ModelAndView postQuestion(AddQuestionBindingModel addQuestionBindingModel,
+    public ModelAndView postQuestion(AddQuestionDto addQuestionDto,
                                      @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata,
                                      @PathVariable UUID id) {
-        questionService.addQuestion(addQuestionBindingModel, id, authenticationMetadata);
+        questionService.addQuestion(addQuestionDto, id, authenticationMetadata);
         return super.redirect("/catalog/species/" + id);
     }
 }

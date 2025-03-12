@@ -19,6 +19,8 @@
             <a class="text-primary" th:href="@{/auth/register}">Register</a>
             now and check our deals.
         </h3>
+
+        <p th:if="${fact}" th:text="${fact}">Fact</p>
     </div>
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>

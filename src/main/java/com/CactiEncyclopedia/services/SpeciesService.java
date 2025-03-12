@@ -1,11 +1,12 @@
 package com.CactiEncyclopedia.services;
 
-import com.CactiEncyclopedia.domain.binding.AddSpeciesBindingModel;
+import com.CactiEncyclopedia.domain.binding.AddSpeciesDto;
 import com.CactiEncyclopedia.domain.entities.Species;
 import com.CactiEncyclopedia.domain.entities.User;
 import com.CactiEncyclopedia.repositories.SpeciesRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,6 +21,8 @@ public class SpeciesService {
     private final ModelMapper modelMapper;
     private final GeneraService generaService;
 
+    //to test with Cacheable
+    @Cacheable("species-by-genera")
     public List<Species> getApprovedSpeciesByGenera(String genera) {
         return this.speciesRepository.findAllByGenera_NameAndApprovedIsTrue(genera);
     }
@@ -28,21 +31,23 @@ public class SpeciesService {
         return this.speciesRepository.findById(id).orElseThrow();
     }
 
+    @Cacheable("all-species")
     public List<Species> getAllApproved() {
         return this.speciesRepository.findAllByApprovedIsTrue();
     }
+
 
     public List<Species> getAllUnapproved() {
         return this.speciesRepository.findAllByApprovedIsFalse();
     }
 
-    public void addSpecies(AddSpeciesBindingModel addSpeciesBindingModel, UUID userId) {
+    public void addSpecies(AddSpeciesDto addSpeciesDto, UUID userId) {
         User user = modelMapper.map(userService.getLoggedUserDetails(userId), User.class);
 
-        Species species = modelMapper.map(addSpeciesBindingModel, Species.class);
+        Species species = modelMapper.map(addSpeciesDto, Species.class);
 
         species.setCreatedBy(user);
-        species.setGenera(generaService.getGeneraByName(addSpeciesBindingModel.getGenera()));
+        species.setGenera(generaService.getGeneraByName(addSpeciesDto.getGenera()));
         species.setAddedOn(LocalDate.now());
 
         userService.saveSpeciesToUser(user, species);

@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @PasswordMatch(password = "password", confirmPassword = "confirmPassword")
-public class UserRegisterBindingModel {
+public class UserRegisterDto {
     @Size(min = 5, max = 20, message = "Username length must be between 5 and 20 characters!")
     @UsernameIsUnique
     private String username;

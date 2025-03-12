@@ -6,7 +6,9 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
-    <div class="container text-white">
+    <div class="container">
+        <h1>My Profile</h1>
+
         <div class="row">
             <div>Username: <strong th:text="${userProfile.username}"></strong></div>
         </div>
@@ -21,8 +23,8 @@
         </div>
     </div>
 
-    <h2 class="text-white">Added Species</h2>
-    <table class="text-white table table-responsive">
+    <h2 class="">Added Species</h2>
+    <table class="table table-responsive">
         <thead>
             <tr>
                 <th>Species</th>
@@ -32,7 +34,7 @@
         <tbody>
             <tr th:each="species : ${userProfile.addedSpecies}">
                 <td th:text="${species.name}"></td>
-                <td class="text-white" th:if="${species.approved}">Approved</td>
+                <td class="" th:if="${species.approved}">Approved</td>
                 <td class="text-danger" th:unless="${species.approved}">In Review</td>
             </tr>
             <tr th:if="${userProfile.addedSpecies.size() == 0}">
