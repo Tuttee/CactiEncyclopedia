@@ -9,60 +9,63 @@
     <link rel="stylesheet" href="/css/reset-css.css"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="icon" type="image/x-icon" href="/images/cactus.png">
 </head>
 <body>
 <header>
     <nav class="">
         <a class="logo" th:href="@{/}"><img src="/images/Logo.png" alt="Logo"></a>
-
-        <!--        <div class="flex-lg-row justify-content-between align-items-center p-2" id="navbarNav">-->
-        <div>
-            <div class="user-nav" id="navbarNav">
-                <ul class="">
-                    <li class="">
-                        <a class="" th:href="@{/catalog}">Genera Catalog</a>
-                    </li>
-                    <li class="" sec:authorize="isAuthenticated()">
-                        <a class="" th:href="@{/catalog/species/add}">Add Species</a>
-                    </li>
-                    <li class="">
-                        <a class="" th:href="@{/catalog/all}">Species Catalog</a>
-                    </li>
-                    <li class="">
-                        <a class="" th:href="@{/about}">About</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="" sec:authorize="isAnonymous()">
-                        <a class="" th:href="@{/auth/login}">Login</a>
-                    </li>
-
-                    <li class="" sec:authorize="isAnonymous()">
-                        <a class="" th:href="@{/auth/register}">Register</a>
-                    </li>
-
-                    <li class="" sec:authorize="isAuthenticated()">
-                        <a class="" th:href="@{/user/my-profile}">My Profile</a>
-                    </li>
-
-                    <li class="" sec:authorize="isAuthenticated()">
-                        <a class="" th:href="@{/auth/logout}">Logout</a>
-                    </li>
-                </ul>
-            </div>
-            <ul class="nav-admin" sec:authorize="hasRole('ADMIN')">
+        <div class="user-nav" id="navbarNav">
+            <ul class="">
                 <li class="">
-                    <a class="" th:href="@{/administration/species}">Species
-                        Administration</a>
+                    <a class="" th:href="@{/catalog}">Genera Catalog</a>
+                </li>
+                <li class="" sec:authorize="isAuthenticated()">
+                    <a class="" th:href="@{/catalog/species/add}">Add Species</a>
                 </li>
                 <li class="">
-                    <a class="" th:href="@{/administration/users}">Users Administration</a>
+                    <a class="" th:href="@{/catalog/all}">Species Catalog</a>
                 </li>
                 <li class="">
-                    <a class="" th:href="@{/catalog/add-genera}">Add Genera</a>
+                    <a class="" th:href="@{/about}">About</a>
                 </li>
-                <li class="">
-                    <a class="" th:href="@{/add-fact}">Add Fact</a>
+            </ul>
+            <ul>
+                <li class="" sec:authorize="isAnonymous()">
+                    <a class="" th:href="@{/auth/login}">Login</a>
+                </li>
+
+                <li class="" sec:authorize="isAnonymous()">
+                    <a class="" th:href="@{/auth/register}">Register</a>
+                </li>
+
+                <li class="" sec:authorize="isAuthenticated()">
+                    <a class="" th:href="@{/user/my-profile}">My Profile</a>
+                </li>
+
+                <li class="nav-admin" sec:authorize="hasRole('ADMIN')">
+                    <a href="#" class="admin-btn">Admin</a>
+                    <div class="container-admin-nav">
+                        <ul class="admin-list-nav">
+                            <li class="">
+                                <a class="" th:href="@{/administration/species}">Species
+                                    Administration</a>
+                            </li>
+                            <li class="">
+                                <a class="" th:href="@{/administration/users}">Users Administration</a>
+                            </li>
+                            <li class="">
+                                <a class="" th:href="@{/catalog/add-genera}">Add Genera</a>
+                            </li>
+                            <li class="">
+                                <a class="" th:href="@{/add-fact}">Add Fact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="" sec:authorize="isAuthenticated()">
+                    <a class="" th:href="@{/auth/logout}">Logout</a>
                 </li>
             </ul>
         </div>
@@ -70,8 +73,19 @@
 </header>
 
 <footer class="">
+    <ul class="footer-nav">
+        <li class="">
+            <a class="" th:href="@{/}">Home</a>
+        </li>
+        <li class="">
+            <a class="" th:href="@{/user/my-profile}">My Profile</a>
+        </li>
+        <li class="">
+            <a class="" th:href="@{/about}">About</a>
+        </li>
+    </ul>
     <p class="">
-        &copy; Tuttee 2025. All rights reserved.
+        © 2025 Encyclopedia.cacti.com | All rights reserved.
     </p>
 </footer>
 </body>

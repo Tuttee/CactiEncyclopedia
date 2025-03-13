@@ -18,7 +18,7 @@ import lombok.Setter;
 @PasswordMatch(password = "password", confirmPassword = "confirmPassword")
 public class UserRegisterDto {
     @Size(min = 5, max = 20, message = "Username length must be between 5 and 20 characters!")
-    @UsernameIsUnique
+//    @UsernameIsUnique
     private String username;
 
     @Size(min = 8, max = 40, message = "Password length must be between 8 and 40 characters!")
@@ -29,7 +29,7 @@ public class UserRegisterDto {
 
     @NotBlank(message = "Email cannot be empty!")
     @Email
-    @EmailIsUnique
+//    @EmailIsUnique
     private String email;
 
     @Size(min = 2, max = 50, message = "First name length must be between 2 and 50 characters!")

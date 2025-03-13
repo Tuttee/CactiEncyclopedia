@@ -6,42 +6,47 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
-    <div class="container">
-        <div class="row">
-            <img class="card-img-top w-25" th:src="${species.imageURL}" alt="Card image cap"/>
+    <h1 th:text="${species.name}"></h1>
+    <div class="details-container">
+        <div class="details-row">
+            <img th:src="${species.imageURL}" alt="Card image cap"/>
+            <p th:text="${species.description}"></p>
         </div>
-        <div class="row">
-            <div>Name: <strong th:text="${species.name}"></strong></div>
+
+        <div class="details-row">
+            <div>Genera:</div>
+            <p th:text="${species.genera.name}"></p>
         </div>
-        <div class="row">
-            <div>Genera: <strong th:text="${species.genera.name}"></strong></div>
+        <div class="details-row" th:unless="${#strings.isEmpty(species.cultivation)}">
+            <div>Cultivation:</div>
+            <p th:text="${species.cultivation}"></p>
         </div>
-        <div class="row">
-            <div>Description: <strong th:text="${species.description}"></strong></div>
-        </div>
-        <div class="row">
-            <div>Cultivation: <strong th:text="${species.cultivation}"></strong></div>
-        </div>
-        <div class="row">
-            <div>Cold Hardiness: <strong th:text="${species.coldHardiness}"></strong></div>
+        <div class="details-row" th:unless="${#strings.isEmpty(species.coldHardiness)}">
+            <div>Cold Hardiness:</div>
+            <p th:text="${species.coldHardiness}"></p>
         </div>
 
     </div>
 
-    <div class="questions">
+    <div class="details-container">
+        <form class="form-question" th:method="POST" th:action="@{/question/{id}(id=${species.id})}"
+              th:object="${addQuestion}">
+            <label for="content">Ask a Question</label>
+            <textarea id="content" th:field="*{content}" placeholder="You have a question? Ask it here!"></textarea>
+            <button class="submit-btn" type="submit">Post Question</button>
+        </form>
         <div class="question" th:if="${#lists.size(species.questions)>0}" th:each="question : ${species.questions}">
-            <h5 th:text="${question.askedBy.username}"></h5>
-            <p th:text="${question.content}"></p>
-            <p class="date" th:text="${#temporals.format(question.askedOn, 'yyyy MMM dd') + ' at ' + #temporals.format(question.askedOn, 'HH:mm')}"></p>
+            <div class="question-data">
+                <h5 th:text="${question.askedBy.username + ':'}"></h5>
+            <p class="date"
+               th:text="${#temporals.format(question.askedOn, 'yyyy MMM dd') + ' at ' + #temporals.format(question.askedOn, 'HH:mm')}"></p>
+            </div>
+                <p th:text="${question.content}"></p>
         </div>
         <div class="question" th:unless="${#lists.size(species.questions)>0}">
             <p class="">No questions are present. Be the first one to ask a question. Registration needed.</p>
         </div>
-        <form th:method="POST" th:action="@{/question/{id}(id=${species.id})}" th:object="${addQuestion}">
-            <label for="content">Add Question</label>
-            <textarea id="content" th:field="*{content}" placeholder="Enter your question"></textarea>
-            <input class="submit-btn" type="submit" value="Post Question"/>
-        </form>
+
     </div>
 
 </main>

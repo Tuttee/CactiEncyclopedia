@@ -5,37 +5,38 @@
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
+    <h1 class="">Species Administration</h1>
 
-    <h2 class="">New Species</h2>
-    <table class="table table-responsive">
+    <h4 class="text-center">New Species</h4>
+    <table class="admin-container">
         <thead>
-            <tr>
-                <th>Species</th>
-                <th>Added by</th>
-                <th>Action</th>
-            </tr>
+        <tr>
+            <th>Species</th>
+            <th>Added by</th>
+            <th class="admin-buttons">Action</th>
+        </tr>
         </thead>
         <tbody>
-            <tr th:unless="${unapprovedSpecies.size() == 0}" th:each="species : ${unapprovedSpecies}">
-                <td><a th:text="${species.name}" th:href="@{/catalog/species/{id}(id=${species.id})}"></a></td>
-                <td class="" th:text="${species.createdBy.username}">createdBy</td>
-                <td class="text-danger">
-                    <form th:method="PATCH" th:action="@{/administration/species/{id}(id=${species.id})}">
-                        <button type="submit" class="btn btn-success">Approve</button>
-                    </form>
-                    <form th:method="DELETE" th:action="@{/administration/species/{id}(id=${species.id})}">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            <tr th:if="${unapprovedSpecies.size() == 0}">
-                <td>No new species present.</td>
-            </tr>
+        <tr th:unless="${unapprovedSpecies.size() == 0}" th:each="species : ${unapprovedSpecies}">
+            <td><a th:text="${species.name}" th:href="@{/catalog/species/{id}(id=${species.id})}"></a></td>
+            <td class="" th:text="${species.createdBy.username}">createdBy</td>
+            <td class="admin-buttons">
+                <form th:method="PATCH" th:action="@{/administration/species/{id}(id=${species.id})}">
+                    <button type="submit" class="btn btn-success">Approve</button>
+                </form>
+                <form th:method="DELETE" th:action="@{/administration/species/{id}(id=${species.id})}">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${unapprovedSpecies.size() == 0}">
+            <td>No new species present.</td>
+        </tr>
         </tbody>
     </table>
 
-    <h2 class="">Approved Species</h2>
-    <table class="table table-responsive">
+    <h4 class="text-center">Approved Species</h4>
+    <table class="admin-container">
         <thead>
         <tr>
             <th>Species</th>

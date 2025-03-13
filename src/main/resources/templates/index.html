@@ -6,8 +6,8 @@
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
-    <div class="container bg-blur mt-5 ">
         <h1>Welcome to Cacti Encyclopedia App</h1>
+    <div class="container bg-blur mt-5 ">
         <hr class="my-3 bg-white w-50"/>
 
         <p class="h4">Lorem Ipsum!!!</p>
@@ -20,7 +20,6 @@
             now and check our deals.
         </h3>
 
-        <p th:if="${fact}" th:text="${fact}">Fact</p>
     </div>
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>

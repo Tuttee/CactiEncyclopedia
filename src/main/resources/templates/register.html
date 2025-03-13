@@ -6,45 +6,65 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
+    <h1 class=""><span class="">Register</span></h1>
     <form class="form-submit" th:method="POST" th:action="@{/auth/register}" th:object="${userRegister}">
-        <h1 class=""><span class="">Register</span></h1>
-            <div class="">
-                <label for="username" class="">Username</label>
-            </div>
-            <input type="text" class="" id="username" name="username" th:value="*{username}" placeholder="Enter username" required/>
-            <small class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error message</small>
+        <div class="field">
+            <label for="username" class="">Username</label>
+            <input type="text" class="" id="username" name="username" th:value="*{username}"
+                   placeholder="Enter username"
+                   required/>
+            <small class="error" th:if="${usernameAlreadyExistsMessage}" th:text="${usernameAlreadyExistsMessage}">Username
+                error message</small>
+            <small class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error
+                message</small>
+        </div>
 
-            <div class="">
-                <label for="email" class="">Email</label>
-            </div>
-            <input type="email" class="" id="email" name="email" th:value="*{email}" placeholder="Enter email address" required/>
-            <small class="error"  th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error message</small>
+        <div class="field">
+            <label for="email" class="">Email</label>
+            <input type="email" class="" id="email" name="email" th:value="*{email}" placeholder="Enter email address"
+                   required/>
+            <small class="error" th:if="${emailAlreadyExistsMessage}" th:text="${emailAlreadyExistsMessage}">Email error
+                message</small>
+            <small class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error
+                message</small>
+        </div>
 
-            <div class="">
-                <label for="firstName" class="">First Name</label>
-            </div>
-            <input type="text" class="" id="firstName" name="firstName" th:value="*{firstName}" placeholder="Enter first name" required/>
-            <small class="error"  th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name error message</small>
 
-            <div class="">
-                <label for="lastName" class="">Last name</label>
-            </div>
-            <input type="text" class="" id="lastName" name="lastName" th:value="*{lastName}" placeholder="Enter last name" required/>
-            <small class="error"  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name error message</small>
+        <div class="field">
+            <label for="firstName" class="">First Name</label>
+            <input type="text" class="" id="firstName" name="firstName" th:value="*{firstName}"
+                   placeholder="Enter first name" required/>
+            <small class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name error
+                message</small>
+        </div>
 
-            <div class="">
-                <label for="password" class="">Password</label>
-            </div>
+        <div class="field">
+            <label for="lastName" class="">Last name</label>
+            <input type="text" class="" id="lastName" name="lastName" th:value="*{lastName}"
+                   placeholder="Enter last name"
+                   required/>
+            <small class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name error
+                message</small>
+        </div>
+
+        <div class="field">
+            <label for="password" class="">Password</label>
             <input type="password" class="" id="password" name="password" placeholder="Enter password" required/>
-            <small class="error"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error message</small>
+            <small class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error
+                message</small>
+            <small class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Password
+                error
+                message</small>
+        </div>
 
-            <div class="">
-                <label for="confirmPassword" class="">Confirm Password</label>
-            </div>
-            <input type="password" class="" id="confirmPassword" name="confirmPassword" placeholder="Enter confirm password" required/>
-            <small class=""  th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" >Password error message</small>
+        <div class="field">
+            <label for="confirmPassword" class="">Confirm Password</label>
+            <input type="password" class="" id="confirmPassword" name="confirmPassword"
+                   placeholder="Enter confirm password"
+                   required/>
+        </div>
 
-            <button class="submit-btn" type="submit" value="Register">Register</button>
+        <button class="submit-btn" type="submit" value="Register">Register</button>
 
 
     </form>

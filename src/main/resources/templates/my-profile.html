@@ -6,42 +6,36 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
-    <div class="container">
-        <h1>My Profile</h1>
+    <h1>My Profile</h1>
+    <div class="details-container">
 
-        <div class="row">
-            <div>Username: <strong th:text="${userProfile.username}"></strong></div>
+        <div class="details-row">
+            <div><strong>Username:</strong></div>
+            <p th:text="${userProfile.username}"></p>
         </div>
-        <div class="row">
-            <div>First name: <strong th:text="${userProfile.firstName}"></strong></div>
+        <div class="details-row">
+            <div><strong>First name:</strong></div>
+            <p th:text="${userProfile.firstName}"></p>
         </div>
-        <div class="row">
-            <div>Last name: <strong th:text="${userProfile.lastName}"></strong></div>
+        <div class="details-row">
+            <div><strong>Last name:</strong></div>
+            <p th:text="${userProfile.lastName}"></p>
         </div>
-        <div class="row">
-            <div>Email: <strong th:text="${userProfile.email}"></strong></div>
+        <div class="details-row">
+            <div><strong>Email:</strong></div>
+            <p th:text="${userProfile.email}"></p>
         </div>
     </div>
 
-    <h2 class="">Added Species</h2>
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th>Species</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="species : ${userProfile.addedSpecies}">
-                <td th:text="${species.name}"></td>
-                <td class="" th:if="${species.approved}">Approved</td>
-                <td class="text-danger" th:unless="${species.approved}">In Review</td>
-            </tr>
-            <tr th:if="${userProfile.addedSpecies.size() == 0}">
-                <td>No added species present.</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="details-container">
+        <h4 class="">My species</h4>
+        <div class="table-row" th:each="species : ${userProfile.addedSpecies}">
+            <div class="status approved" th:if="${species.approved}">Approved</div>
+            <div class="status in-review" th:unless="${species.approved}">In Review</div>
+            <span th:unless="${species.approved}" th:text="${species.name}"></span>
+            <a th:if="${species.approved}" th:href="@{'/catalog/species/' + ${species.id}}" th:text="${species.name}"></a>
+        </div>
+    </div>
 
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>

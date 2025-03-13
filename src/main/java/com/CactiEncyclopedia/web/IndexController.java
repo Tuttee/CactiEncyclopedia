@@ -2,19 +2,12 @@ package com.CactiEncyclopedia.web;
 
 import com.CactiEncyclopedia.client.FactClient;
 import com.CactiEncyclopedia.domain.binding.AddFactDto;
-import com.CactiEncyclopedia.domain.binding.FactDto;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.FactService;
-import feign.RetryableException;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -28,24 +21,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping
 @RequiredArgsConstructor
-public class HomeController extends BaseController {
-    private static final Logger log = LoggerFactory.getLogger(HomeController.class);
+public class IndexController extends BaseController {
+    private static final Logger log = LoggerFactory.getLogger(IndexController.class);
     private final FactClient factClient;
     private final FactService factService;
 
     @GetMapping
     public ModelAndView getIndex() {
         ModelAndView modelAndView = new ModelAndView();
-
-        try {
-            FactDto body = factClient.randomFact().getBody();
-
-            if (body != null) {
-                modelAndView.addObject("fact", body.getContent());
-            }
-        } catch (RetryableException e) {
-            log.error(e.getMessage());
-        }
 
         return super.view("index", modelAndView);
     }

@@ -26,7 +26,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 ).formLogin(form -> form.loginPage("/auth/login")
 //                        .usernameParameter("username")
 //                        .passwordParameter("password")
-                        .defaultSuccessUrl("/", false)
+                        .defaultSuccessUrl("/")
                         .failureUrl("/auth/login?error")
                         .permitAll())
                 .logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "GET"))

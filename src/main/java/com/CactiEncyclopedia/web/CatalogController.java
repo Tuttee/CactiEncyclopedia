@@ -8,7 +8,6 @@ import com.CactiEncyclopedia.domain.binding.FactDto;
 import com.CactiEncyclopedia.domain.entities.Genera;
 import com.CactiEncyclopedia.domain.entities.Species;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
-import com.CactiEncyclopedia.services.FactService;
 import com.CactiEncyclopedia.services.GeneraService;
 import com.CactiEncyclopedia.services.SpeciesService;
 import feign.RetryableException;
@@ -50,6 +49,8 @@ public class CatalogController extends BaseController {
             log.error(e.getMessage());
         }
 
+        List<Species> recentlyAdded = speciesService.get10RecentlyAdded();
+        modelAndView.addObject("recentlyAdded", recentlyAdded);
 
         return super.view("catalog", modelAndView);
     }

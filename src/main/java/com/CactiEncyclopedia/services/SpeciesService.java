@@ -3,6 +3,7 @@ package com.CactiEncyclopedia.services;
 import com.CactiEncyclopedia.domain.binding.AddSpeciesDto;
 import com.CactiEncyclopedia.domain.entities.Species;
 import com.CactiEncyclopedia.domain.entities.User;
+import com.CactiEncyclopedia.domain.enums.RoleName;
 import com.CactiEncyclopedia.repositories.SpeciesRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -28,7 +29,14 @@ public class SpeciesService {
     }
 
     public Species getSpeciesById(UUID id) {
-        return this.speciesRepository.findById(id).orElseThrow();
+        Species species = this.speciesRepository.findById(id).orElseThrow();
+
+        return sortSpeciesQuestionsByDate(species);
+    }
+
+    private Species sortSpeciesQuestionsByDate(Species species) {
+        species.getQuestions().sort((q1, q2) -> q2.getAskedOn().compareTo(q1.getAskedOn()));
+        return species;
     }
 
     @Cacheable("all-species")
@@ -50,8 +58,12 @@ public class SpeciesService {
         species.setGenera(generaService.getGeneraByName(addSpeciesDto.getGenera()));
         species.setAddedOn(LocalDate.now());
 
+        if (user.getRole().getRoleName().equals(RoleName.ADMIN)) {
+            species.setApproved(true);
+        }
+
         userService.saveSpeciesToUser(user, species);
-        this.speciesRepository.saveAndFlush(species);
+        this.speciesRepository.save(species);
     }
 
     public void approve(UUID id) {
@@ -62,5 +74,9 @@ public class SpeciesService {
 
     public void delete(UUID id) {
         this.speciesRepository.deleteById(id);
+    }
+
+    public List<Species> get10RecentlyAdded() {
+        return this.speciesRepository.find10RecentlyAddedAndApproved();
     }
 }

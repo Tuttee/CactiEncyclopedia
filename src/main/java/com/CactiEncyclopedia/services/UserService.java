@@ -4,6 +4,8 @@ import com.CactiEncyclopedia.domain.binding.UserRegisterDto;
 import com.CactiEncyclopedia.domain.entities.Species;
 import com.CactiEncyclopedia.domain.entities.User;
 import com.CactiEncyclopedia.domain.view.UserDetailsViewModel;
+import com.CactiEncyclopedia.exception.EmailAlreadyExistsException;
+import com.CactiEncyclopedia.exception.UsernameAlreadyExistsException;
 import com.CactiEncyclopedia.repositories.UserRepository;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import jakarta.transaction.Transactional;
@@ -36,6 +38,14 @@ public class UserService implements UserDetailsService {
     }
 
     public void register(UserRegisterDto userRegisterDto) {
+        if (existsByUsername(userRegisterDto.getUsername())) {
+            throw new UsernameAlreadyExistsException();
+        }
+
+        if (existsByEmail(userRegisterDto.getEmail())) {
+            throw new EmailAlreadyExistsException();
+        }
+
         User user = new User();
         user.setUsername(userRegisterDto.getUsername());
         user.setPassword(passwordEncoder.encode(userRegisterDto.getPassword()));
@@ -103,8 +113,9 @@ public class UserService implements UserDetailsService {
                 true);
     }
 
+    @Transactional
     public void saveSpeciesToUser(User user, Species species) {
         user.getAddedSpecies().add(species);
-        this.userRepository.saveAndFlush(user);
+        this.userRepository.save(user);
     }
 }
