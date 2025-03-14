@@ -13,7 +13,7 @@
         <div class="field">
                 <label for="content" class="">Content</label>
 
-            <input type="text" class="" id="content" name="content" th:value="*{content}" placeholder="Enter content" required/>
+            <textarea type="text" class="" id="content" name="content" th:value="*{content}" placeholder="Enter content*" required></textarea>
             <small class="error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Name error message</small>
             </div>
 

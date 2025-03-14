@@ -22,7 +22,7 @@
                 <p th:text="${fact}"></p>
             </div>
 
-            <div class="recently-added" th:if="${fact}">
+            <div class="recently-added">
                 <h5>Recently Added</h5>
                 <a th:each="specie : ${recentlyAdded}" th:text="${specie.name}" th:href="@{/catalog/species/{id}(id=${specie.id})}"></a>
                 <p th:if="${#lists.size(recentlyAdded) == 0}">No species have been added yet.</p>

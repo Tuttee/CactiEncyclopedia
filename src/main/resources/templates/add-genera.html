@@ -6,22 +6,25 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
-        <h1 class=""><span class="">Add Genera</span></h1>
+    <h1 class=""><span class="">Add Genera</span></h1>
     <form class="form-submit" th:method="POST" th:action="@{/catalog/add-genera}" th:object="${addGenera}">
-            <div class="field">
-                <label for="name" class="">Genera Name</label>
+        <div class="field">
+            <label for="name" class="">Genera Name*</label>
             <input type="text" class="" id="name" name="name" th:value="*{name}" placeholder="Enter name" required/>
-            <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error message</small>
-            </div>
+            <small class="error" style="font-size: 15px" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+                error message</small>
+        </div>
 
-            <div class="field">
-                <label for="imageURL" class="">Image URL</label>
-            <input type="text" class="" id="imageURL" name="imageURL" th:value="*{imageURL}" placeholder="Enter image URL" required/>
-            <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('imageURL')}" th:errors="*{imageURL}">Name error message</small>
-            </div>
+        <div class="field">
+            <label for="imageURL" class="">Image URL*</label>
+            <input type="text" class="" id="imageURL" name="imageURL" th:value="*{imageURL}"
+                   placeholder="Enter image URL" required/>
+            <small class="error" style="font-size: 15px" th:if="${#fields.hasErrors('imageURL')}"
+                   th:errors="*{imageURL}">Name error message</small>
+        </div>
 
 
-            <button class="submit-btn" type="submit" value="Register">Add genera</button>
+        <button class="submit-btn" type="submit" value="Register">Add genera</button>
 
     </form>
 </main>

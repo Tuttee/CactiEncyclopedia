@@ -9,14 +9,14 @@
     <form class="form-submit" th:method="POST" th:action="@{/catalog/species/add}" th:object="${addSpecies}">
         <h1 class=""><span class="">Add Species</span></h1>
         <div class="field">
-            <label for="name" class="">Species Name</label>
+            <label for="name" class="">Species Name*</label>
             <input type="text" class="" id="name" name="name" th:value="*{name}" placeholder="Enter name" required/>
             <small class="error" style="font-size: 15px" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
                 error message</small>
         </div>
 
         <div class="field">
-            <label for="genera" class="">Genera</label>
+            <label for="genera" class="">Genera*</label>
             <select type="text" class="" id="genera" name="genera" th:value="*{genera}" required>
                 <option class="placeholder" value="">Select genera</option>
                 <option th:each="genera : ${generaList}" th:value="${genera}" th:text="${genera}">Select genera</option>
@@ -26,7 +26,7 @@
         </div>
 
         <div class="field">
-            <label for="description" class="">Description</label>
+            <label for="description" class="">Description*</label>
             <textarea type="description" class="" id="description" name="description" th:text="*{description}"
                       placeholder="Enter description" required></textarea>
             <small class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Email error
@@ -34,7 +34,7 @@
         </div>
 
         <div class="field">
-            <label for="cultivation" class="">Cultivation</label>
+            <label for="cultivation" class="">Cultivation*</label>
             <textarea type="cultivation" class="" id="cultivation" name="cultivation" th:text="*{cultivation}"
                       placeholder="Enter cultivation" required></textarea>
             <small class="error" th:if="${#fields.hasErrors('cultivation')}" th:errors="*{cultivation}">Email error
@@ -42,7 +42,7 @@
         </div>
 
         <div class="field">
-            <label for="coldHardiness" class="">Cold hardiness</label>
+            <label for="coldHardiness" class="">Cold hardiness*</label>
             <textarea type="coldHardiness" class="" id="coldHardiness" name="coldHardiness" th:text="*{coldHardiness}"
                       placeholder="Enter cold hardiness" required></textarea>
             <small class="error" th:if="${#fields.hasErrors('coldHardiness')}" th:errors="*{coldHardiness}">Email error
@@ -50,7 +50,7 @@
         </div>
 
         <div class="field">
-            <label for="imageURL" class="">Image URL</label>
+            <label for="imageURL" class="">Image URL*</label>
             <input type="text" class="" id="imageURL" name="imageURL" th:value="*{imageURL}"
                    placeholder="Enter image URL"
                    required/>
