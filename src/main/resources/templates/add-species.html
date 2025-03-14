@@ -8,50 +8,59 @@
 
     <form class="form-submit" th:method="POST" th:action="@{/catalog/species/add}" th:object="${addSpecies}">
         <h1 class=""><span class="">Add Species</span></h1>
-            <div class="">
-                <label for="name" class="">Species Name</label>
-            </div>
-
+        <div class="field">
+            <label for="name" class="">Species Name</label>
             <input type="text" class="" id="name" name="name" th:value="*{name}" placeholder="Enter name" required/>
-            <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error message</small>
+            <small class="error" style="font-size: 15px" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+                error message</small>
+        </div>
 
-            <div class="">
-                <label for="genera" class="">Genera</label>
-            </div>
-
+        <div class="field">
+            <label for="genera" class="">Genera</label>
             <select type="text" class="" id="genera" name="genera" th:value="*{genera}" required>
                 <option class="placeholder" value="">Select genera</option>
                 <option th:each="genera : ${generaList}" th:value="${genera}" th:text="${genera}">Select genera</option>
             </select>
-            <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('genera')}" th:errors="*{genera}">Genera error message</small>
+            <small class="error" style="font-size: 15px" th:if="${#fields.hasErrors('genera')}" th:errors="*{genera}">Genera
+                error message</small>
+        </div>
 
-            <div class="">
-                <label for="description" class="">Description</label>
-            </div>
-            <textarea type="description" class="" id="description" name="description" th:value="*{description}" placeholder="Enter description" required></textarea>
-            <small class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Email error message</small>
+        <div class="field">
+            <label for="description" class="">Description</label>
+            <textarea type="description" class="" id="description" name="description" th:text="*{description}"
+                      placeholder="Enter description" required></textarea>
+            <small class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Email error
+                message</small>
+        </div>
 
-            <div class="">
-                <label for="cultivation" class="">Cultivation</label>
-            </div>
-            <textarea type="cultivation" class="" id="cultivation" name="cultivation" th:value="*{cultivation}" placeholder="Enter cultivation" required></textarea>
-            <small class="error" th:if="${#fields.hasErrors('cultivation')}" th:errors="*{cultivation}">Email error message</small>
+        <div class="field">
+            <label for="cultivation" class="">Cultivation</label>
+            <textarea type="cultivation" class="" id="cultivation" name="cultivation" th:text="*{cultivation}"
+                      placeholder="Enter cultivation" required></textarea>
+            <small class="error" th:if="${#fields.hasErrors('cultivation')}" th:errors="*{cultivation}">Email error
+                message</small>
+        </div>
 
-            <div class="">
-                <label for="coldHardiness" class="">Cold hardiness</label>
-            </div>
-            <textarea type="coldHardiness" class="" id="coldHardiness" name="coldHardiness" th:value="*{coldHardiness}" placeholder="Enter cold hardiness" required></textarea>
-            <small class="error" th:if="${#fields.hasErrors('coldHardiness')}" th:errors="*{coldHardiness}">Email error message</small>
+        <div class="field">
+            <label for="coldHardiness" class="">Cold hardiness</label>
+            <textarea type="coldHardiness" class="" id="coldHardiness" name="coldHardiness" th:text="*{coldHardiness}"
+                      placeholder="Enter cold hardiness" required></textarea>
+            <small class="error" th:if="${#fields.hasErrors('coldHardiness')}" th:errors="*{coldHardiness}">Email error
+                message</small>
+        </div>
 
-            <div class="">
-                <label for="imageURL" class="">Image URL</label>
-            </div>
+        <div class="field">
+            <label for="imageURL" class="">Image URL</label>
+            <input type="text" class="" id="imageURL" name="imageURL" th:value="*{imageURL}"
+                   placeholder="Enter image URL"
+                   required/>
+            <small class="error" style="font-size: 15px" th:if="${#fields.hasErrors('imageURL')}"
+                   th:errors="*{imageURL}">Name
+                error message</small>
+        </div>
 
-            <input type="text" class="" id="imageURL" name="imageURL" th:value="*{imageURL}" placeholder="Enter image URL" required/>
-            <small class="error" style="font-size: 15px"  th:if="${#fields.hasErrors('imageURL')}" th:errors="*{imageURL}">Name error message</small>
 
-
-            <button class="submit-btn" type="submit" value="Register">Add species</button>
+        <button class="submit-btn" type="submit" value="Register">Add species</button>
 
     </form>
 </main>

@@ -40,7 +40,7 @@ public class SpeciesService {
         return species;
     }
 
-    @Cacheable("all-species")
+//    @Cacheable("all-species")
     public List<Species> getAllApproved() {
         return this.speciesRepository.findAllByApprovedIsTrue();
     }

@@ -86,7 +86,7 @@ public class CatalogController extends BaseController {
 
         generaService.addGenera(addGeneraDto);
 
-        return super.view("add-genera");
+        return super.redirect("/catalog/add-genera");
     }
 
     @GetMapping("/all")
@@ -137,7 +137,7 @@ public class CatalogController extends BaseController {
         speciesService.addSpecies(addSpeciesDto, authenticationMetadata.getUserId());
 
         if (authenticationMetadata.getRole().getRoleName().equals(RoleName.ADMIN)) {
-            return super.redirect("/species/add");
+            return super.redirect("/catalog/species/add");
         }
         return super.view("thank-you");
     }

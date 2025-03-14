@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.URL;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddGeneraDto {
-    @Size(min = 5, max = 200, message = "Species name must be between 5 and 200 characters!")
+    @Size(min = 5, max = 200, message = "Genera name must be between 5 and 200 characters!")
     private String name;
 
     @NotBlank

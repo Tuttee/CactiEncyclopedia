@@ -69,7 +69,7 @@ nav a, footer a {
     transition: 0.2s ease-in-out;
 }
 
-nav a:hover, footer a:hover {
+nav a:hover, footer a:hover, .submit-btn:hover {
     /*box-shadow: black 2px ;*/
     box-shadow: rgba(50, 50, 93, 0.25) 0 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0 18px 36px -18px inset;
     text-decoration: none;
@@ -259,6 +259,8 @@ input::placeholder, select .placeholder {
     margin-top: 20px;
     max-width: fit-content;
     align-self: center;
+    transition: 0.2s ease-in-out;
+
 }
 
 .catalog {
