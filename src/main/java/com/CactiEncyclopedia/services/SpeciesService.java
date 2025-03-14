@@ -5,6 +5,7 @@ import com.CactiEncyclopedia.domain.entities.Species;
 import com.CactiEncyclopedia.domain.entities.User;
 import com.CactiEncyclopedia.domain.enums.RoleName;
 import com.CactiEncyclopedia.repositories.SpeciesRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.Cacheable;
@@ -49,8 +50,9 @@ public class SpeciesService {
         return this.speciesRepository.findAllByApprovedIsFalse();
     }
 
+    @Transactional
     public void addSpecies(AddSpeciesDto addSpeciesDto, UUID userId) {
-        User user = modelMapper.map(userService.getLoggedUserDetails(userId), User.class);
+        User user = userService.findUserById(userId);
 
         Species species = modelMapper.map(addSpeciesDto, Species.class);
 
@@ -62,7 +64,7 @@ public class SpeciesService {
             species.setApproved(true);
         }
 
-        userService.saveSpeciesToUser(user, species);
+//        userService.saveSpeciesToUser(userId, species);
         this.speciesRepository.save(species);
     }
 

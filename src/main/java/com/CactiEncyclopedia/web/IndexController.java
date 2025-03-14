@@ -62,6 +62,11 @@ public class IndexController extends BaseController {
         return super.redirect("/add-fact", modelAndView);
     }
 
+    @GetMapping("/thank")
+    public ModelAndView thank() {
+        return super.view("thank-you");
+    }
+
     @ModelAttribute("addFact")
     public AddFactDto addFact() {
         return new AddFactDto();

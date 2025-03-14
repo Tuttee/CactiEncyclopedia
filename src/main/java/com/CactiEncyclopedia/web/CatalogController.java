@@ -7,6 +7,7 @@ import com.CactiEncyclopedia.domain.binding.AddSpeciesDto;
 import com.CactiEncyclopedia.domain.binding.FactDto;
 import com.CactiEncyclopedia.domain.entities.Genera;
 import com.CactiEncyclopedia.domain.entities.Species;
+import com.CactiEncyclopedia.domain.enums.RoleName;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.GeneraService;
 import com.CactiEncyclopedia.services.SpeciesService;
@@ -135,6 +136,9 @@ public class CatalogController extends BaseController {
 
         speciesService.addSpecies(addSpeciesDto, authenticationMetadata.getUserId());
 
+        if (authenticationMetadata.getRole().getRoleName().equals(RoleName.ADMIN)) {
+            return super.redirect("/species/add");
+        }
         return super.view("thank-you");
     }
 

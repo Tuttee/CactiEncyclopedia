@@ -10,7 +10,6 @@ import com.CactiEncyclopedia.repositories.UserRepository;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,14 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
 
@@ -113,9 +110,11 @@ public class UserService implements UserDetailsService {
                 true);
     }
 
-    @Transactional
-    public void saveSpeciesToUser(User user, Species species) {
-        user.getAddedSpecies().add(species);
-        this.userRepository.save(user);
+    //TODO: delete
+    public void saveSpeciesToUser(UUID userId, Species species) {
+        User userById = findUserById(userId);
+        userById.getAddedSpecies().add(species);
+//        user.getAddedSpecies().add(species);
+        this.userRepository.save(userById);
     }
 }
