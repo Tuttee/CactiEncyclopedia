@@ -6,8 +6,10 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
     <h1>Internal Server Error!</h1>
-    <h2 class="">500</h2>
-    <p th:if="${error-message}" th:text="${error-message}"></p>
+    <div class="details-container">
+        <h2 class="text-center">Error 500</h2>
+        <p class="text-center" th:text="${'Error: ' + error}"></p>
+    </div>
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>
 </body>

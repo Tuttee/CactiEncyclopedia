@@ -40,7 +40,8 @@ public class ExceptionAdvice {
             AccessDeniedException.class,
             NoResourceFoundException.class,
             MethodArgumentTypeMismatchException.class,
-            MissingRequestValueException.class})
+            MissingRequestValueException.class,
+            NoSuchElementException.class})
     public ModelAndView handleNotFoundException() {
         return new ModelAndView("not-found");
     }
@@ -52,7 +53,7 @@ public class ExceptionAdvice {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("internal-server-error");
-        modelAndView.addObject("error-message", e.getClass().getSimpleName());
+        modelAndView.addObject("error", e.getClass().getSimpleName());
 
         return modelAndView;
     }
