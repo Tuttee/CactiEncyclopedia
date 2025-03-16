@@ -5,7 +5,6 @@ import com.CactiEncyclopedia.domain.view.UserDetailsViewModel;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.SpeciesService;
 import com.CactiEncyclopedia.services.UserService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -68,7 +67,7 @@ public class AdministrationController extends BaseController {
 
     @PatchMapping("/users/{username}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ModelAndView updateUser(@PathVariable String username, HttpSession session) {
+    public ModelAndView updateUser(@PathVariable String username) {
         userService.updateUserRole(username);
         return super.redirect("/administration/users");
     }

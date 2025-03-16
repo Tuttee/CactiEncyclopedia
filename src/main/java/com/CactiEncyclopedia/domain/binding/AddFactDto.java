@@ -1,6 +1,5 @@
 package com.CactiEncyclopedia.domain.binding;
 
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddFactDto {
-    @Size(min = 5)
+    @Size(min = 5, message = "Fact content must be at least 5 characters!")
     private String content;
 
     private UUID addedBy;

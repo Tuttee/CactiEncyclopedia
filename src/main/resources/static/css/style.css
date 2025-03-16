@@ -528,3 +528,9 @@ th {
     word-wrap: normal;
     text-wrap: nowrap;
 }
+
+.success-message {
+    text-align: center;
+    color: green;
+    font-weight: 700;
+}

@@ -2,7 +2,6 @@ package com.CactiEncyclopedia.web;
 
 
 import com.CactiEncyclopedia.domain.binding.UserRegisterDto;
-import com.CactiEncyclopedia.exception.UsernameAlreadyExistsException;
 import com.CactiEncyclopedia.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

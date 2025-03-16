@@ -1,8 +1,8 @@
 package com.CactiEncyclopedia.web;
 
-import com.CactiEncyclopedia.domain.binding.UserRegisterDto;
 import com.CactiEncyclopedia.exception.EmailAlreadyExistsException;
 import com.CactiEncyclopedia.exception.UsernameAlreadyExistsException;
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MissingRequestValueException;
@@ -33,6 +33,15 @@ public class ExceptionAdvice {
         redirectAttributes.addFlashAttribute("emailAlreadyExistsMessage", "Email is already in use!");
 
         return "redirect:/auth/register";
+    }
+
+    @ExceptionHandler(FeignException.class)
+    public String handleEmailAlreadyExistsException(FeignException duplicateFactException,
+                                                    RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("error", "Fact cannot be added! " + duplicateFactException.getMessage());
+
+        return "redirect:/add-fact";
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

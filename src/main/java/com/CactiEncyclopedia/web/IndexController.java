@@ -1,13 +1,10 @@
 package com.CactiEncyclopedia.web;
 
-import com.CactiEncyclopedia.client.FactClient;
 import com.CactiEncyclopedia.domain.binding.AddFactDto;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.FactService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -22,8 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping
 @RequiredArgsConstructor
 public class IndexController extends BaseController {
-    private static final Logger log = LoggerFactory.getLogger(IndexController.class);
-    private final FactClient factClient;
     private final FactService factService;
 
     @GetMapping
@@ -56,10 +51,10 @@ public class IndexController extends BaseController {
             return super.view("/add-fact", modelAndView);
         }
 
-        factService.addFact(addFactDto, authenticationMetadata.getUserId());
+        boolean isFactAdded = factService.addFact(addFactDto, authenticationMetadata.getUserId());
 
-        modelAndView.addObject("success", true);
-        return super.redirect("/add-fact", modelAndView);
+        modelAndView.addObject("success", isFactAdded);
+        return super.view("/add-fact", modelAndView);
     }
 
     @GetMapping("/thank")

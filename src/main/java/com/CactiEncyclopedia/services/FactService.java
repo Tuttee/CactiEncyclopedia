@@ -13,12 +13,9 @@ import java.util.UUID;
 public class FactService {
     private final FactClient factClient;
 
-    public void addFact(AddFactDto addFactDto, UUID userId) {
+    public boolean addFact(AddFactDto addFactDto, UUID userId) {
         addFactDto.setAddedBy(userId);
-        ResponseEntity<Void> voidResponseEntity = factClient.addFact(addFactDto);
-
-        if (!voidResponseEntity.getStatusCode().is2xxSuccessful()) {
-            throw new RuntimeException("Fact cannot be created");
-        }
+        ResponseEntity<Void> stringResponseEntity = factClient.addFact(addFactDto);
+        return stringResponseEntity.getStatusCode().is2xxSuccessful();
     }
 }
