@@ -10,7 +10,9 @@
 main {
     font: 14px Inder, sans-serif;
     margin-top: 150px;
-    margin-bottom: 150px;
+    padding: 50px;
+    /*margin-bottom: 150px;*/
+    min-height:70.5vh;
 }
 
 nav {
@@ -132,6 +134,7 @@ nav a:hover, footer a:hover, .submit-btn:hover {
 }
 
 footer {
+    font-family: 'Inder', sans-serif;
     background-image: url("/images/cacti_cartoon.png");
     background-size: cover;
     background-position: center;
@@ -140,8 +143,8 @@ footer {
     text-align: center;
     padding: 10px 0;
     align-content: center;
-    position: fixed;
-    clear: both;
+    /*position: fixed;*/
+    /*clear: both;*/
 }
 
 .footer-nav {

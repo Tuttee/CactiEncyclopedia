@@ -35,11 +35,11 @@ public class UserService implements UserDetailsService {
 
     public void register(UserRegisterDto userRegisterDto) {
         if (existsByUsername(userRegisterDto.getUsername())) {
-            throw new UsernameAlreadyExistsException("Username is in use!");
+            throw new UsernameAlreadyExistsException("Username is already in use!");
         }
 
         if (existsByEmail(userRegisterDto.getEmail())) {
-            throw new EmailAlreadyExistsException("Email is in use!");
+            throw new EmailAlreadyExistsException("Email is already in use!");
         }
 
         User user = new User();

@@ -1,8 +1,10 @@
 package com.CactiEncyclopedia.web;
 
+import com.CactiEncyclopedia.domain.binding.UserRegisterDto;
 import com.CactiEncyclopedia.exception.EmailAlreadyExistsException;
 import com.CactiEncyclopedia.exception.UsernameAlreadyExistsException;
 import feign.FeignException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MissingRequestValueException;
@@ -20,17 +22,26 @@ import java.util.NoSuchElementException;
 public class ExceptionAdvice {
 
     @ExceptionHandler(UsernameAlreadyExistsException.class)
-    public String handleUsernameAlreadyExistsException(RedirectAttributes redirectAttributes) {
+    public String handleUsernameAlreadyExistsException(RedirectAttributes redirectAttributes,
+                                                       HttpServletRequest request,
+                                                       UsernameAlreadyExistsException e) {
+        UserRegisterDto userRegisterDto = getUserRegisterDtoFromHttpRequest(request);
 
-        redirectAttributes.addFlashAttribute("usernameAlreadyExistsMessage", "Username is already in use!");
+        redirectAttributes.addFlashAttribute("usernameAlreadyExistsMessage", e.getMessage());
+        redirectAttributes.addFlashAttribute("userRegister", userRegisterDto);
 
         return "redirect:/auth/register";
     }
 
     @ExceptionHandler(EmailAlreadyExistsException.class)
-    public String handleEmailAlreadyExistsException(RedirectAttributes redirectAttributes) {
+    public String handleEmailAlreadyExistsException(RedirectAttributes redirectAttributes,
+                                                    HttpServletRequest request,
+                                                    EmailAlreadyExistsException e) {
+        UserRegisterDto userRegisterDto = getUserRegisterDtoFromHttpRequest(request);
 
-        redirectAttributes.addFlashAttribute("emailAlreadyExistsMessage", "Email is already in use!");
+        redirectAttributes.addFlashAttribute("emailAlreadyExistsMessage", e.getMessage());
+        redirectAttributes.addFlashAttribute("userRegister", userRegisterDto);
+
 
         return "redirect:/auth/register";
     }
@@ -65,5 +76,17 @@ public class ExceptionAdvice {
         modelAndView.addObject("error", e.getClass().getSimpleName());
 
         return modelAndView;
+    }
+
+    private UserRegisterDto getUserRegisterDtoFromHttpRequest(HttpServletRequest request) {
+        String username = request.getParameter("username");
+        String password = "";
+        String confirmPassword = "";
+        String email = request.getParameter("email");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+
+        return new UserRegisterDto(username, password, confirmPassword, email, firstName, lastName);
+
     }
 }
