@@ -7,9 +7,8 @@
 <main>
 
     <h1 th:if="${all}" class="text-center mt-2"><span >Species Catalogue</span></h1>
-    <h1 th:unless="${all}" class="text-center mt-2"><span th:text="${species[0].genera.name + ' Catalogue'}">Species Catalogue</span></h1>
+    <h1 th:unless="${all}" class="text-center mt-2"><span th:text="${generaName + ' Catalogue'}">Species Catalogue</span></h1>
     <div class="card-container">
-
         <div class="card-cacti" th:each="specie : ${species}">
             <a th:href="@{/catalog/species/{id}(id=${specie.id})}">
                 <img th:src="${specie.imageURL}" alt="Card image cap"/>
@@ -18,7 +17,105 @@
             </a>
         </div>
     </div>
+    <div aria-label="Page navigation" th:if="${species.getTotalPages()>1 && all}">
+        <ul class="pagination">
+            <!-- First page logic start -->
+            <li class="" th:classappend="${species.isFirst()} ? 'disabled' : ''">
+                <a th:if="${species.isFirst()}" class="disabled" href="#" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                <a th:unless="${species.isFirst()}" class=""
+                   th:href="@{/catalog/all(size=${species.getSize()})}" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <!-- EO: First page logic start -->
 
+            <li class="" th:classappend="${species.isFirst()} ? 'disabled' : ''">
+                <a class="" th:unless="${species.isFirst()}"
+                   th:href="@{/catalog/all(size=${species.getSize()}, page=${species.getPageable().getPageNumber()-1})}">Previous</a>
+                <a class="disabled" th:if="${species.isFirst()}">Previous</a>
+            </li>
+
+            <li class="" th:each="page : ${#numbers.sequence(0, species.getTotalPages()-1)}"
+                th:classappend="${species.getPageable().getPageNumber() == page} ? 'disabled' : ''">
+                <a class="" th:unless="${species.getPageable().getPageNumber() == page}"
+                   th:href="@{/catalog/all(size=${species.getSize()}, page=${page})}" th:text="${page+1}">#</a>
+                <a class="disabled" th:if="${species.getPageable().getPageNumber() == page}"
+                   th:text="${page+1}">#</a>
+            </li>
+
+            <li class="" th:classappend="${species.isLast()} ? 'disabled' : ''">
+                <a class="" th:unless="${species.isLast()}"
+                   th:href="@{/catalog/all(size=${species.getSize()}, page=${species.getPageable().getPageNumber()+1})}">Next</a>
+                <a class="disabled" th:if="${species.isLast()}">Next</a>
+            </li>
+
+            <!--                    <li class="page-item"><a class="page-Link" href="#">3</a></li>-->
+
+            <!-- Last page logic start -->
+            <li class="" th:classappend="${species.isLast()} ? 'disabled' : ''">
+                <a th:if="${species.isLast()}" class="disabled" href="#" aria-label="Last">
+                    <span aria-hidden="true">&raquo; </span>
+                </a>
+                <a th:unless="${species.isLast()}" class=""
+                   th:href="@{/catalog/all(size=${species.getSize()}, page=${species.getTotalPages()-1})}"
+                   aria-label="Last">
+                    <span aria-hidden="true">&raquo; </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div aria-label="Page navigation" th:if="${species.getTotalPages()>1 && !all}">
+        <ul class="pagination">
+            <!-- First page logic start -->
+            <li class="" th:classappend="${species.isFirst()} ? 'disabled' : ''">
+                <a th:if="${species.isFirst()}" class="disabled" href="#" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                <a th:unless="${species.isFirst()}" class=""
+                   th:href="@{/catalog/{generaName}(size=${species.getSize()}, generaName=${generaName})}" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <!-- EO: First page logic start -->
+
+            <li class="" th:classappend="${species.isFirst()} ? 'disabled' : ''">
+                <a class="" th:unless="${species.isFirst()}"
+                   th:href="@{/catalog/{generaName}(size=${species.getSize()}, page=${species.getPageable().getPageNumber()-1}, generaName=${generaName})}">Previous</a>
+                <a class="disabled" th:if="${species.isFirst()}">Previous</a>
+            </li>
+
+            <li class="" th:each="page : ${#numbers.sequence(0, species.getTotalPages()-1)}"
+                th:classappend="${species.getPageable().getPageNumber() == page} ? 'disabled' : ''">
+                <a class="" th:unless="${species.getPageable().getPageNumber() == page}"
+                   th:href="@{/catalog/{generaName}(size=${species.getSize()}, page=${page}, generaName=${generaName})}" th:text="${page+1}">#</a>
+                <a class="disabled" th:if="${species.getPageable().getPageNumber() == page}"
+                   th:text="${page+1}">#</a>
+            </li>
+
+            <li class="" th:classappend="${species.isLast()} ? 'disabled' : ''">
+                <a class="" th:unless="${species.isLast()}"
+                   th:href="@{/catalog/{generaName}(size=${species.getSize()}, page=${species.getPageable().getPageNumber()+1}, generaName=${generaName})}">Next</a>
+                <a class="disabled" th:if="${species.isLast()}">Next</a>
+            </li>
+
+            <!--                    <li class="page-item"><a class="page-Link" href="#">3</a></li>-->
+
+            <!-- Last page logic start -->
+            <li class="" th:classappend="${species.isLast()} ? 'disabled' : ''">
+                <a th:if="${species.isLast()}" class="disabled" href="#" aria-label="Last">
+                    <span aria-hidden="true">&raquo; </span>
+                </a>
+                <a th:unless="${species.isLast()}" class=""
+                   th:href="@{/catalog/{generaName}(size=${species.getSize()}, page=${species.getTotalPages()-1}, generaName=${generaName})}"
+                   aria-label="Last">
+                    <span aria-hidden="true">&raquo; </span>
+                </a>
+            </li>
+        </ul>
+    </div>
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>
 </body>

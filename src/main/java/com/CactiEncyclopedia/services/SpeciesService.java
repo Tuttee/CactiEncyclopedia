@@ -9,6 +9,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,8 +27,8 @@ public class SpeciesService {
 
     //to test with Cacheable
     @Cacheable("species-by-genera")
-    public List<Species> getApprovedSpeciesByGenera(String genera) {
-        return this.speciesRepository.findAllByGenera_NameAndApprovedIsTrue(genera);
+    public Page<Species> getApprovedSpeciesByGenera(String genera, Pageable pageable) {
+        return this.speciesRepository.findAllByGenera_NameAndApprovedIsTrue(genera, pageable);
     }
 
     public Species getSpeciesById(UUID id) {
@@ -41,6 +43,11 @@ public class SpeciesService {
     }
 
 //    @Cacheable("all-species")
+    public Page<Species> getAllApproved(Pageable pageable) {
+        return this.speciesRepository.findAllByApprovedIsTrue(pageable);
+    }
+
+    //    @Cacheable("all-species")
     public List<Species> getAllApproved() {
         return this.speciesRepository.findAllByApprovedIsTrue();
     }

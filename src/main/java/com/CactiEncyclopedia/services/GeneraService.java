@@ -5,6 +5,8 @@ import com.CactiEncyclopedia.domain.entities.Genera;
 import com.CactiEncyclopedia.repositories.GeneraRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +16,14 @@ import java.util.List;
 public class GeneraService {
     private final GeneraRepository generaRepository;
 
+//    @Cacheable("genera")
+//    public List<Genera> getAllGeneraWithSpecies() {
+//        return generaRepository.findAllBySpeciesCountMoreThan0();
+//    }
+
     @Cacheable("genera")
-    public List<Genera> getAllGeneraWithSpecies() {
-        return generaRepository.findAllBySpeciesCountMoreThan0();
+    public Page<Genera> getAllGeneraWithSpecies(Pageable pageable) {
+        return generaRepository.findAllBySpeciesListNotEmpty(pageable);
     }
 
     public List<String> getAllGeneraNamesList() {

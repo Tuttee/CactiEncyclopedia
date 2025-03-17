@@ -15,6 +15,9 @@ import feign.RetryableException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -33,10 +36,11 @@ public class CatalogController extends BaseController {
     private final GeneraService generaService;
     private final SpeciesService speciesService;
     private final FactClient factClient;
+    private static final int PAGEABLE_DEFAULT = 2;
 
     @GetMapping
-    public ModelAndView catalog() {
-        List<Genera> allGenera = generaService.getAllGeneraWithSpecies();
+    public ModelAndView catalog(@PageableDefault(size = PAGEABLE_DEFAULT, sort = "name") Pageable pageable) {
+        Page<Genera> allGenera = generaService.getAllGeneraWithSpecies(pageable);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("allGenera", allGenera);
 
@@ -57,11 +61,15 @@ public class CatalogController extends BaseController {
     }
 
     @GetMapping("/{generaName}")
-    public ModelAndView getGenera(@PathVariable String generaName) {
-        List<Species> speciesByGenera = speciesService.getApprovedSpeciesByGenera(generaName);
+    public ModelAndView getGenera(@PathVariable String generaName,
+                                  @PageableDefault(size = PAGEABLE_DEFAULT, sort = "name") Pageable pageable) {
+        Page<Species> speciesByGenera = speciesService.getApprovedSpeciesByGenera(generaName, pageable);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("species", speciesByGenera);
+        modelAndView.addObject("generaName", generaName);
+        modelAndView.addObject("all", false);
+
 
         return super.view("species", modelAndView);
     }
@@ -90,8 +98,8 @@ public class CatalogController extends BaseController {
     }
 
     @GetMapping("/all")
-    public ModelAndView getAllSpecies() {
-        List<Species> allSpecies = speciesService.getAllApproved();
+    public ModelAndView getAllSpecies(@PageableDefault(size = PAGEABLE_DEFAULT, sort = "name") Pageable pageable) {
+        Page<Species> allSpecies = speciesService.getAllApproved(pageable);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("species", allSpecies);
