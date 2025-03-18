@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head th:replace="~{fragments/commons::head}"></head>
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
@@ -29,7 +29,8 @@
     </div>
 
     <div class="details-container">
-        <form class="form-question" th:method="POST" th:action="@{/question/{id}(id=${species.id})}"
+            <h5 class="text-center" sec:authorize="isAnonymous()">You need to be logged to post a question. <a th:href="@{/auth/login}">Login here</a></h5>
+        <form class="form-question" sec:authorize="isAuthenticated()" th:method="POST" th:action="@{/question/{id}(id=${species.id})}"
               th:object="${addQuestion}">
             <label for="content">Ask a Question</label>
             <textarea id="content" th:field="*{content}" placeholder="You have a question? Ask it here!"></textarea>

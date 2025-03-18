@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 @EnableFeignClients
-@EnableCaching
+//@EnableCaching
 public class CactiEncyclopediaApplication {
 
 	public static void main(String[] args) {
