@@ -36,7 +36,7 @@ public class CatalogController extends BaseController {
     private final GeneraService generaService;
     private final SpeciesService speciesService;
     private final FactClient factClient;
-    private static final int PAGEABLE_DEFAULT = 2;
+    private static final int PAGEABLE_DEFAULT = 9;
 
     @GetMapping
     public ModelAndView catalog(@PageableDefault(size = PAGEABLE_DEFAULT, sort = "name") Pageable pageable) {

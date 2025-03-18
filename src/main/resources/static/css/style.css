@@ -554,11 +554,13 @@ th {
     color: black;
 }
 
-.pagination a:active {
-    cursor: pointer;
+.pagination a.disabled {
+    color: #9a9a9a;
+    /*background-color: rgb(252, 248, 238) !important;*/
+    cursor: default;
 }
 
-.pagination a.disabled {
+.pagination a.disabled:hover {
     color: #9a9a9a;
     /*background-color: rgb(252, 248, 238) !important;*/
     cursor: default;

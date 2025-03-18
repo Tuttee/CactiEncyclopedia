@@ -16,14 +16,9 @@ import java.util.List;
 public class GeneraService {
     private final GeneraRepository generaRepository;
 
-//    @Cacheable("genera")
-//    public List<Genera> getAllGeneraWithSpecies() {
-//        return generaRepository.findAllBySpeciesCountMoreThan0();
-//    }
-
     @Cacheable("genera")
     public Page<Genera> getAllGeneraWithSpecies(Pageable pageable) {
-        return generaRepository.findAllBySpeciesListNotEmpty(pageable);
+        return generaRepository.findAllByApprovedSpeciesCountMoreThan0(pageable);
     }
 
     public List<String> getAllGeneraNamesList() {
