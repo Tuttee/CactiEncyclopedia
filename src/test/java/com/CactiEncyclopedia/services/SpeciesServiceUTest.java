@@ -1,7 +1,6 @@
 package com.CactiEncyclopedia.services;
 
 import com.CactiEncyclopedia.domain.binding.AddSpeciesDto;
-import com.CactiEncyclopedia.domain.binding.UserRegisterDto;
 import com.CactiEncyclopedia.domain.entities.*;
 import com.CactiEncyclopedia.domain.enums.RoleName;
 import com.CactiEncyclopedia.exception.SpeciesAlreadyExistsException;
@@ -182,24 +181,48 @@ public class SpeciesServiceUTest {
 
     }
 
+    @Test
+    void givenIncorrectId_whenApprove_thenThrowsException() {
+        when(speciesRepository.findById(any())).thenReturn(Optional.empty());
 
-//    @Test
-//    void givenCorrectData_whenFirstUserRegister_successAdmin() {
-//        UserRegisterDto userRegisterDto = getAdminRegisterDto();
-//
-//        when(userRepository.existsByUsername(any())).thenReturn(false);
-//        when(userRepository.existsByEmail(any())).thenReturn(false);
-//
-//        User adminUser = getAdmin();
-//        when(userRepository.saveAndFlush(any())).thenReturn(adminUser);
-//        when(userRepository.count()).thenReturn(0L);
-//
-//        userService.register(userRegisterDto);
-//
-//        verify(roleService, times(1)).getAdminRole();
-//        verify(roleService, never()).getUserRole();
-//        verify(userRepository, times(1)).saveAndFlush(any());
-//    }
+        assertThrows(NoSuchElementException.class, () -> speciesService.approve(UUID.randomUUID()));
+    }
+
+    @Test
+    void givenCorrectId_whenApprove_thenSuccess() {
+        Species unapprovedSpecies = getUnapprovedSpecies();
+
+        when(speciesRepository.findById(unapprovedSpecies.getId())).thenReturn(Optional.of(unapprovedSpecies));
+
+        speciesService.approve(unapprovedSpecies.getId());
+
+        verify(speciesRepository, times(1)).findById(unapprovedSpecies.getId());
+        verify(speciesRepository, times(1)).save(unapprovedSpecies);
+        assertTrue(unapprovedSpecies.isApproved());
+    }
+
+    @Test
+    void givenId_whenDelete_thenSuccess() {
+        UUID id = UUID.randomUUID();
+
+        speciesService.delete(id);
+
+        verify(speciesRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    void givenSpeciesExist_whenGet10RecentlyAdded_thenListOfSpecies() {
+        List<Species> speciesList = Arrays.asList(getApprovedSpecies(),
+                getApprovedSpecies(),
+                getApprovedSpecies());
+
+        when(speciesRepository.find10RecentlyAddedAndApproved()).thenReturn(speciesList);
+
+        List<Species> speciesService10RecentlyAdded = speciesService.get10RecentlyAdded();
+
+        verify(speciesRepository, times(1)).find10RecentlyAddedAndApproved();
+        assertEquals(speciesList, speciesService10RecentlyAdded);
+    }
 
     private AddSpeciesDto getAddSpeciesDto() {
         return new AddSpeciesDto("Species",
