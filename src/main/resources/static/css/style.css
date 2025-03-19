@@ -547,11 +547,19 @@ th {
 .pagination a {
     padding: 10px 15px;
     background-color: rgb(248, 233, 233);
-    border: 1px solid lightgrey;
+    /*border: 1px solid lightgrey;*/
+    border: 1px solid #8A9964;
     border-radius: 20px;
     margin-inline: 5px;
     text-decoration: none;
     color: black;
+    transition: 0.2s ease-in-out;
+}
+
+.pagination a:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0 3px 10px -1px;
+    transition: 0.2s ease-in-out;
+
 }
 
 .pagination a.disabled {
@@ -564,4 +572,5 @@ th {
     color: #9a9a9a;
     /*background-color: rgb(252, 248, 238) !important;*/
     cursor: default;
+    box-shadow: none;
 }

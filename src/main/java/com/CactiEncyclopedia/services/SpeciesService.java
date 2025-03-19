@@ -4,10 +4,12 @@ import com.CactiEncyclopedia.domain.binding.AddSpeciesDto;
 import com.CactiEncyclopedia.domain.entities.Species;
 import com.CactiEncyclopedia.domain.entities.User;
 import com.CactiEncyclopedia.domain.enums.RoleName;
+import com.CactiEncyclopedia.exception.SpeciesAlreadyExistsException;
 import com.CactiEncyclopedia.repositories.SpeciesRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,12 +44,12 @@ public class SpeciesService {
         return species;
     }
 
-//    @Cacheable("all-species")
+    @Cacheable("all-species")
     public Page<Species> getAllApproved(Pageable pageable) {
         return this.speciesRepository.findAllByApprovedIsTrue(pageable);
     }
 
-    //    @Cacheable("all-species")
+        @Cacheable("all-species")
     public List<Species> getAllApproved() {
         return this.speciesRepository.findAllByApprovedIsTrue();
     }
@@ -61,6 +63,10 @@ public class SpeciesService {
     public void addSpecies(AddSpeciesDto addSpeciesDto, UUID userId) {
         User user = userService.findUserById(userId);
 
+        if (speciesRepository.findByName(addSpeciesDto.getName()).isPresent()) {
+            throw new SpeciesAlreadyExistsException(addSpeciesDto.getName());
+        }
+
         Species species = modelMapper.map(addSpeciesDto, Species.class);
 
         species.setCreatedBy(user);
@@ -71,16 +77,17 @@ public class SpeciesService {
             species.setApproved(true);
         }
 
-//        userService.saveSpeciesToUser(userId, species);
         this.speciesRepository.save(species);
     }
 
+    @CacheEvict(value = {"all-species", "species-by-genera", "genera"}, allEntries = true)
     public void approve(UUID id) {
         Species species = this.speciesRepository.findById(id).orElseThrow();
         species.setApproved(true);
         this.speciesRepository.save(species);
     }
 
+    @CacheEvict(value = {"all-species", "species-by-genera", "genera"}, allEntries = true)
     public void delete(UUID id) {
         this.speciesRepository.deleteById(id);
     }

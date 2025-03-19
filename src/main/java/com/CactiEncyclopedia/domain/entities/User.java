@@ -2,10 +2,7 @@ package com.CactiEncyclopedia.domain.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class User extends BaseEntity{
     @Column(nullable = false, unique = true)
     @Size(min = 3, max = 20)

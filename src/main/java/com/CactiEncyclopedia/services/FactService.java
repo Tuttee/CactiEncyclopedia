@@ -3,6 +3,7 @@ package com.CactiEncyclopedia.services;
 import com.CactiEncyclopedia.client.FactClient;
 import com.CactiEncyclopedia.domain.binding.AddFactDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,6 @@ public class FactService {
     public boolean addFact(AddFactDto addFactDto, UUID userId) {
         addFactDto.setAddedBy(userId);
         ResponseEntity<Void> stringResponseEntity = factClient.addFact(addFactDto);
-        return stringResponseEntity.getStatusCode().is2xxSuccessful();
+        return stringResponseEntity.getStatusCode().isSameCodeAs(HttpStatus.CREATED);
     }
 }
