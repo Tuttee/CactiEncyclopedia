@@ -64,7 +64,7 @@ public class SpeciesService {
         User user = userService.findUserById(userId);
 
         if (speciesRepository.findByName(addSpeciesDto.getName()).isPresent()) {
-            throw new SpeciesAlreadyExistsException(addSpeciesDto.getName());
+            throw new SpeciesAlreadyExistsException("Species with name " + addSpeciesDto.getName() + " already exists!");
         }
 
         Species species = modelMapper.map(addSpeciesDto, Species.class);

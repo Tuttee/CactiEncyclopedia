@@ -1,7 +1,11 @@
 package com.CactiEncyclopedia.web;
 
+import com.CactiEncyclopedia.domain.binding.AddGeneraDto;
+import com.CactiEncyclopedia.domain.binding.AddSpeciesDto;
 import com.CactiEncyclopedia.domain.binding.UserRegisterDto;
 import com.CactiEncyclopedia.exception.EmailAlreadyExistsException;
+import com.CactiEncyclopedia.exception.GeneraAlreadyExistsException;
+import com.CactiEncyclopedia.exception.SpeciesAlreadyExistsException;
 import com.CactiEncyclopedia.exception.UsernameAlreadyExistsException;
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,8 +50,36 @@ public class ExceptionAdvice {
         return "redirect:/auth/register";
     }
 
+    @ExceptionHandler(GeneraAlreadyExistsException.class)
+    public String handleGeneraAlreadyExistsException(RedirectAttributes redirectAttributes,
+                                                    HttpServletRequest request,
+                                                    GeneraAlreadyExistsException e) {
+        AddGeneraDto addGeneraDto = getAddGeneraDtoFromHttpRequest(request);
+
+        redirectAttributes.addFlashAttribute("generaAlreadyExistsMessage", e.getMessage());
+        redirectAttributes.addFlashAttribute("addGenera", addGeneraDto);
+
+
+        return "redirect:/catalog/add-genera";
+    }
+
+    @ExceptionHandler(SpeciesAlreadyExistsException.class)
+    public String handleSpeciesAlreadyExistsException(RedirectAttributes redirectAttributes,
+                                                    HttpServletRequest request,
+                                                    SpeciesAlreadyExistsException e) {
+        AddSpeciesDto addSpeciesDto = getAddSpeciesDtoFromHttpRequest(request);
+
+        redirectAttributes.addFlashAttribute("speciesAlreadyExistsMessage", e.getMessage());
+        redirectAttributes.addFlashAttribute("addSpecies", addSpeciesDto);
+
+
+        return "redirect:/catalog/species/add";
+    }
+
+
+
     @ExceptionHandler(FeignException.class)
-    public String handleEmailAlreadyExistsException(FeignException duplicateFactException,
+    public String handleFeignException(FeignException duplicateFactException,
                                                     RedirectAttributes redirectAttributes) {
 
         redirectAttributes.addFlashAttribute("error", "Fact cannot be added! " + duplicateFactException.getMessage());
@@ -88,5 +120,29 @@ public class ExceptionAdvice {
 
         return new UserRegisterDto(username, password, confirmPassword, email, firstName, lastName);
 
+    }
+
+    private AddGeneraDto getAddGeneraDtoFromHttpRequest(HttpServletRequest request) {
+        String name = request.getParameter("name");
+        String imageUrl = request.getParameter("imageUrl");
+
+        return new AddGeneraDto(name, imageUrl);
+    }
+
+    private AddSpeciesDto getAddSpeciesDtoFromHttpRequest(HttpServletRequest request) {
+        String name = request.getParameter("name");
+        String genera = request.getParameter("genera");
+        String description = request.getParameter("description");
+        String cultivation = request.getParameter("cultivation");
+        String coldHardiness = request.getParameter("coldHardiness");
+        String imageURL = request.getParameter("imageURL");
+
+        return new AddSpeciesDto(name,
+                genera,
+                imageURL,
+                description,
+                cultivation,
+                coldHardiness,
+                false);
     }
 }
