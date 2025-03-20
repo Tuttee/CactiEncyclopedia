@@ -148,12 +148,14 @@ public class SpeciesServiceUTest {
         when(userService.findUserById(user.getId())).thenReturn(user);
         when(speciesRepository.findByName(addSpeciesDto.getName())).thenReturn(Optional.empty());
         when(modelMapper.map(addSpeciesDto, Species.class)).thenReturn(unapprovedSpecies);
+        when(generaService.getGeneraByName(addSpeciesDto.getGenera())).thenReturn(getGenera());
 
         speciesService.addSpecies(addSpeciesDto, user.getId());
 
         verify(userService, times(1)).findUserById(user.getId());
         verify(speciesRepository, times(1)).findByName(addSpeciesDto.getName());
         verify(modelMapper, times(1)).map(addSpeciesDto, Species.class);
+        verify(generaService, times(1)).getGeneraByName(addSpeciesDto.getGenera());
         verify(speciesRepository, times(1)).save(unapprovedSpecies);
         assertTrue(unapprovedSpecies.isApproved());
 
@@ -170,12 +172,14 @@ public class SpeciesServiceUTest {
         when(userService.findUserById(user.getId())).thenReturn(user);
         when(speciesRepository.findByName(addSpeciesDto.getName())).thenReturn(Optional.empty());
         when(modelMapper.map(addSpeciesDto, Species.class)).thenReturn(unapprovedSpecies);
+        when(generaService.getGeneraByName(addSpeciesDto.getGenera())).thenReturn(getGenera());
 
         speciesService.addSpecies(addSpeciesDto, user.getId());
 
         verify(userService, times(1)).findUserById(user.getId());
         verify(speciesRepository, times(1)).findByName(addSpeciesDto.getName());
         verify(modelMapper, times(1)).map(addSpeciesDto, Species.class);
+        verify(generaService, times(1)).getGeneraByName(addSpeciesDto.getGenera());
         verify(speciesRepository, times(1)).save(unapprovedSpecies);
         assertFalse(unapprovedSpecies.isApproved());
 

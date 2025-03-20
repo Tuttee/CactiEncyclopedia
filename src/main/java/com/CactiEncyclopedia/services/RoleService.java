@@ -24,10 +24,10 @@ public class RoleService {
     }
 
     public UserRole getUserRole() {
-        return this.roleRepository.findByRoleName(RoleName.USER);
+        return this.roleRepository.findByRoleName(RoleName.USER).orElseThrow();
     }
 
     public UserRole getAdminRole() {
-        return this.roleRepository.findByRoleName(RoleName.ADMIN);
+        return this.roleRepository.findByRoleName(RoleName.ADMIN).orElseThrow();
     }
 }
