@@ -2,6 +2,7 @@ package com.CactiEncyclopedia.services;
 
 import com.CactiEncyclopedia.domain.binding.AddGeneraDto;
 import com.CactiEncyclopedia.domain.entities.Genera;
+import com.CactiEncyclopedia.exception.GeneraAlreadyExistsException;
 import com.CactiEncyclopedia.repositories.GeneraRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
@@ -32,6 +33,10 @@ public class GeneraService {
 
     public void addGenera(AddGeneraDto addGeneraDto) {
         Genera genera = new Genera();
+
+        if (generaRepository.findByName(addGeneraDto.getName()).isPresent()) {
+            throw new GeneraAlreadyExistsException("Genera with name " + addGeneraDto.getName() + " already exists!");
+        }
 
         genera.setName(addGeneraDto.getName());
         genera.setImageURL(addGeneraDto.getImageURL());
