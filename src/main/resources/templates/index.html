@@ -6,20 +6,111 @@
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
-        <h1>Welcome to Cacti Encyclopedia App</h1>
-    <div class="container bg-blur mt-5 ">
-        <hr class="my-3 bg-white w-50"/>
+    <h1>Welcome to Cacti Encyclopedia App</h1>
 
-        <p class="h4">Lorem Ipsum!!!</p>
-        <hr class="my-3 bg-white w-75"/>
+    <div class="login-banner" sec:authorize="isAnonymous()">
+        <h4 sec:authorize="isAnonymous()">
+            To fully experience all functionalities,
+            <a class="" th:href="@{/auth/register}">Register Now</a>
+            or
+            <a class="" th:href="@{/auth/login}">Login</a>.
+        </h4>
+    </div>
 
-        <h3 sec:authorize="isAnonymous()">
-            <a class="text-primary" th:href="@{/auth/login}">Login</a>
-            if you have an account or
-            <a class="text-primary" th:href="@{/auth/register}">Register</a>
-            now and check our deals.
-        </h3>
+    <div class="index-container">
+        <div>
+            <img class="img-float-right" src="/images/c4.jpg" alt="">
+            <h4>What do you know about Cacti?</h4>
+            Cacti are some of the most fascinating and unique plants on Earth! From the towering saguaro cactus standing
+            tall in the desert to the tiny prickly pear with its bright flowers, these resilient plants have evolved
+            incredible shapes and features to survive harsh, dry environments.
+            <br>
+            <br>
+            Can you imagine identifying over 1,000 different kinds of cacti? It’s an incredible world of spines, shapes,
+            and surprising colors waiting to be explored.
+        </div>
+        <div>
+            <img class="img-float-left" src="/images/c3.jpg" alt="">
+            <h4>How can you identify the different types of Cacti?</h4>
+            Cacti are easily recognizable by their fleshy leaves or stems, in which they store water. They come in a
+            huge range of shapes, colors and forms, some covered in spines, others smooth or furry, some gently rounded,
+            others angular and sculptural. <br>
+            <br>
+            As such, it is important to differentiate the various types of cacti and what distinguishes them from one
+            another. Cactus identification is not a hard job, if you know how to identify the different types that
+            exist. It becomes even much easier if you get to understand what to look out for. Cacti, as a classification
+            of succulent plants, are often found in dry and harsh environments. This is one of the most important
+            characteristics to consider when identifying your cactus.
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <h4>What are Cacti used for?</h4>
+            Cacti are often used as decoration in homes and gardens, but they can also be used for their medicinal
+            properties. Some cactus species contain compounds that can be used to treat a variety of ailments, including
+            diabetes, arthritis, and headaches. <br>
+            <br>
+            In addition, cacti can be used as food and water sources in desert habitats. Cactus fruits are often eaten
+            fresh, and the flesh of the cactus can be used to make drinks such as juice and wine. The pads of the cactus
+            can also be cooked and eaten, and are a good source of vitamins and minerals.
+            <br>
+            <br>
+            However, Cacti possess numerous uses beyond their obvious decorative value, and already mentioned value in
+            medicine. They are playing pivotal roles as construction material, food source, fuel supply, grafting
+            rootstock, pest control and even sacrament. Cacti’s versatility is further demonstrated through their
+            application in areas such as dye production and weaving, showcasing the extensive utility derived from these
+            unique plants that thrive under adverse conditions. Furthermore, their adaptability to harsh environments
+            makes them an ideal subject of study for evolutionary biologists, providing valuable insights into desert
+            ecology.
+            <br>
+            <br>
+            Nevertheless, Cacti are essential part of the desert ecosystem. They provide homes and shelter for a wide
+            variety of animals, and their roots help to stabilize the soil. Cacti also play an important role in the
+            water cycle by absorbing and sorting water.
+            <br>
+            <br>
+            <div class="text-center">
+                <img class="" alt="" src="/images/OIP_4.jpg"/>
+                <img class="" src="/images/OIP_2.jpg" alt="cactus"/>
+            </div>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <h4>How To Care For a Cactus?</h4>
+            While cacti may seem like tough plants that can survive just about anything, they actually require quite a bit of care if you want them to thrive. Here are some secrets to growing healthy cacti:
+            <br>
+            <br>
+            <ol type="1">
+                <li>
+                    Provide plenty of sunlight. Cacti need direct sunlight in order to grow and produce flowers. If you live in a climate with long, hot summers, your cactus will do best if it's placed in a sunny spot outdoors. If you live in a cooler climate, or if you want to grow your cactus indoors, place it near a south-facing window where it will receive plenty of sunlight.
+                </li>
+                <li>
+                    Allow the soil to dry out completely between watering. Cacti are succulents, which means they store water in their stems and leaves. As a result, they don't need to be watered very often. In fact, overwatering is one of the most common mistakes people make when growing cacti. Water your cactus only when the top inch or so of soil is dry to the touch.
+                </li>
+                <li>
+                    Don't fertilize too often. Cacti don't need a lot of fertilizer, and too much can actually do more harm than good. If you decide to fertilize your cactus, use a very diluted solution and apply it only once every month or two.
+                </li>
+                <li>
+                    Protect your cactus from cold weather. Cacti are native to warm desert climates, so they're not very tolerant of cold weather. If you live in an area that gets frost in the winter, it's best to grow your cactus indoors where it will be protected from the cold.
+                </li>
+                <li>
+                    Be careful when handling cacti. The spines on some cacti can be quite sharp, so it's important to handle them with care. If you need to move your cactus, or if you want to repot it, be sure to wear gloves to protect your hands.
+                </li>
 
+            </ol>
+            As such, it is important to differentiate the various types of cacti and what distinguishes them from one
+            another. Cactus identification is not a hard job, if you know how to identify the different types that
+            exist. It becomes even much easier if you get to understand what to look out for. Cacti, as a classification
+            of succulent plants, are often found in dry and harsh environments. This is one of the most important
+            characteristics to consider when identifying your cactus.
+        </div>
+        <div class="text-center imgs" sec:authorize="isAuthenticated()">
+            <img class="" alt="" src="/images/OIP_6.jpg"/>
+            <img class="" src="/images/OIP_8.jpg" alt="cactus"/>
+            <img class="" src="/images/OIP_1.jpg" alt="cactus"/>
+        </div>
+        <div class="login-banner w-100" sec:authorize="isAnonymous()">
+            <h4>
+                To read more, please <a class="" th:href="@{/auth/login}">Login</a>.
+            </h4>
+        </div>
     </div>
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>

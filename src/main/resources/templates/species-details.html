@@ -9,8 +9,9 @@
     <h1 th:text="${species.name}"></h1>
     <div class="details-container">
         <div class="details-row">
-            <img th:src="${species.imageURL}" alt="Card image cap"/>
-            <p th:text="${species.description}"></p>
+<!--            <img class="" th:src="${species.imageURL}" alt="Card image cap"/>-->
+<!--            <p class="" th:text="${species.description}"></p>-->
+            <p class="" th:utext="'<img src=\'' + ${species.imageURL} + '\' alt=\'Card image cap\'>' + ${species.description}"></p>
         </div>
 
         <div class="details-row">
