@@ -5,7 +5,7 @@
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
-        <h1 class="text-center mt-2"><span class="">Add Fact</span></h1>
+        <h1 class="text-center"><span class="">Add Fact</span></h1>
 
         <h5 class="success-message" th:if="${success}">Fact Added!</h5>
     <form class="form-submit" th:method="POST" th:action="@{/add-fact}" th:object="${addFact}">

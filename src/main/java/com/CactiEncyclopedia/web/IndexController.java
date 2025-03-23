@@ -23,9 +23,7 @@ public class IndexController extends BaseController {
 
     @GetMapping
     public ModelAndView getIndex() {
-        ModelAndView modelAndView = new ModelAndView();
-
-        return super.view("index", modelAndView);
+        return super.view("index");
     }
 
     @GetMapping("/about")
@@ -48,13 +46,13 @@ public class IndexController extends BaseController {
 
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("addFact", addFactDto);
-            return super.view("/add-fact", modelAndView);
+            return super.view("add-fact", modelAndView);
         }
 
         boolean isFactAdded = factService.addFact(addFactDto, authenticationMetadata.getUserId());
 
         modelAndView.addObject("success", isFactAdded);
-        return super.view("/add-fact", modelAndView);
+        return super.view("add-fact", modelAndView);
     }
 
     @GetMapping("/thank")

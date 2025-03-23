@@ -35,17 +35,17 @@
         </div>
 
         <div class="field">
-            <label for="cultivation" class="">Cultivation*</label>
+            <label for="cultivation" class="">Cultivation</label>
             <textarea type="cultivation" class="" id="cultivation" name="cultivation" th:text="*{cultivation}"
-                      placeholder="Enter cultivation" required></textarea>
+                      placeholder="Enter cultivation"></textarea>
             <small class="error" th:if="${#fields.hasErrors('cultivation')}" th:errors="*{cultivation}">Email error
                 message</small>
         </div>
 
         <div class="field">
-            <label for="coldHardiness" class="">Cold hardiness*</label>
+            <label for="coldHardiness" class="">Cold hardiness</label>
             <textarea type="coldHardiness" class="" id="coldHardiness" name="coldHardiness" th:text="*{coldHardiness}"
-                      placeholder="Enter cold hardiness" required></textarea>
+                      placeholder="Enter cold hardiness"></textarea>
             <small class="error" th:if="${#fields.hasErrors('coldHardiness')}" th:errors="*{coldHardiness}">Email error
                 message</small>
         </div>

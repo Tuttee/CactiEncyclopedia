@@ -33,7 +33,7 @@ public class AuthController extends BaseController {
 
         this.userService.register(userRegisterDto);
 
-        return super.view("login");
+        return super.redirect("/auth/login");
     }
 
     @GetMapping("/login")

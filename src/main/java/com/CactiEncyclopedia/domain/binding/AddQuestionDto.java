@@ -1,5 +1,6 @@
 package com.CactiEncyclopedia.domain.binding;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddQuestionDto {
+    @NotBlank(message = "You cannot publish an empty question!")
     private String content;
     private String speciesId;
 }

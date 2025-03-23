@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
         return this.userRepository.existsByEmail(email);
     }
 
-    public void register(UserRegisterDto userRegisterDto) {
+    public boolean register(UserRegisterDto userRegisterDto) {
         if (existsByUsername(userRegisterDto.getUsername())) {
             throw new UsernameAlreadyExistsException("Username is already in use!");
         }
@@ -51,6 +51,7 @@ public class UserService implements UserDetailsService {
         user.setRole(isDbInit() ? roleService.getUserRole() : roleService.getAdminRole());
 
         this.userRepository.saveAndFlush(user);
+        return true;
     }
 
     private boolean isDbInit() {

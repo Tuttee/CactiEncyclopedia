@@ -34,7 +34,7 @@
         <form class="form-question" sec:authorize="isAuthenticated()" th:method="POST" th:action="@{/question/{id}(id=${species.id})}"
               th:object="${addQuestion}">
             <label for="content">Ask a Question</label>
-            <textarea id="content" th:field="*{content}" placeholder="You have a question? Ask it here!"></textarea>
+            <textarea id="content" th:field="*{content}" placeholder="You have a question? Ask it here!" required></textarea>
             <button class="submit-btn" type="submit">Post Question</button>
         </form>
         <div class="question" th:if="${#lists.size(species.questions)>0}" th:each="question : ${species.questions}">

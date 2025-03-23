@@ -24,13 +24,13 @@ public class AddSpeciesDto {
     @URL(message = "Please enter a valid URL!")
     private String imageURL;
 
-    @Size(min = 50, max = 1000, message = "Description must be between 50 and 1000 characters.")
+    @Size(min = 50, max = 2000, message = "Description must be between 50 and 2000 characters.")
     private String description;
 
-    @Size(max = 1000)
+    @Size(max = 2000, message = "Cultivation must be maximum of 2000 characters.")
     private String cultivation;
 
-    @Size(max = 500)
+    @Size(max = 1000, message = "Cold hardiness must be maximum of 1000 characters.")
     private String coldHardiness;
 
     @Column

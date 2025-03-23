@@ -77,7 +77,7 @@
         <li class="">
             <a class="" th:href="@{/}">Home</a>
         </li>
-        <li class="">
+        <li class="" sec:authorize="isAuthenticated()">
             <a class="" th:href="@{/user/my-profile}">My Profile</a>
         </li>
         <li class="">

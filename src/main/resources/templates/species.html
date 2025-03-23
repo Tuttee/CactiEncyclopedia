@@ -6,8 +6,8 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
-    <h1 th:if="${all}" class="text-center mt-2"><span >Species Catalogue</span></h1>
-    <h1 th:unless="${all}" class="text-center mt-2"><span th:text="${generaName + ' Catalogue'}">Species Catalogue</span></h1>
+    <h1 th:if="${all}" class="text-center">Species Catalogue</h1>
+    <h1 th:unless="${all}" class="text-center" th:text="${generaName + ' Catalogue'}">Species Catalogue</h1>
     <div class="card-container">
         <div class="card-cacti" th:each="specie : ${species}">
             <a th:href="@{/catalog/species/{id}(id=${specie.id})}">

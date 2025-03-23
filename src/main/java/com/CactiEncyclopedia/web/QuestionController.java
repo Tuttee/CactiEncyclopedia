@@ -3,6 +3,7 @@ package com.CactiEncyclopedia.web;
 import com.CactiEncyclopedia.domain.binding.AddQuestionDto;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.QuestionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,7 +23,7 @@ public class QuestionController extends BaseController {
 
     @PostMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ModelAndView postQuestion(AddQuestionDto addQuestionDto,
+    public ModelAndView postQuestion(@Valid AddQuestionDto addQuestionDto,
                                      @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata,
                                      @PathVariable UUID id) {
         questionService.addQuestion(addQuestionDto, id, authenticationMetadata);

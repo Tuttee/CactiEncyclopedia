@@ -9,7 +9,7 @@
 
 body {
     font: 14px Inder, sans-serif;
-    margin-top: 150px;
+    /*margin-top: 150px;*/
     padding-bottom: 150px;
     /*margin-bottom: 150px;*/
     /*min-height:70.5vh;*/
@@ -25,7 +25,8 @@ nav {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 20px;
-    position: fixed;
+    position: sticky;
+    /*position: fixed;*/
     width: 100vw;
     top: 0;
 }
@@ -198,15 +199,23 @@ form.form-submit {
     overflow: hidden;
     color: black;
     gap: 40px;
+    flex-grow: 1;
+    justify-content: stretch;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
 }
 
 h1 {
-    margin-top: 16px;
+    margin-top: 45px;
     padding-bottom: 35px;
     text-align: center;
     border-bottom: 1px solid #8A9964;
-    /*max-width: 550px;*/
-    max-width: 700px;
+    horiz-align: center;
+    /*max-width: 700px;*/
+    display: inline-block;
     margin-inline: auto;
     margin-bottom: 40px;
     word-wrap: break-word;
@@ -225,6 +234,7 @@ input, select, textarea {
     padding-left: 10px;
     padding-right: 10px;
     font-size: 1.2em;
+    width: 600px;
 }
 
 input, select {
@@ -388,7 +398,7 @@ input::placeholder, select .placeholder {
     background-color: rgb(248, 233, 233);
     border-radius: 20px;
     margin-bottom: 30px;
-    align-items: flex-start;
+    /*align-items: flex-start;*/
 }
 
 .details-row {
@@ -495,6 +505,14 @@ p.date {
 
 .status.in-review {
     background-color: #c9aa65;
+}
+
+.btn-danger {
+    background-color: #c65454;
+}
+
+.btn-success {
+    background-color: #8A9964;
 }
 
 
@@ -657,8 +675,10 @@ display: flex;
     border: 1px solid lightgrey;
     border-radius: 20px;
     margin-top: 10px;
+    transition: 0.2s ease-in-out;
 }
 
 .login-banner a:hover {
+    transition: 0.2s ease-in-out;
     color: green;
 }

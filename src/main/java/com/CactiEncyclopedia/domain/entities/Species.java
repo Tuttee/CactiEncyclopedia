@@ -22,7 +22,7 @@ public class Species extends BaseEntity {
     @Column(nullable = false)
     private String imageURL;
 
-    @ManyToOne(optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private User createdBy;
 
     @ManyToOne(optional = false)
