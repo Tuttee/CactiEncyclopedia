@@ -31,7 +31,7 @@ public class GeneraService {
         return this.generaRepository.findByName(genera).orElseThrow();
     }
 
-    public void addGenera(AddGeneraDto addGeneraDto) {
+    public boolean addGenera(AddGeneraDto addGeneraDto) {
         Genera genera = new Genera();
 
         if (generaRepository.findByName(addGeneraDto.getName()).isPresent()) {
@@ -42,5 +42,6 @@ public class GeneraService {
         genera.setImageURL(addGeneraDto.getImageURL());
 
         generaRepository.save(genera);
+        return true;
     }
 }

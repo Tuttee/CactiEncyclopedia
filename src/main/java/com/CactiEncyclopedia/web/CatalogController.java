@@ -86,7 +86,6 @@ public class CatalogController extends BaseController {
     public ModelAndView postAddGenera(@Valid @ModelAttribute("addGenera") AddGeneraDto addGeneraDto,
                                       BindingResult bindingResult,
                                       ModelAndView modelAndView) {
-
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("addGenera", addGeneraDto);
             return super.view("add-genera", modelAndView);
@@ -119,6 +118,7 @@ public class CatalogController extends BaseController {
     }
 
     @GetMapping("/species/add")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ModelAndView getAddSpecies() {
         List<String> GeneraList = generaService.getAllGeneraNamesList();
 

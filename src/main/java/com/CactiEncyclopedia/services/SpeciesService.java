@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -30,7 +31,11 @@ public class SpeciesService {
     //to test with Cacheable
     @Cacheable("species-by-genera")
     public Page<Species> getApprovedSpeciesByGenera(String genera, Pageable pageable) {
-        return this.speciesRepository.findAllByGenera_NameAndApprovedIsTrue(genera, pageable);
+        Page<Species> allByGeneraNameAndApprovedIsTrue = this.speciesRepository.findAllByGenera_NameAndApprovedIsTrue(genera, pageable);
+
+        if (allByGeneraNameAndApprovedIsTrue.isEmpty()) throw new NoSuchElementException();
+
+        return allByGeneraNameAndApprovedIsTrue;
     }
 
     public Species getSpeciesById(UUID id) {
@@ -60,7 +65,7 @@ public class SpeciesService {
     }
 
     @Transactional
-    public void addSpecies(AddSpeciesDto addSpeciesDto, UUID userId) {
+    public boolean addSpecies(AddSpeciesDto addSpeciesDto, UUID userId) {
         User user = userService.findUserById(userId);
 
         if (speciesRepository.findByName(addSpeciesDto.getName()).isPresent()) {
@@ -78,6 +83,7 @@ public class SpeciesService {
         }
 
         this.speciesRepository.save(species);
+        return true;
     }
 
     @CacheEvict(value = {"all-species", "species-by-genera", "genera"}, allEntries = true)

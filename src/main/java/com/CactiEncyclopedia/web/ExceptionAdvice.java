@@ -79,10 +79,10 @@ public class ExceptionAdvice {
 
 
     @ExceptionHandler(FeignException.class)
-    public String handleFeignException(FeignException duplicateFactException,
+    public String handleFeignException(FeignException feignException,
                                                     RedirectAttributes redirectAttributes) {
 
-        redirectAttributes.addFlashAttribute("error", "Fact cannot be added! " + duplicateFactException.getMessage());
+        redirectAttributes.addFlashAttribute("error", "Fact cannot be added! " + feignException.getMessage());
 
         return "redirect:/add-fact";
     }

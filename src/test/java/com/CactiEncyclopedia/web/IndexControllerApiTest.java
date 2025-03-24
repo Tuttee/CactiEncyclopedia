@@ -6,6 +6,7 @@ import com.CactiEncyclopedia.domain.enums.RoleName;
 import com.CactiEncyclopedia.domain.view.UserDetailsViewModel;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.FactService;
+import feign.FeignException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -161,14 +162,48 @@ public class IndexControllerApiTest {
         verify(factService, times(0)).addFact(any(), any());
     }
 
+    @Test
+    void postAuthorizedRequestToAddFactEndpoint_whenSavingErrorOccurs_shouldReturnAndFactViewWithError() throws Exception {
+        UUID userId = UUID.randomUUID();
+        AuthenticationMetadata principal = new AuthenticationMetadata(userId, "user123", "12312312", new UserRole(RoleName.ADMIN), true);
 
-    private UserDetailsViewModel aRandomUser() {
-        UserDetailsViewModel viewModel = new UserDetailsViewModel();
-        viewModel.setUsername("username");
-        viewModel.setFirstName("firstname");
-        viewModel.setLastName("lastname");
-        viewModel.setEmail("email@email.com");
-        viewModel.setRole(RoleName.USER);
-        return viewModel;
+        AddFactDto addFactDto = new AddFactDto("Test123456", userId);
+
+        MockHttpServletRequestBuilder request = post("/add-fact")
+                .with(user(principal))
+                .param("content", addFactDto.getContent())
+                .with(csrf());
+
+        when(factService.addFact(any(), any())).thenThrow(FeignException.class);
+
+        mockMvc.perform(request)
+                .andExpect(status().isFound())
+                .andExpect(redirectedUrl("/add-fact"))
+                .andExpect(flash().attributeExists("error"))
+                .andExpect(model().attributeDoesNotExist("success"));
+
+        verify(factService, times(1)).addFact(any(), any());
+    }
+
+    @Test
+    void postAuthorizedRequestToAddFactEndpoint_whenRuntimeException_shouldReturn500AndInternalServerErrorView() throws Exception {
+        UUID userId = UUID.randomUUID();
+        AuthenticationMetadata principal = new AuthenticationMetadata(userId, "user123", "12312312", new UserRole(RoleName.ADMIN), true);
+
+        AddFactDto addFactDto = new AddFactDto("Test123456", userId);
+
+        MockHttpServletRequestBuilder request = post("/add-fact")
+                .with(user(principal))
+                .param("content", addFactDto.getContent())
+                .with(csrf());
+
+        when(factService.addFact(any(), any())).thenThrow(new RuntimeException("error"));
+
+        mockMvc.perform(request)
+                .andExpect(status().isInternalServerError())
+                .andExpect(view().name("internal-server-error"))
+                .andExpect(model().attributeExists("error"));
+
+        verify(factService, times(1)).addFact(any(), any());
     }
 }
