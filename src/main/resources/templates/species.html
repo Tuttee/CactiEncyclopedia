@@ -9,6 +9,7 @@
     <h1 th:if="${all}" class="text-center">Species Catalogue</h1>
     <h1 th:unless="${all}" class="text-center" th:text="${generaName + ' Catalogue'}">Species Catalogue</h1>
     <div class="card-container">
+        <h5 class="text-center" th:if="${#lists.size(species) == 0}">There are no species available yet. :(</h5>
         <div class="card-cacti" th:each="specie : ${species}">
             <a th:href="@{/catalog/species/{id}(id=${specie.id})}">
                 <img th:src="${specie.imageURL}" alt="Card image cap"/>

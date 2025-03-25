@@ -9,6 +9,7 @@
 
     <div class='catalog'>
         <div>
+            <h5 class="text-center" th:if="${#lists.size(allGenera) == 0}">There are no genera available yet. :(</h5>
             <div class="card-container">
                 <div class="card-cacti " th:each="genera : ${allGenera}">
                     <a th:href="@{/catalog/{generaName}(generaName=${genera.name})}">
