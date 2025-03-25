@@ -3,7 +3,6 @@ package com.CactiEncyclopedia.web;
 import com.CactiEncyclopedia.domain.binding.AddFactDto;
 import com.CactiEncyclopedia.domain.entities.UserRole;
 import com.CactiEncyclopedia.domain.enums.RoleName;
-import com.CactiEncyclopedia.domain.view.UserDetailsViewModel;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.FactService;
 import feign.FeignException;

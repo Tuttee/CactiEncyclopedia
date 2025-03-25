@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.*;
 
+import static com.CactiEncyclopedia.TestBuilder.getGenera;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -30,7 +31,7 @@ public class GeneraServiceUTest {
     @Test
     void givenExistingGenera_whenGetAllGeneraWithSpecies_thenPageOfGenera() {
         Pageable pageable = Pageable.unpaged();
-        Genera genera = getGenera("Mammilarria");
+        Genera genera = getGenera();
         Page<Genera> generaPage = new PageImpl<>(Arrays.asList(genera, genera));
 
         when(generaRepository.findAllByApprovedSpeciesCountMoreThan0(pageable))
@@ -50,7 +51,7 @@ public class GeneraServiceUTest {
 
     @Test
     void givenExistingGenera_whenGetAllGeneraNamesList_thenListOfGeneraNames() {
-        List<Genera> list = Arrays.asList(getGenera("Mammillaria"), getGenera("Ferocactus"));
+        List<Genera> list = Arrays.asList(getGenera(), getGenera());
 
         when(generaRepository.findAll())
                 .thenReturn(list);
@@ -74,7 +75,7 @@ public class GeneraServiceUTest {
 
     @Test
     void givenHappyPath_whenGetGeneraByName() {
-        Genera genera = getGenera("Mammillaria");
+        Genera genera = getGenera();
 
         when(generaRepository.findByName(genera.getName()))
                 .thenReturn(Optional.of(genera));
@@ -88,7 +89,7 @@ public class GeneraServiceUTest {
 
     @Test
     void givenNameExists_whenAddGenera_thenThrowException() {
-        Genera genera = getGenera("Mammilarria");
+        Genera genera = getGenera();
         AddGeneraDto addGeneraDto = new AddGeneraDto();
         addGeneraDto.setName(genera.getName());
         addGeneraDto.setImageURL(genera.getImageURL());
@@ -99,7 +100,7 @@ public class GeneraServiceUTest {
 
     @Test
     void givenHappyPath_whenAddGenera() {
-        Genera genera = getGenera("Mammilarria");
+        Genera genera = getGenera();
         AddGeneraDto addGeneraDto = new AddGeneraDto();
         addGeneraDto.setName(genera.getName());
         addGeneraDto.setImageURL(genera.getImageURL());
@@ -110,10 +111,6 @@ public class GeneraServiceUTest {
 
         verify(generaRepository, times(1)).findByName(addGeneraDto.getName());
         verify(generaRepository, times(1)).save(any(Genera.class));
-    }
-
-    private Genera getGenera(String name) {
-        return new Genera(name, "http://", new ArrayList<>());
     }
 
 

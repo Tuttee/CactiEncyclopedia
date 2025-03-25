@@ -2,7 +2,6 @@ package com.CactiEncyclopedia.services;
 
 import com.CactiEncyclopedia.domain.binding.UserRegisterDto;
 import com.CactiEncyclopedia.domain.entities.User;
-import com.CactiEncyclopedia.domain.entities.UserRole;
 import com.CactiEncyclopedia.domain.enums.RoleName;
 import com.CactiEncyclopedia.domain.view.UserDetailsViewModel;
 import com.CactiEncyclopedia.exception.EmailAlreadyExistsException;
@@ -17,10 +16,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.internal.util.Assert;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.*;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.UUID;
 
+import static com.CactiEncyclopedia.TestBuilder.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,8 +32,6 @@ import static org.mockito.Mockito.*;
 public class UserServiceUTest {
     @Mock
     private UserRepository userRepository;
-    @Mock
-    private PasswordEncoder passwordEncoder;
     @Mock
     private RoleService roleService;
 
@@ -204,7 +204,7 @@ public class UserServiceUTest {
 
         when(userRepository.findByUsername(admin.getUsername()))
                 .thenReturn(Optional.of(admin));
-        when(roleService.getUserRole()).thenReturn(createUserRole());
+        when(roleService.getUserRole()).thenReturn(getUserRole());
 
         userService.updateUserRole(admin.getUsername());
 
@@ -218,7 +218,7 @@ public class UserServiceUTest {
 
         when(userRepository.findByUsername(user.getUsername()))
                 .thenReturn(Optional.of(user));
-        when(roleService.getAdminRole()).thenReturn(createAdminRole());
+        when(roleService.getAdminRole()).thenReturn(getAdminRole());
 
         userService.updateUserRole(user.getUsername());
 
@@ -239,57 +239,5 @@ public class UserServiceUTest {
         assertThat(allUsersExceptLogged.stream().filter(u -> u.getUsername().equals(admin.getUsername()))).hasSize(0);
     }
 
-    private User getAdmin() {
-        User user = new User("admin",
-                "adminadmin",
-                "admin@user.com",
-                "Admin",
-                "Adminov",
-                createAdminRole(),
-                new ArrayList<>(),
-                new ArrayList<>());
-        user.setId(UUID.randomUUID());
-        return user;
-    }
 
-    private User getUser() {
-        User user = new User("Testuser",
-                "testpass",
-                "test@user.com",
-                "TestFname",
-                "TestLname",
-                createUserRole(),
-                new ArrayList<>(),
-                new ArrayList<>());
-        user.setId(UUID.randomUUID());
-        return user;
-    }
-
-    private UserRole createAdminRole() {
-        return new UserRole(RoleName.ADMIN);
-    }
-
-    private UserRole createUserRole() {
-        return new UserRole(RoleName.USER);
-    }
-
-    private UserRegisterDto getAdminRegisterDto() {
-
-        return new UserRegisterDto(getAdmin().getUsername(),
-                getAdmin().getPassword(),
-                getAdmin().getPassword(),
-                getAdmin().getEmail(),
-                getAdmin().getFirstName(),
-                getAdmin().getLastName());
-    }
-
-    private UserRegisterDto getUserRegisterDto() {
-
-        return new UserRegisterDto(getUser().getUsername(),
-                getUser().getPassword(),
-                getUser().getPassword(),
-                getUser().getEmail(),
-                getUser().getFirstName(),
-                getUser().getLastName());
-    }
 }

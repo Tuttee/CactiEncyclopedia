@@ -45,7 +45,9 @@ public class SpeciesService {
     }
 
     private Species sortSpeciesQuestionsByDate(Species species) {
-        species.getQuestions().sort((q1, q2) -> q2.getAskedOn().compareTo(q1.getAskedOn()));
+        if (species.getQuestions() != null && !species.getQuestions().isEmpty()) {
+            species.getQuestions().sort((q1, q2) -> q2.getAskedOn().compareTo(q1.getAskedOn()));
+        }
         return species;
     }
 
@@ -65,7 +67,7 @@ public class SpeciesService {
     }
 
     @Transactional
-    public boolean addSpecies(AddSpeciesDto addSpeciesDto, UUID userId) {
+    public Species addSpecies(AddSpeciesDto addSpeciesDto, UUID userId) {
         User user = userService.findUserById(userId);
 
         if (speciesRepository.findByName(addSpeciesDto.getName()).isPresent()) {
@@ -82,8 +84,7 @@ public class SpeciesService {
             species.setApproved(true);
         }
 
-        this.speciesRepository.save(species);
-        return true;
+        return this.speciesRepository.save(species);
     }
 
     @CacheEvict(value = {"all-species", "species-by-genera", "genera"}, allEntries = true)

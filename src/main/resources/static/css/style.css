@@ -389,7 +389,7 @@ input::placeholder, select .placeholder {
 
 .details-container {
     font-size: 1.1em;
-    max-width: 700px;
+    width: 700px;
     margin-inline: auto;
     padding: 20px;
     display: flex;

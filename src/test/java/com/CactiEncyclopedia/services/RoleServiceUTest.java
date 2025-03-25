@@ -12,6 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static com.CactiEncyclopedia.TestBuilder.getAdminRole;
+import static com.CactiEncyclopedia.TestBuilder.getUserRole;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -78,13 +80,4 @@ public class RoleServiceUTest {
         verify(roleRepository, times(1)).findByRoleName(RoleName.USER);
         assertEquals(expectedUser, actualAdmin);
     }
-
-    private UserRole getAdminRole() {
-        return new UserRole(RoleName.ADMIN);
-    }
-
-    private UserRole getUserRole() {
-        return new UserRole(RoleName.ADMIN);
-    }
-
 }

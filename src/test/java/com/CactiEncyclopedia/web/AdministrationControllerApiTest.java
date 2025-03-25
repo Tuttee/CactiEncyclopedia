@@ -1,6 +1,7 @@
 package com.CactiEncyclopedia.web;
 
-import com.CactiEncyclopedia.domain.entities.*;
+import com.CactiEncyclopedia.domain.entities.Species;
+import com.CactiEncyclopedia.domain.entities.UserRole;
 import com.CactiEncyclopedia.domain.enums.RoleName;
 import com.CactiEncyclopedia.domain.view.UserDetailsViewModel;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
@@ -13,13 +14,10 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import static com.CactiEncyclopedia.TestBuilder.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -205,54 +203,5 @@ public class AdministrationControllerApiTest {
         verify(userService, times(1)).updateUserRole(principal.getUsername());
     }
 
-    private Species getSpecies() {
-        Species species = new Species();
-        species.setId(UUID.randomUUID());
-        species.setName("Species");
-        species.setDescription("Species Description");
-        species.setCreatedBy(new User());
-        species.setAddedOn(LocalDate.now());
-        species.setGenera(getGenera());
-        species.setColdHardiness("Species Cold Hardiness");
-        species.setCultivation("Species Cultivation");
 
-        Question q1 = Question.builder().askedOn(LocalDateTime.now()).build();
-        Question q2 = Question.builder().askedOn(LocalDateTime.now()).build();
-        List<Question> questions = Arrays.asList(q1, q2);
-        species.setQuestions(questions);
-
-        return species;
-    }
-
-    private Genera getGenera() {
-        return new Genera("Mammillaria", "https://", new ArrayList<>());
-    }
-
-    private Species getApprovedSpecies() {
-        Species species = getSpecies();
-        species.setApproved(true);
-        return species;
-    }
-    private Species getUnapprovedSpecies() {
-        Species species = getSpecies();
-        species.setApproved(false);
-        return species;
-    }
-
-    private User getUser() {
-        User user = new User("Testuser",
-                "testpass",
-                "test@user.com",
-                "TestFname",
-                "TestLname",
-                createUserRole(),
-                new ArrayList<>(),
-                new ArrayList<>());
-        user.setId(UUID.randomUUID());
-        return user;
-    }
-
-    private UserRole createUserRole() {
-        return new UserRole(RoleName.USER);
-    }
 }

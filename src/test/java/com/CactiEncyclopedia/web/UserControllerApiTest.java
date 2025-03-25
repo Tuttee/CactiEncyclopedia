@@ -1,9 +1,7 @@
 package com.CactiEncyclopedia.web;
 
-import com.CactiEncyclopedia.domain.entities.User;
 import com.CactiEncyclopedia.domain.entities.UserRole;
 import com.CactiEncyclopedia.domain.enums.RoleName;
-import com.CactiEncyclopedia.domain.view.UserDetailsViewModel;
 import com.CactiEncyclopedia.security.AuthenticationMetadata;
 import com.CactiEncyclopedia.services.UserService;
 import org.junit.jupiter.api.Test;
@@ -15,6 +13,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 
 import java.util.UUID;
 
+import static com.CactiEncyclopedia.TestBuilder.aRandomUserDetailsViewModel;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -47,7 +46,7 @@ public class UserControllerApiTest {
         MockHttpServletRequestBuilder request = get("/user/my-profile")
                 .with(user(principal));
 
-        when(userService.getLoggedUserDetails(userId)).thenReturn(aRandomUser());
+        when(userService.getLoggedUserDetails(userId)).thenReturn(aRandomUserDetailsViewModel());
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
@@ -55,15 +54,5 @@ public class UserControllerApiTest {
                 .andExpect(model().attributeExists("userProfile"));
 
         verify(userService, times(1)).getLoggedUserDetails(userId);
-    }
-
-    private UserDetailsViewModel aRandomUser() {
-        UserDetailsViewModel viewModel = new UserDetailsViewModel();
-        viewModel.setUsername("username");
-        viewModel.setFirstName("firstname");
-        viewModel.setLastName("lastname");
-        viewModel.setEmail("email@email.com");
-        viewModel.setRole(RoleName.USER);
-        return viewModel;
     }
 }

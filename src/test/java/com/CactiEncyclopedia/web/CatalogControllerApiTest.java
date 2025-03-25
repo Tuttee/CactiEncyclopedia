@@ -2,7 +2,9 @@ package com.CactiEncyclopedia.web;
 
 import com.CactiEncyclopedia.client.FactClient;
 import com.CactiEncyclopedia.domain.binding.FactDto;
-import com.CactiEncyclopedia.domain.entities.*;
+import com.CactiEncyclopedia.domain.entities.Genera;
+import com.CactiEncyclopedia.domain.entities.Species;
+import com.CactiEncyclopedia.domain.entities.UserRole;
 import com.CactiEncyclopedia.domain.enums.RoleName;
 import com.CactiEncyclopedia.exception.GeneraAlreadyExistsException;
 import com.CactiEncyclopedia.exception.SpeciesAlreadyExistsException;
@@ -21,10 +23,11 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 
+import static com.CactiEncyclopedia.TestBuilder.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -422,45 +425,5 @@ public class CatalogControllerApiTest {
         verify(speciesService, times(1)).addSpecies(any() ,any());
     }
 
-    private Species getSpecies() {
-        Species species = new Species();
-        species.setId(UUID.randomUUID());
-        species.setName("Species");
-        species.setDescription("Species Description");
-        species.setCreatedBy(new User());
-        species.setAddedOn(LocalDate.now());
-        species.setGenera(getGenera());
-        species.setColdHardiness("Species Cold Hardiness");
-        species.setCultivation("Species Cultivation");
 
-        Question q1 = getQuestion(species);
-        Question q2 = getQuestion(species);
-        List<Question> questions = Arrays.asList(q1, q2);
-        species.setQuestions(questions);
-
-        return species;
-    }
-
-    private static Question getQuestion(Species species) {
-        return Question.builder()
-                .species(species)
-                .content("TestContent")
-                .approved(true)
-                .askedBy(getUser())
-                .askedOn(LocalDateTime.now()).build();
-    }
-
-    private static User getUser() {
-        return User.builder().username("Pesho").build();
-    }
-
-    private Genera getGenera() {
-        return new Genera("Mammillaria", "http://", new ArrayList<>());
-    }
-
-    private Species getApprovedSpecies() {
-        Species species = getSpecies();
-        species.setApproved(true);
-        return species;
-    }
 }

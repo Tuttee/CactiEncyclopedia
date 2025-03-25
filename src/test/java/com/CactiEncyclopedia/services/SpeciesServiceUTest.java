@@ -1,7 +1,10 @@
 package com.CactiEncyclopedia.services;
 
 import com.CactiEncyclopedia.domain.binding.AddSpeciesDto;
-import com.CactiEncyclopedia.domain.entities.*;
+import com.CactiEncyclopedia.domain.entities.Genera;
+import com.CactiEncyclopedia.domain.entities.Species;
+import com.CactiEncyclopedia.domain.entities.User;
+import com.CactiEncyclopedia.domain.entities.UserRole;
 import com.CactiEncyclopedia.domain.enums.RoleName;
 import com.CactiEncyclopedia.exception.SpeciesAlreadyExistsException;
 import com.CactiEncyclopedia.repositories.SpeciesRepository;
@@ -15,10 +18,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
+import static com.CactiEncyclopedia.TestBuilder.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -226,49 +228,5 @@ public class SpeciesServiceUTest {
 
         verify(speciesRepository, times(1)).find10RecentlyAddedAndApproved();
         assertEquals(speciesList, speciesService10RecentlyAdded);
-    }
-
-    private AddSpeciesDto getAddSpeciesDto() {
-        return new AddSpeciesDto("Species",
-                "Mammillaria",
-                "http://",
-                "Test Description",
-                "Test Cultivation",
-                "Test cold hardiness",
-                false);
-    }
-
-    private Species getSpecies() {
-        Species species = new Species();
-        species.setId(UUID.randomUUID());
-        species.setName("Species");
-        species.setDescription("Species Description");
-        species.setCreatedBy(new User());
-        species.setAddedOn(LocalDate.now());
-        species.setGenera(getGenera());
-        species.setColdHardiness("Species Cold Hardiness");
-        species.setCultivation("Species Cultivation");
-
-        Question q1 = Question.builder().askedOn(LocalDateTime.now()).build();
-        Question q2 = Question.builder().askedOn(LocalDateTime.now()).build();
-        List<Question> questions = Arrays.asList(q1, q2);
-        species.setQuestions(questions);
-
-        return species;
-    }
-
-    private Genera getGenera() {
-        return new Genera("Mammillaria", "http://", new ArrayList<>());
-    }
-
-    private Species getApprovedSpecies() {
-        Species species = getSpecies();
-        species.setApproved(true);
-        return species;
-    }
-    private Species getUnapprovedSpecies() {
-        Species species = getSpecies();
-        species.setApproved(false);
-        return species;
     }
 }
