@@ -19,7 +19,8 @@
         <tbody>
         <tr th:unless="${unapprovedSpecies.size() == 0}" th:each="species : ${unapprovedSpecies}">
             <td><a th:text="${species.name}" th:href="@{/catalog/species/{id}(id=${species.id})}"></a></td>
-            <td class="" th:text="${species.createdBy.username}">createdBy</td>
+            <td class="" th:if="${species.createdBy != null}" th:text="${species.createdBy.username}">createdBy</td>
+            <td class="" th:unless="${species.createdBy != null}"> </td>
             <td class="admin-buttons">
                 <form th:method="PATCH" th:action="@{/administration/species/{id}(id=${species.id})}">
                     <button type="submit" class="btn btn-success">Approve</button>
@@ -47,7 +48,8 @@
         <tbody>
         <tr th:unless="${approvedSpecies.size() == 0}" th:each="species : ${approvedSpecies}">
             <td><a th:text="${species.name}" th:href="@{/catalog/species/{id}(id=${species.id})}"></a></td>
-            <td class="" th:text="${species.createdBy.username}">createdBy</td>
+            <td class="" th:if="${species.createdBy != null}" th:text="${species.createdBy.username}">createdBy</td>
+            <td class="" th:unless="${species.createdBy != null}"> </td>
             <td class="text-danger">
                 <form th:method="DELETE" th:action="@{/administration/species/{id}(id=${species.id})}">
                     <button type="submit" class="btn btn-danger">Delete</button>

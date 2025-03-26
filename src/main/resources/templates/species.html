@@ -8,8 +8,8 @@
 
     <h1 th:if="${all}" class="text-center">Species Catalogue</h1>
     <h1 th:unless="${all}" class="text-center" th:text="${generaName + ' Catalogue'}">Species Catalogue</h1>
+    <h5 class="text-center" th:if="${species.getTotalElements() == 0}">There are no species available yet. :(</h5>
     <div class="card-container">
-        <h5 class="text-center" th:if="${#lists.size(species) == 0}">There are no species available yet. :(</h5>
         <div class="card-cacti" th:each="specie : ${species}">
             <a th:href="@{/catalog/species/{id}(id=${specie.id})}">
                 <img th:src="${specie.imageURL}" alt="Card image cap"/>
@@ -76,7 +76,8 @@
                     <span aria-hidden="true">&laquo;</span>
                 </a>
                 <a th:unless="${species.isFirst()}" class=""
-                   th:href="@{/catalog/{generaName}(size=${species.getSize()}, generaName=${generaName})}" aria-label="First">
+                   th:href="@{/catalog/{generaName}(size=${species.getSize()}, generaName=${generaName})}"
+                   aria-label="First">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -91,7 +92,8 @@
             <li class="" th:each="page : ${#numbers.sequence(0, species.getTotalPages()-1)}"
                 th:classappend="${species.getPageable().getPageNumber() == page} ? 'disabled' : ''">
                 <a class="" th:unless="${species.getPageable().getPageNumber() == page}"
-                   th:href="@{/catalog/{generaName}(size=${species.getSize()}, page=${page}, generaName=${generaName})}" th:text="${page+1}">#</a>
+                   th:href="@{/catalog/{generaName}(size=${species.getSize()}, page=${page}, generaName=${generaName})}"
+                   th:text="${page+1}">#</a>
                 <a class="disabled" th:if="${species.getPageable().getPageNumber() == page}"
                    th:text="${page+1}">#</a>
             </li>
