@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.internal.util.Assert;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -34,6 +35,8 @@ public class UserServiceUTest {
     private UserRepository userRepository;
     @Mock
     private RoleService roleService;
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @InjectMocks
     private UserService userService;
@@ -112,6 +115,7 @@ public class UserServiceUTest {
         User adminUser = getAdmin();
         when(userRepository.saveAndFlush(any())).thenReturn(adminUser);
         when(userRepository.count()).thenReturn(0L);
+        when(passwordEncoder.encode(any())).thenReturn("password");
 
         userService.register(userRegisterDto);
 
@@ -127,6 +131,7 @@ public class UserServiceUTest {
         User user = getUser();
         when(userRepository.saveAndFlush(any())).thenReturn(user);
         when(userRepository.count()).thenReturn(1L);
+        when(passwordEncoder.encode(any())).thenReturn("password");
 
         userService.register(userRegisterDto);
 
