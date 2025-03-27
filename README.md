@@ -7,3 +7,4 @@
 3. After first start, import the data.sql. To import, add "spring.sql.init.mode=always" to the application.properties file.
 4. After import, change "always" to "never".
 5. The first registered user has an ADMIN role, every following user has USER role.
+6. Additionally, set up the Facts service URL in the "facts-svc.base-url" property in the application.properties file.

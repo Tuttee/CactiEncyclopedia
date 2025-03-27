@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-//@FeignClient(name = "fact-service", url = "http://192.168.101.119:8081/api/v1/facts")
-@FeignClient(name = "fact-service", url = "http://localhost:8081/api/v1/facts")
+@FeignClient(name = "facts-svc", url = "${facts-svc.base-url}")
 public interface FactClient {
 
     @GetMapping("/random")
