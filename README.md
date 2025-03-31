@@ -1,13 +1,80 @@
-#Getting started with Cacti Encyclopedia
+# Getting Started with Cacti Encyclopedia
 
-1. Start apache/kafka:3.9.0 as a docker container.
-2. In application-dev.properties configure spring.kafka.bootstrap-servers with your kafka address.
-3. Enter credentials for database use one of the following options:
-    a. edit the application-dev.properties file with your credentials
-    b. use MYSQL_USER and MYSQL_PASS environment variables to enter credentials
-4. Make sure the active profile you use is dev.
-5. Initially start the app without importing data.sql, so that the DB can be created
-6. After first start, import the data.sql. To import, add "spring.sql.init.mode=always" to the application.properties file.
-7. After import, change "always" to "never".
-8. The first registered user has an ADMIN role, every following user has USER role.
-9. Additionally, set up the Facts service URL in the "facts-svc.base-url" property in the application.properties file.
+## **1. Setting Up Kafka**
+Start **apache/kafka:3.9.0** as a Docker container. Ensure it's running properly before starting the application.
+
+## **2. Configure Kafka in the Application**
+Edit **`application-dev.properties`** and set:
+```properties
+spring.kafka.bootstrap-servers=<your_kafka_address>
+```
+
+## **3. Configure Database Credentials**
+Choose one of the following methods:
+- **Option A:** Edit `application-dev.properties`:
+  ```properties
+  spring.datasource.username=<your_user>
+  spring.datasource.password=<your_password>
+  ```
+- **Option B:** Use environment variables:
+  ```bash
+  export MYSQL_USER=<your_user>
+  export MYSQL_PASS=<your_password>
+  ```
+
+## **4. Set Active Profile to `dev`**
+Ensure the application is running with the **`dev`** profile.
+
+## **5. Initial Start Without `data.sql` Import**
+Run the application **without importing** `data.sql` so the database can initialize.
+
+## **6. Import `data.sql` After First Start**
+After the first successful start:
+1. **Enable SQL import** by adding this to `application.properties`:
+   ```properties
+   spring.sql.init.mode=always
+   ```
+2. Restart the application to execute the import.
+3. After import, **disable SQL import** by changing `always` to `never`:
+   ```properties
+   spring.sql.init.mode=never
+   ```
+
+## **7. User Roles**
+- The **first registered user** gets **ADMIN** role.
+- Every following user gets the **USER** role.
+
+## **8. Configure Facts Service**
+Set up the **Facts Service URL** in `application.properties`:
+```properties
+facts-svc.base-url=<your_facts_service_url>
+```
+
+---
+
+## **Running Cacti Encyclopedia with Docker**
+
+### **1. Clone the Required Repositories**
+```bash
+git clone <cacti-encyclopedia-repo-url>
+git clone <facts-svc-repo-url>
+```
+Ensure both repos are in adjacent folders.
+
+### **2. Build the Applications**
+Inside each repo, run:
+```bash
+mvn clean install
+```
+
+### **3. Start with Docker**
+From the **Cacti Encyclopedia** repo, run:
+```bash
+docker compose up -d
+```
+> **Note:** The `facts-svc` **build property** in `docker-compose.yml` may need directory adjustments.
+
+---
+
+### 🎉 **Cacti Encyclopedia is Now Running!**
+You can access it and start using the service. Let me know if you need any help! 🚀

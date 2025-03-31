@@ -1,0 +1,118 @@
+services:
+
+  kafka:
+    image: apache/kafka:3.9.0
+    container_name: kafka
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: "controller,broker"
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:9093"
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+    networks:
+      - cacti
+    ports:
+      - "9092:9092"
+
+  mysql-db-cacti:
+    image: mysql:8.0
+    container_name: mysql-cacti
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: cacti_encyclopedia
+      MYSQL_USER: cacti
+      MYSQL_PASSWORD: password123
+    ports:
+      - "3308:3306"
+    networks:
+      - cacti
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 20s
+      retries: 10
+      start_period: 40s
+
+  cacti-app:
+    build: .
+    container_name: cacti-encyclopedia
+    restart: always
+    environment:
+      KAFKA_HOST: kafka:9092
+      SPRING_PROFILES_ACTIVE: docker
+      MYSQL_HOST: mysql-db-cacti
+      MYSQL_PORT: 3306
+      MYSQL_DB: cacti_encyclopedia
+      MYSQL_USER: cacti
+      MYSQL_PASSWORD: password123
+      FACTS_HOST: facts-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql-db-cacti:
+        condition: service_healthy
+    networks:
+      - cacti
+
+  mysql-db-facts:
+    image: mysql:8.0
+    container_name: mysql-facts
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: facts_svc
+      MYSQL_USER: cacti
+      MYSQL_PASSWORD: password123
+    ports:
+      - "3307:3306"
+    networks:
+      - cacti
+    volumes:
+      - mysql_data2:/var/lib/mysql
+    depends_on:
+      mysql-db-cacti:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 20s
+      retries: 10
+      start_period: 40s
+
+  facts-app:
+    build: ../facts-svc/
+    container_name: facts-svc
+    restart: always
+    environment:
+      KAFKA_HOST: kafka:9092
+      SPRING_PROFILES_ACTIVE: docker
+      MYSQL_HOST: mysql-db-facts
+      MYSQL_PORT: 3306
+      MYSQL_DB: facts_svc
+      MYSQL_USER: cacti
+      MYSQL_PASSWORD: password123
+    ports:
+      - "8081:8081"
+    depends_on:
+      mysql-db-facts:
+        condition: service_healthy
+    networks:
+      - cacti
+
+networks:
+  cacti:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  mysql_data2:
