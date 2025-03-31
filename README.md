@@ -52,29 +52,29 @@ facts-svc.base-url=<your_facts_service_url>
 
 ---
 
-## **Running Cacti Encyclopedia with Docker**
+# **Running Cacti Encyclopedia with Docker**
 
-### **1. Clone the Required Repositories**
+## **1. Clone the Required Repositories**
 ```bash
-git clone <cacti-encyclopedia-repo-url>
-git clone <facts-svc-repo-url>
+git clone https://github.com/Tuttee/CactiEncyclopedia.git
+git clone https://github.com/Tuttee/facts-svc.git
 ```
-Ensure both repos are in adjacent folders.
+Ensure both repos are in adjacent directories.
 
-### **2. Build the Applications**
+## **2. Build the Applications**
 Inside each repo, run:
 ```bash
 mvn clean install
 ```
 
-### **3. Start with Docker**
+## **3. Start with Docker**
 From the **Cacti Encyclopedia** repo, run:
 ```bash
 docker compose up -d
 ```
-> **Note:** The `facts-svc` **build property** in `docker-compose.yml` may need directory adjustments.
+> **Note:** The `facts-svc` **build** property in `docker-compose.yml` may need directory adjustments.
 
 ---
 
-### 🎉 **Cacti Encyclopedia is Now Running!**
+## 🎉 **Cacti Encyclopedia is Now Running!**
 You can access it and start using the service. Let me know if you need any help! 🚀
