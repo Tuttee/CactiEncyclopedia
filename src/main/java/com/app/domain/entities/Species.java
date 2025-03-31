@@ -43,6 +43,6 @@ public class Species extends BaseEntity {
     @Column
     private boolean approved = false;
 
-    @OneToMany(mappedBy = "species")
+    @OneToMany(mappedBy = "species", cascade = {CascadeType.ALL})
     private List<Question> questions;
 }
