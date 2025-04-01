@@ -5,6 +5,7 @@ A platform for cactus enthusiasts to explore, contribute, and manage species inf
 ## 📜 Contents
 
 - [Introduction](#-introduction)
+- [Used Technologies](#used-technologies)
 - [Application Features](#-application-features)
 - [User Roles](#-user-roles)
 - [Running the Application](#%EF%B8%8F-running-the-application)
@@ -13,6 +14,17 @@ A platform for cactus enthusiasts to explore, contribute, and manage species inf
 ## 🌟 Introduction
 
 Cacti Encyclopedia is a web application designed for cactus enthusiasts to share knowledge about different species of cacti. Users can register, contribute species, add facts, and interact with a curated database of cacti. The platform ensures proper categorization of species and allows administrative control over approvals and fact submissions.
+
+## Used Technologies
+
+- ![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+- ![Spring](https://img.shields.io/badge/Spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+- ![MySQL](https://img.shields.io/badge/MySQL-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+- ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-%2300A98F.svg?style=for-the-badge&logo=thymeleaf&logoColor=white)
+- ![HTML5](https://img.shields.io/badge/HTML5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+- ![CSS3](https://img.shields.io/badge/CSS3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+- ![Apache Kafka](https://img.shields.io/badge/Apache_Kafka-%23023130.svg?style=for-the-badge&logo=apachekafka&logoColor=white)
+- ![Docker](https://img.shields.io/badge/Docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 ## 🚀 Application Features
 
