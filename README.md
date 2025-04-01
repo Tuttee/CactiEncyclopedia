@@ -7,7 +7,7 @@ A platform for cactus enthusiasts to explore, contribute, and manage species inf
 - [Introduction](#-introduction)
 - [Application Features](#-application-features)
 - [User Roles](#-user-roles)
-- [Running the Application](#--running-the-application)
+- [Running the Application](#%EF%B8%8F-running-the-application)
 - [Running with Docker](#running-cacti-encyclopedia-with-docker)
 
 ## 🌟 Introduction
