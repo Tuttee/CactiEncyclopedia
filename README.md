@@ -9,7 +9,7 @@ A platform for cactus enthusiasts to explore, contribute, and manage species inf
 - [Application Features](#-application-features)
 - [User Roles](#-user-roles)
 - [Running the Application](#%EF%B8%8F-running-the-application)
-- [Running with Docker](#running-cacti-encyclopedia-with-docker)
+- [Running with Docker](#-running-cacti-encyclopedia-with-docker)
 
 ## 🌟 Introduction
 
@@ -162,7 +162,7 @@ facts-svc.base-url=<your_facts_service_url>
 
 ---
 
-# Running Cacti Encyclopedia with Docker
+# 🐳 Running Cacti Encyclopedia with Docker
 
 ## **1. Clone the Required Repositories**
 ```bash
