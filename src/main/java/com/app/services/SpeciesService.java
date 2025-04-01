@@ -68,7 +68,7 @@ public class SpeciesService {
     }
 
     @Transactional
-    @CacheEvict(value = {"all-species", "species-by-genera", "genera"}, allEntries = true)
+    @CacheEvict(value = {"all-species", "species-by-genera", "genera", "genera-list"}, allEntries = true)
     public Species addSpecies(AddSpeciesDto addSpeciesDto, UUID userId) {
         User user = userService.findUserById(userId);
 
@@ -89,7 +89,7 @@ public class SpeciesService {
         return this.speciesRepository.save(species);
     }
 
-    @CacheEvict(value = {"all-species", "species-by-genera", "genera"}, allEntries = true)
+    @CacheEvict(value = {"all-species", "species-by-genera", "genera", "genera-list"}, allEntries = true)
     @LogSpeciesAction
     public void approve(UUID id) {
         Species species = this.speciesRepository.findById(id).orElseThrow();
@@ -97,7 +97,7 @@ public class SpeciesService {
         this.speciesRepository.save(species);
     }
 
-    @CacheEvict(value = {"all-species", "species-by-genera", "genera"}, allEntries = true)
+    @CacheEvict(value = {"all-species", "species-by-genera", "genera", "genera-list"}, allEntries = true)
     @LogSpeciesAction
     @Transactional
     public void delete(UUID id) {
