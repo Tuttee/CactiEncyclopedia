@@ -40,14 +40,14 @@
         </form>
         <div class="question" th:if="${#lists.size(species.questions)>0}" th:each="question : ${species.questions}">
             <div class="question-data">
-                <h5 th:text="${question.askedBy.username + ':'}"></h5>
+                <h6 th:text="${question.askedBy.username + ':'}"></h6>
             <p class="date"
                th:text="${#temporals.format(question.askedOn, 'yyyy MMM dd') + ' at ' + #temporals.format(question.askedOn, 'HH:mm')}"></p>
             </div>
                 <p th:text="${question.content}"></p>
         </div>
         <div class="question" th:unless="${#lists.size(species.questions)>0}">
-            <p class="">No questions are present. Be the first one to ask a question. Registration needed.</p>
+            <p>No questions are present. Be the first one to ask a question. Registration needed.</p>
         </div>
 
     </div>

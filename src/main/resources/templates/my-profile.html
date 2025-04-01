@@ -29,11 +29,15 @@
 
     <div class="details-container">
         <h4 class="">My species</h4>
-        <div class="table-row" th:each="species : ${userProfile.addedSpecies}">
+        <p class="text-center">You have not submitted any species. Submissions which have not been approved for more
+            than 30 days are automatically deleted.</p>
+        <div class="table-row" th:if="${#lists.size(userProfile.addedSpecies) > 0}"
+             th:each="species : ${userProfile.addedSpecies}">
             <div class="status approved" th:if="${species.approved}">Approved</div>
             <div class="status in-review" th:unless="${species.approved}">In Review</div>
             <span th:unless="${species.approved}" th:text="${species.name}"></span>
-            <a th:if="${species.approved}" th:href="@{'/catalog/species/' + ${species.id}}" th:text="${species.name}"></a>
+            <a th:if="${species.approved}" th:href="@{'/catalog/species/' + ${species.id}}"
+               th:text="${species.name}"></a>
         </div>
     </div>
 

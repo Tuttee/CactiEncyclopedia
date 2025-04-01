@@ -40,6 +40,10 @@ nav > div {
     padding: 20px 62px;
 }
 
+h6 {
+    font-size: 1.2em;
+}
+
 .user-nav {
     display: flex;
     gap: 10px;
@@ -245,7 +249,7 @@ textarea {
     height: 100px;
 }
 
-input::placeholder, select .placeholder {
+input::placeholder, select .placeholder, textarea::placeholder {
     font-size: 1em;
     color: #5A5A5A;
 }
@@ -547,6 +551,7 @@ p.date {
 
 .admin-container button {
     border-radius: 50px;
+    width: 165px;
 }
 
 .admin-container form {
