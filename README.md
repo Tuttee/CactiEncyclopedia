@@ -96,7 +96,7 @@ Provides useful information about cacti.
 | **Admin**  | Can perform all user actions plus manage users, approve/delete species, add genera, and add facts |
 | **User**   | Can add species, post species questions |
 
-# 🛠️ Running the Application
+# 🛠️Running the Application
 
 ## **1. Setting Up Kafka**
 Start **apache/kafka:3.9.0** as a Docker container. Ensure it's running properly before starting the application.
