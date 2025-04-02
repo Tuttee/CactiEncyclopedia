@@ -137,6 +137,7 @@ public class TestBuilder {
         viewModel.setLastName("lastname");
         viewModel.setEmail("email@email.com");
         viewModel.setRole(RoleName.USER);
+        viewModel.setAddedSpecies(new ArrayList<>());
         return viewModel;
     }
 }
