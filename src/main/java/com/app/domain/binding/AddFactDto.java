@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddFactDto {
-    @Size(min = 5, message = "Fact content must be at least 5 characters!")
+    @Size(min = 5, max = 500, message = "Fact content must be between 5 and 500 characters!")
     private String content;
 
     private UUID addedBy;
